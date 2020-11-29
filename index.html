@@ -1,36 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./css/dist/main.css" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/less" ></script> -->
-    <title>제트팬관리시스템</title>
-</head>
-<body>
-    <div class='header'>
-        <h4>프라임 방재</h4>
-        <h2>제트팬 관리 시스템</h2>
-        <h5>게스트(guest@gmail.com) 님 안녕하세요.</h5>
-    </div>
-    <div class='content-body'>
-        <div>
-            <button type='button'>평가표<br>관리</button>
-            <button type='button'>안전점검<br>관리</button>
-            <button type='button'>추적도면<br>관리</button>
-        </div>
-        <div>
-            <button type='button'>이상발생<br>보고서</button>
-            <button type='button'>사진첩<br>관리</button>
-            <button type='button'>데이터 생성<br>관리</button>
-        </div>
-    </div>
+<script src="./script/main.js"></script>
 
-    <div class='footer'>
-        <button type='button'>암호변경</button>
-        <button type='button'>홈</button>
-        <button type='button'>로그아웃</button>
-    </div>
+<header></header>
 
-</body>
-</html>
+<div class='body'>
+    <div>
+        <button type='button'>평가표<br>관리</button>
+        <button type='button'>안전점검<br>관리</button>
+        <button type='button'>추적도면<br>관리</button>
+    </div>
+    <div>
+        <button type='button'>이상발생<br>보고서</button>
+        <button type='button'>사진첩<br>관리</button>
+        <button type='button' onclick='location.href="./createData.html"'>데이터 생성<br>관리</button>
+    </div>
+</div>
+
+<footer></footer>
