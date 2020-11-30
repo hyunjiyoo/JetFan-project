@@ -1,0 +1,191 @@
+@table-font: 10pt;
+
+#body-header {
+    div:nth-child(n+1):nth-child(-n+2) {
+        display: flex;
+        justify-content: center;
+    }
+
+    div:last-child {
+        display: flex;
+        margin-right: auto;
+        margin-left: 2%;
+    }
+
+    select {
+        width: 30%;
+        margin: 1%;
+    }
+}
+
+.gap {
+    height: 10px;
+}
+
+
+#contents {
+    h5 {
+        background-color: lightyellow;
+        margin-bottom: 10px;
+    }
+
+    #operation table {
+        border-collapse: collapse;
+
+        th, td {
+            border: 1px solid #000;
+            width: 1%;
+            font-size: @table-font;
+            padding-left: 3px;
+        }
+
+        tr {
+            th:first-child {
+                width: 1.2%;
+                text-align: left;
+            }
+
+            &:nth-child(n+12):nth-child(-n+15) td {
+                text-align: right;
+                padding-right: 3px;
+            }
+
+            &:last-child th{
+                text-align: center;
+            }
+        }
+
+        input[type='number'] {
+            border: none;
+            width: 100%;
+            text-align: right;
+        }
+    }
+
+
+    #chkAppearance table {
+        border-collapse: collapse;
+
+        th, td {
+            font-size: @table-font;
+        }
+
+        th {
+            width: 2.2%;
+            text-align: left;
+        }
+
+        td {
+            width: 1%;
+            &:last-child {
+                width: 0.5%;
+                text-align: right;
+            }
+        }
+
+        select {
+            width: 100%;
+        }
+
+        tr:last-child th,
+        tr:last-child td {
+            text-align: center;
+            border: 1px solid #000;
+        }
+    }
+
+
+    #useYear table {
+        border-collapse: collapse;
+
+        th, td {
+            font-size: @table-font;
+        }
+        
+        th {
+            width: 2.2%;
+            text-align: left;
+        }
+        
+        td {
+            width: 1%;
+            text-align: right;
+            &:last-child {
+                width: 0.5%;
+            }
+        }
+        
+        input[type='number'] {
+            width: 100%;
+            text-align: right;
+            border: none;
+            border-bottom: 1px solid #000;
+        }
+        
+        tr:last-child th,
+        tr:last-child td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+    }
+
+
+    #useEnv table {
+        border-collapse: collapse;
+
+        th, td {
+            font-size: @table-font;
+        }
+        
+        th {
+            width: 2.2%;
+            text-align: left;
+        }
+        
+        td {
+            width: 1%;
+            text-align: right;
+            &:last-child {
+                width: 0.5%;
+            }
+        }
+        
+        select {
+            width: 100%;
+            text-align: right;
+        }
+        
+        tr:last-child th,
+        tr:last-child td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+    }
+}
+
+#body-footer {
+    table {
+        border-collapse: collapse;
+        margin-bottom: 5%;
+
+        th, td {
+            font-size: @table-font;
+            border: 1px solid #000;
+        }
+
+        th {
+            width: 6%;
+        }
+        td {
+            width: 1%;
+            text-align: right;
+        }
+    }
+
+    display: flex;
+    flex-direction: column;
+    button {
+        margin: 0 auto;
+        width: 35%;
+    }
+}

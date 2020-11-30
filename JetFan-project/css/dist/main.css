@@ -9,7 +9,23 @@ header {
 }
 header h2,
 header h5 {
+  margin: 10px 0;
   text-align: center;
+}
+header h4 {
+  margin-bottom: 5px;
+}
+.content-body {
+  margin: 0 8% 3% 8%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.content-body h4 {
+  margin-top: 5px;
+  text-align: center;
+  padding: 5px;
+  background-color: grey;
+  color: #fff;
 }
 footer div {
   width: 100%;
@@ -23,4 +39,7 @@ footer div {
 footer button {
   margin: 2%;
   width: 24%;
+}
+.center {
+  text-align: center;
 }
