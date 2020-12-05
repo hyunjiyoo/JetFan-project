@@ -5,18 +5,47 @@ body {
   height: 92vh;
 }
 header {
-  margin: 0 8%;
-}
-header h2,
-header h5 {
-  margin: 10px 0;
-  text-align: center;
+  margin: 0;
+  position: relative;
 }
 header h4 {
+  color: #fff;
+  padding: 7px 4%;
+  margin-top: 0;
   margin-bottom: 5px;
+  background-color: #2d669d;
+}
+header #menu-ic {
+  position: absolute;
+  top: 7px;
+  right: 4%;
+  color: #fff;
+  cursor: pointer;
+}
+header .sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 35px;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 20px;
+}
+header .sidenav a {
+  padding: 8px 20px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+header .sidenav a:hover {
+  color: #f1f1f1;
 }
 .content-body {
-  margin: 0 8% 3% 8%;
+  margin: 0 4% 3% 4%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -34,7 +63,7 @@ footer div {
   display: flex;
   justify-content: center;
   padding: 1% 0;
-  background-color: #4849ad;
+  background-color: #2d669d;
 }
 footer button {
   margin: 2%;

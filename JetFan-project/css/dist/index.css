@@ -1,6 +1,14 @@
 .body {
   margin: 2% 8%;
 }
+.body h2 {
+  margin-top: 5%;
+  text-align: center;
+}
+.body h5 {
+  margin: 10px 0 8% 0;
+  text-align: center;
+}
 .body div {
   display: flex;
 }
