@@ -3,10 +3,13 @@ body {
   display: flex;
   flex-direction: column;
   height: 92vh;
+  overflow-y: auto;
 }
 header {
   margin: 0;
-  position: relative;
+  display: block;
+  position: fixed;
+  width: 100%;
 }
 header h4 {
   color: #fff;
@@ -45,9 +48,7 @@ header .sidenav a:hover {
   color: #f1f1f1;
 }
 .content-body {
-  margin: 0 4% 3% 4%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  margin: 12% 4% 0 4%;
 }
 .content-body h4 {
   margin-top: 5px;
@@ -56,10 +57,13 @@ header .sidenav a:hover {
   background-color: grey;
   color: #fff;
 }
-footer div {
-  width: 100%;
+footer {
   position: fixed;
+  display: block;
+  width: 100%;
   bottom: 0;
+}
+footer div {
   display: flex;
   justify-content: center;
   padding: 1% 0;

@@ -129,6 +129,7 @@
 #body-footer {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20%;
 }
 #body-footer table {
   border-collapse: collapse;

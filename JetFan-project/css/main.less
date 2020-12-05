@@ -3,11 +3,14 @@ body {
   display: flex;
   flex-direction: column;
   height: 92vh;
+  overflow-y: auto;
 }
 
 header {
   margin: 0;
-  position: relative;
+  display: block;
+  position: fixed;
+  width: 100%;
   h4 {
     color: #fff;
     padding: 7px 4%;
@@ -51,9 +54,7 @@ header {
 }
 
 .content-body {
-  margin: 0 4% 3% 4%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  margin: 12% 4% 0 4%;
   h4 {
     margin-top: 5px;
     text-align: center;
@@ -64,10 +65,11 @@ header {
 }
 
 footer {
+  position: fixed;
+  display: block;
+  width: 100%;
+  bottom: 0;
   div {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
     display: flex;
     justify-content: center;
     padding: 1% 0;

@@ -10,6 +10,9 @@
 #body-header select:first-child {
   width: 40%;
 }
+#contents {
+  margin-bottom: 20%;
+}
 #contents table {
   border-collapse: collapse;
   width: 100%;
