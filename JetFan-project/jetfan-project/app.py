@@ -4,14 +4,12 @@ from flask import Flask, request, jsonify, render_template
 import requests
 import json
 
-# app = Flask (__name__, static_url_path="", static_folder="/static/")
-app = Flask (__name__)
+app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
  
 @app.route('/')
 def hello_world():
     return render_template('./index.html')
-    # return Template().render('./index.html')
  
 @app.route('/user')
 def hello_user():
