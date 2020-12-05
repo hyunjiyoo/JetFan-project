@@ -1,0 +1,27 @@
+{% include 'header.html' %}
+
+    <script src="../static/script/main.js"></script>
+    <!-- <script type='text/javascript' src="{{ url_for('static', filename='script/main.js') }}"></script> -->
+    
+    <header></header>
+    
+    
+    <div class='body'>
+        <h2>제트팬 관리 시스템</h2>
+        <h5>게스트(guest@gmail.com) 님 안녕하세요.</h5>
+        <div>
+            <button type='button' onclick='location.href="./standardEval.html"'>평가표<br>관리</button>
+            <button type='button' onclick='location.href="./safetyChk.html"'>안전점검<br>관리</button>
+            <button type='button'>추적도면<br>관리</button>
+        </div>
+        <div>
+            <button type='button'>이상발생<br>보고서</button>
+            <button type='button'>사진첩<br>관리</button>
+            <button type='button' onclick='location.href="./createData.html"'>데이터 생성<br>관리</button>
+        </div>
+    </div>
+    
+    <footer></footer>
+    
+
+{% include "footer.html" %}

@@ -1,0 +1,153 @@
+#body-header div:nth-child(n+1):nth-child(-n+2) {
+  display: flex;
+  justify-content: center;
+}
+#body-header div:last-child {
+  display: flex;
+  margin-right: auto;
+  margin-left: 2%;
+}
+#body-header select {
+  width: 30%;
+  margin: 1%;
+}
+.gap {
+  height: 10px;
+}
+#contents h5 {
+  background-color: lightyellow;
+  margin-bottom: 10px;
+}
+#contents #operation table {
+  border-collapse: collapse;
+}
+#contents #operation table th,
+#contents #operation table td {
+  border: 1px solid #000;
+  width: 1%;
+  font-size: 10pt;
+  padding-left: 3px;
+}
+#contents #operation table tr th:first-child {
+  width: 1.2%;
+  text-align: left;
+}
+#contents #operation table tr:nth-child(n+12):nth-child(-n+15) td {
+  text-align: right;
+  padding-right: 3px;
+}
+#contents #operation table tr:last-child th {
+  text-align: center;
+}
+#contents #operation table input[type='number'] {
+  border: none;
+  width: 100%;
+  text-align: right;
+}
+#contents #chkAppearance table {
+  border-collapse: collapse;
+}
+#contents #chkAppearance table th,
+#contents #chkAppearance table td {
+  font-size: 10pt;
+}
+#contents #chkAppearance table th {
+  width: 2.2%;
+  text-align: left;
+}
+#contents #chkAppearance table td {
+  width: 1%;
+}
+#contents #chkAppearance table td:last-child {
+  width: 0.5%;
+  text-align: right;
+}
+#contents #chkAppearance table select {
+  width: 100%;
+}
+#contents #chkAppearance table tr:last-child th,
+#contents #chkAppearance table tr:last-child td {
+  text-align: center;
+  border: 1px solid #000;
+}
+#contents #useYear table {
+  border-collapse: collapse;
+}
+#contents #useYear table th,
+#contents #useYear table td {
+  font-size: 10pt;
+}
+#contents #useYear table th {
+  width: 2.2%;
+  text-align: left;
+}
+#contents #useYear table td {
+  width: 1%;
+  text-align: right;
+}
+#contents #useYear table td:last-child {
+  width: 0.5%;
+}
+#contents #useYear table input[type='number'] {
+  width: 100%;
+  text-align: right;
+  border: none;
+  border-bottom: 1px solid #000;
+}
+#contents #useYear table tr:last-child th,
+#contents #useYear table tr:last-child td {
+  border: 1px solid #000;
+  text-align: center;
+}
+#contents #useEnv table {
+  border-collapse: collapse;
+}
+#contents #useEnv table th,
+#contents #useEnv table td {
+  font-size: 10pt;
+}
+#contents #useEnv table th {
+  width: 2.2%;
+  text-align: left;
+}
+#contents #useEnv table td {
+  width: 1%;
+  text-align: right;
+}
+#contents #useEnv table td:last-child {
+  width: 0.5%;
+}
+#contents #useEnv table select {
+  width: 100%;
+  text-align: right;
+}
+#contents #useEnv table tr:last-child th,
+#contents #useEnv table tr:last-child td {
+  border: 1px solid #000;
+  text-align: center;
+}
+#body-footer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20%;
+}
+#body-footer table {
+  border-collapse: collapse;
+  margin-bottom: 5%;
+}
+#body-footer table th,
+#body-footer table td {
+  font-size: 10pt;
+  border: 1px solid #000;
+}
+#body-footer table th {
+  width: 6%;
+}
+#body-footer table td {
+  width: 1%;
+  text-align: right;
+}
+#body-footer button {
+  margin: 0 auto;
+  width: 35%;
+}
