@@ -8,12 +8,42 @@ app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
  
 @app.route('/')
-def hello_world():
+def home():
     return render_template('./index.html')
  
 @app.route('/user')
 def hello_user():
     return 'Hello, User! Flask'
+
+@app.route('/standardEval')
+def standardEval():
+	return render_template('./standardEval.html')
+
+@app.route('/safetyChk')
+def safetyChk():
+	return render_template('./safetyChk.html')
+	
+@app.route('/tracePlan')
+def tracePlan():
+	return render_template('./tracePlan.html')
+
+@app.route('/errorReport')
+def errorReport():
+	return render_template('./errorReport.html')
+
+@app.route('/album')
+def album():
+	return render_template('./album.html')
+
+@app.route('/createData')
+def createData():
+	return render_template('./createData.html')
+
+
+
+
+
+
 
 # test 테이블
 @app.route('/test')	

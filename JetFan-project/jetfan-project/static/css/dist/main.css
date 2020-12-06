@@ -43,6 +43,7 @@ header .sidenav a {
   color: #818181;
   display: block;
   transition: 0.3s;
+  font-size: 10pt;
 }
 header .sidenav a:hover {
   color: #f1f1f1;

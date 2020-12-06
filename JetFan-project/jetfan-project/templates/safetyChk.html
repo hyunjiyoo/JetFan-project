@@ -1,7 +1,6 @@
-<script defer src="./script/main.js"></script>
-<link rel="stylesheet" href="./css/dist/safetyChk.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/safetyChk.css') }}">
 
-<header></header>
+{% include 'header.html' %}
 
 <div class='content-body'>
     <h4>안전점검 관리</h4>
@@ -222,7 +221,7 @@
     </div>
 </div>
 
-<footer></footer>
+{% include 'footer.html' %}
     
 
 <script>

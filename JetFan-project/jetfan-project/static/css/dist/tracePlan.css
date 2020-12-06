@@ -1,0 +1,50 @@
+#body-header div:nth-child(n+1):nth-child(-n+2) {
+  display: flex;
+  justify-content: center;
+}
+#body-header div:last-child {
+  display: flex;
+  margin-right: auto;
+  margin-left: 2%;
+}
+#body-header select {
+  width: 30%;
+  margin: 1%;
+}
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  border: 1px solid #000;
+  width: 1%;
+  font-size: 10pt;
+  padding-left: 3px;
+}
+.table-header {
+  text-align: center;
+  background-color: lightgrey;
+  letter-spacing: 8px;
+  font-weight: bold;
+}
+.table-title {
+  text-align: center;
+  background-color: #f0f0f0;
+}
+#planImg {
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+}
+#curStatusChk input {
+  width: 97%;
+  border: none;
+}
+#etc {
+  margin-bottom: 20%;
+}
+#etc input {
+  width: 95%;
+  border: none;
+}

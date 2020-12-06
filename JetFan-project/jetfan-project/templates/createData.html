@@ -1,7 +1,6 @@
-<script src="./script/main.js"></script>
-<link rel="stylesheet" href="./css/dist/createData.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/createData.css') }}">
 
-<header></header>
+{% include 'header.html' %}
 
 <div class='content-body'>
     <h4>JetFan 데이터 생성 관리</h4>
@@ -44,4 +43,4 @@
 
 </div>
 
-<footer></footer>
+{% include 'footer.html' %}

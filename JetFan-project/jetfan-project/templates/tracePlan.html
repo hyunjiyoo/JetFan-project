@@ -1,0 +1,195 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/tracePlan.css') }}">
+
+{% include 'header.html' %}
+    
+<div class="content-body">
+    <h4>JetFan 추적도면 관리</h4>
+
+    <div id='body-header'>
+        <div>
+            <select name="" id="">
+                <option value="">수도권본부</option>
+                <option value="">대전충남본부</option>
+                <option value="">부산경남본부</option>
+                <option value="">광주전남본부</option>
+            </select>
+            
+            <select name="" id="">
+                <option value="">군포</option>
+                <option value="">군포</option>
+                <option value="">군포</option>
+                <option value="">군포</option>
+                <option value="">군포</option>
+            </select>
+
+            <select name="" id="">
+                <option value="">수암</option>
+                <option value="">수암</option>
+                <option value="">수암</option>
+                <option value="">수암</option>
+            </select>
+        </div>
+
+        <div>
+            <select name="" id="">
+                <option value="">상</option>
+                <option value="">하</option>
+            </select>
+
+            <select name="" id="">
+                <option value="">좌</option>
+                <option value="">우</option>
+            </select>
+
+            <select name="" id="">
+                <option value="">101</option>
+                <option value="">101</option>
+                <option value="">101</option>
+            </select>
+        </div>
+        <div>
+            <select name="" id="">
+                <option value="">2020</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="contents">
+        <div id="history">
+            <table>
+                <tr>
+                    <td colspan='4' class='table-header'>시설이력</td>
+                </tr>
+                <tr>
+                    <td class='table-title'>터널명</td>
+                    <td>장성3터널</td>
+                    <td class='table-title'>방향</td>
+                    <td>고창</td>
+                </tr>
+                <tr>
+                    <td class='table-title'>차선</td>
+                    <td>A</td>
+                    <td class='table-title'>관리번호</td>
+                    <td>109</td>
+                </tr>
+                <tr>
+                    <td colspan='1' class='table-title'>제조사</td>
+                    <td colspan='3'>에스텍이앤지(주)</td>
+                </tr>
+                <tr>
+                    <td colspan='1' class='table-title'>점검자</td>
+                    <td colspan='3'>프라임방재(주)</td>
+                </tr>
+                <tr>
+                    <td colspan='1' class='table-title'>점검일자</td>
+                    <td colspan='3'>2019.06.24</td>
+                </tr>
+            </table>
+
+            <div id='planImg'>
+                <img src="http://via.placeholder.com/100x100" alt="planning_image">
+            </div>
+        </div>
+
+        <div id="operationChk">
+            <table>
+                <tr>
+                    <td colspan='5' class='table-header'>운전점검</td>
+                </tr>
+                <tr>
+                    <td rowspan='5' colspan='1' class='table-title'>진동<br>(K.S 기준 6mm/sec이하)</td>
+                    <td colspan='4' class='table-title'>턴버클 & FAN 안정판 체결부위(대당 2Point)</td>
+                </tr>
+                <tr>
+                    <td rowspan='2' class='table-title'>구분</td>
+                    <td class='table-title'>Vertical</td>
+                    <td class='table-title'>Horizontal</td>
+                    <td class='table-title'>Axial</td>
+                </tr>
+                <tr>
+                    <td class='table-title'>수직방향</td>
+                    <td class='table-title'>수평방향</td>
+                    <td class='table-title'>축방향</td>
+                </tr>
+                <tr>
+                    <td class='table-title'>①</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='table-title'>②</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class='table-title'>운전 전류</td>
+                    <td class='table-title'>구분</td>
+                    <td class='table-title'>R</td>
+                    <td class='table-title'>S</td>
+                    <td class='table-title'>T</td>
+                </tr>
+                <tr>
+                    <td class='table-title'>(A)</td>
+                    <td class='table-title'>측정값</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan='2' class='table-title'>전압(V)</td>
+                    <td colspan='3'></td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div id="curStatusChk">
+            <table>
+                <tr>
+                    <td class='table-header'>현상태점검현황</td>
+                </tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+            </table>
+        </div>
+
+        <div id='etc'>
+            <table>
+                <tr>
+                    <td class='table-header'>비고(기능상태 등)</td>
+                </tr>
+                <tr><td class='table-title'>2019년도</td></tr>
+                <tr><td>1) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>2) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>3) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>4) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>5) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>6) <input type="text" name="" id="" maxlength="28"></td></tr>
+
+                <tr><td class='table-title'>2018년도</td></tr>
+                <tr><td>1)</td></tr>
+                <tr><td>2)</td></tr>
+                <tr><td>3)</td></tr>
+                <tr><td>4)</td></tr>
+                <tr><td>5)</td></tr>
+
+                <tr><td class='table-title'>2017년도</td></tr>
+                <tr><td>1)</td></tr>
+                <tr><td>2)</td></tr>
+                <tr><td>3)</td></tr>
+                <tr><td>4)</td></tr>
+                <tr><td>5)</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

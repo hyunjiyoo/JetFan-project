@@ -1,5 +1,6 @@
 .body {
-  margin: 12% 8%;
+  margin: 12% 8% 0 8%;
+  overflow: hidden;
 }
 .body h2 {
   margin-top: 5%;

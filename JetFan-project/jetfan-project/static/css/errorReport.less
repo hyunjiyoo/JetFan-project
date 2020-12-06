@@ -1,0 +1,63 @@
+@table-font: 10pt;
+
+#body-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8%;
+
+    select {
+        margin: 0 1%;
+        width: 25%;
+        &:first-child {
+            width: 40%;    
+        }
+    }
+}
+
+#contents {
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        th, td {
+            border: 1px solid #000;
+            font-size: @table-font;
+        }
+
+        tr:first-child td {
+            font-size: 11pt;
+            font-weight: bold;
+            background-color: lightgrey;
+        }
+        input {
+            border: none;
+            &.contentInput {
+                width: 97%;
+            }
+            &.refInput {
+                width: 82%;
+                & + button#delBtn {
+                    float: right;
+                    width: 13%;
+                    margin: 1px 1px;
+                }
+            }
+        }
+        
+        .refImg {
+            display: flex;
+            margin: 0 auto;
+            padding: 1.5%;
+        }
+
+        select {
+            width: 100%;
+        }
+    }
+
+    button#submitBtn {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto 20% auto;
+        width: 35%;
+    }
+}

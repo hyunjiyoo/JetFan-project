@@ -1,8 +1,6 @@
-<script src="./script/main.js"></script>
-<link rel="stylesheet" href="./css/dist/standardEval.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/standardEval.css') }}">
 
-<header></header>
-
+{% include 'header.html' %}
 <div class='content-body'>
     <h4>JetFan 평가표 관리</h4>
 
@@ -320,4 +318,4 @@
     </div>
 </div>
 
-<footer></footer>
+{% include 'footer.html' %}
