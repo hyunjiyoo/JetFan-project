@@ -7,10 +7,9 @@
     <div id='body-header'>
         <div>
             <select name="" id="">
-                <option value="">수도권본부</option>
-                <option value="">대전충남본부</option>
-                <option value="">부산경남본부</option>
-                <option value="">광주전남본부</option>
+                {% for i in range(data['headquater'] | length) %}
+                    <option value="">{{ data['headquater'][i]['본부명'] }}</option>
+                {% endfor %}
             </select>
             
             <select name="" id="">
@@ -22,10 +21,9 @@
             </select>
 
             <select name="" id="">
-                <option value="">수암</option>
-                <option value="">수암</option>
-                <option value="">수암</option>
-                <option value="">수암</option>
+                {% for i in range(data['tunnel'] | length) %}
+                    <option value="">{{ data['tunnel'][i]['터널명'] }}</option>
+                {% endfor %}
             </select>
         </div>
 

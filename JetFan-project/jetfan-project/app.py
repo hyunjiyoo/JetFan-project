@@ -1,86 +1,55 @@
 from flask import Flask, request, jsonify, render_template
-# from jinja2 import Template
 
-import requests
-import json
+# Import routes (API test)
+from routes.apitest_routes import TestUser
+from routes.apitest_routes import TestTest
+from routes.apitest_routes import TestDept
+from routes.apitest_routes import TestJetfan
+from routes.apitest_routes import TestTunnel
+
+## Import routes
+# 평가표 Eval
+from routes.eval_routes import Eval
+# 추적도면 Trace
+from routes.trace_routes import Trace
+from routes.trace_routes import Trace2
+# 안전점검 Safety 
+from routes.safety_routes import Safety
+# 이상발생보고서 Error
+from routes.error_routes import Error
+# 사진첩 Album
+from routes.album_routes import Album
+# 데이터생성 Data
+from routes.data_routes import Data
 
 app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
- 
+
 @app.route('/')
 def home():
     return render_template('./index.html')
- 
-@app.route('/user')
-def hello_user():
-    return 'Hello, User! Flask'
 
-@app.route('/standardEval')
-def standardEval():
-	return render_template('./standardEval.html')
+# API Test
+app.add_url_rule('/user', view_func=TestUser.as_view('user_view'), methods=['GET'])
+app.add_url_rule('/test', view_func=TestTest.as_view('test_view'), methods=['GET'])
+app.add_url_rule('/dept', view_func=TestDept.as_view('dept_view'), methods=['GET'])
+app.add_url_rule('/jetfan', view_func=TestJetfan.as_view('jetfan_view'), methods=['GET'])
+app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods=['GET'])
 
-@app.route('/safetyChk')
-def safetyChk():
-	return render_template('./safetyChk.html')
-	
-@app.route('/tracePlan')
-def tracePlan():
-	return render_template('./tracePlan.html')
+# 평가표
+app.add_url_rule('/evaluation', view_func=Eval.as_view('eval_view'), methods=['GET'])
+# 안전점검
+app.add_url_rule('/inspection', view_func=Safety.as_view('safety_view'), methods=['GET'])
+# 추적도면
+app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET'])
+app.add_url_rule('/trace2', view_func=Trace2.as_view('trace2_view'), methods=['GET'])
+# 이상발생보고서
+app.add_url_rule('/abnormal', view_func=Error.as_view('error_view'), methods=['GET'])
+# 사진첩
+app.add_url_rule('/photo', view_func=Album.as_view('album_view'), methods=['GET'])
+# 데이터생성
+app.add_url_rule('/basic', view_func=Data.as_view('data_view'), methods=['GET'])
 
-@app.route('/errorReport')
-def errorReport():
-	return render_template('./errorReport.html')
-
-@app.route('/album')
-def album():
-	return render_template('./album.html')
-
-@app.route('/createData')
-def createData():
-	return render_template('./createData.html')
-
-
-
-
-
-
-
-# test 테이블
-@app.route('/test')	
-def test():
-	r = requests.get('https://api.fureweb.com/spreadsheets/1qQtSrqa7C500EBAr6cMOSfwceybmz3mvQq8Tv2f0CWI')
-	js = json.dumps(r.json())
-	deptName = json.loads(r.text)
-
-	return deptName['data'][1]['a']
-	# return deptName['data'][1]
-
-# 본부 테이블
-@app.route('/dept')
-def dept():
-	r = requests.get('https://api.fureweb.com/spreadsheets/1cVSi29-wfHDJSdtY5o6l1Yhe5Uz370neYaRX8hJH6NA')
-	js = json.dumps(r.json())
-	deptName = json.loads(r.text)
-	return deptName['data'][1]
-	# return deptName['data'][1]['본부명']
-
-# 제트팬 테이블
-@app.route('/jetfan')
-def jetfan():
-	r = requests.get('https://api.fureweb.com/spreadsheets/1Ql-5lAL8G-4bTmMZeJbD74G-DI25G3HpQebE04dFBTY')
-	js = json.dumps(r.json())
-	deptName = json.loads(r.text)
-	# return deptName['data'][1]
-	return deptName['data'][1]['제트팬관리번호']
-
-# 터널 테이블
-@app.route('/tunnel')
-def tunnel():
-	r = requests.get('https://api.fureweb.com/spreadsheets/1zsZaIp1cu1xzgup6OqA4CFXRmLBOjbnP3htxEdUrsa8')
-	js = json.dumps(r.json())
-	deptName = json.loads(r.text)
-	return deptName['data'][66]
-	# return deptName['data'][1]['제트팬관리번호']
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+	app.run(host='0.0.0.0',port=5000,debug=True)
