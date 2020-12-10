@@ -1,4 +1,6 @@
-@table-font: 10pt;
+@basic-font: 13pt;
+@table-padding: 5px 3px;
+
 
 #body-header {
     div:nth-child(n+1):nth-child(-n+2) {
@@ -15,6 +17,7 @@
     select {
         width: 30%;
         margin: 1%;
+        font-size: @basic-font;
     }
 }
 
@@ -22,21 +25,46 @@
     height: 10px;
 }
 
+table {
+    border-collapse: collapse;
+
+    th, td {
+        font-size: @basic-font;
+        padding: @table-padding;
+    }
+}
 
 #contents {
-    h5 {
+
+    #info table {
+        margin-top: 40px;
+        th, td {
+            border: 1px solid #000;
+        }
+
+        th {
+            width: 2%;
+        }
+
+        td {
+            width: 3%;
+            text-align: center;
+        }
+    }
+
+    h3 {
         background-color: lightyellow;
+        margin-top: 40px;
         margin-bottom: 10px;
+        color: #000;
+        text-align: left;
     }
 
     #operation table {
-        border-collapse: collapse;
 
         th, td {
             border: 1px solid #000;
             width: 1%;
-            font-size: @table-font;
-            padding-left: 3px;
         }
 
         tr {
@@ -59,16 +87,12 @@
             border: none;
             width: 100%;
             text-align: right;
+            font-size: @basic-font;
         }
     }
 
 
     #chkAppearance table {
-        border-collapse: collapse;
-
-        th, td {
-            font-size: @table-font;
-        }
 
         th {
             width: 2.2%;
@@ -85,6 +109,7 @@
 
         select {
             width: 100%;
+            font-size: @basic-font;
         }
 
         tr:last-child th,
@@ -96,11 +121,6 @@
 
 
     #useYear table {
-        border-collapse: collapse;
-
-        th, td {
-            font-size: @table-font;
-        }
         
         th {
             width: 2.2%;
@@ -120,6 +140,7 @@
             text-align: right;
             border: none;
             border-bottom: 1px solid #000;
+            font-size: @basic-font;
         }
         
         tr:last-child th,
@@ -131,11 +152,6 @@
 
 
     #useEnv table {
-        border-collapse: collapse;
-
-        th, td {
-            font-size: @table-font;
-        }
         
         th {
             width: 2.2%;
@@ -153,6 +169,7 @@
         select {
             width: 100%;
             text-align: right;
+            font-size: @basic-font;
         }
         
         tr:last-child th,
@@ -169,11 +186,9 @@
     margin-bottom: 20%;
     
     table {
-        border-collapse: collapse;
         margin-bottom: 5%;
 
         th, td {
-            font-size: @table-font;
             border: 1px solid #000;
         }
 
@@ -189,5 +204,6 @@
     button {
         margin: 0 auto;
         width: 35%;
+        font-size: @basic-font;
     }
 }

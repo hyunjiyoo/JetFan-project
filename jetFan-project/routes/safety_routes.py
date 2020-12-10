@@ -8,4 +8,4 @@ import json
 class Safety(MethodView):
 	def get(self):
 
-		return render_template('safetyChk.html', data='')
+		return render_template('inspection.html', data='')

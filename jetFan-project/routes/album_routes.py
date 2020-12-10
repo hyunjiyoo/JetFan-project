@@ -8,5 +8,5 @@ import json
 class Album(MethodView):
 	def get(self):
 
-		return render_template('album.html', data='')
+		return render_template('photo.html', data='')
 

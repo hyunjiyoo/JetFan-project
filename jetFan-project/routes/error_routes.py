@@ -8,5 +8,5 @@ import json
 class Error(MethodView):
 	def get(self):
 
-		return render_template('errorReport.html', data='')
+		return render_template('abnormal.html', data='')
 

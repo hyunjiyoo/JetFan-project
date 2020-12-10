@@ -1,3 +1,6 @@
+* {
+  font-size: 13pt;
+}
 #body-header {
   display: flex;
   justify-content: center;
@@ -20,41 +23,49 @@
 #contents table th,
 #contents table td {
   border: 1px solid #000;
-  font-size: 10pt;
+  padding: 5px 3px;
 }
 #contents #info {
   margin-bottom: 10px;
 }
 #contents #info table th {
   width: 13%;
+  padding: 5px 3px;
 }
 #contents #info table td {
   width: 60%;
+  padding: 5px 3px;
 }
 #contents #chk {
   margin-bottom: 10px;
+}
+#contents #chk table th,
+#contents #chk table td {
+  padding: 5px 3px;
 }
 #contents #chk table td {
   text-align: center;
 }
 #contents #chk table td:first-child {
-  width: 30%;
+  width: 27%;
 }
 #contents #chk table td:first-child input[type='text'] {
   text-align: center;
+  padding: 5px 3px;
 }
 #contents #chk table td:last-child {
-  width: 70%;
+  width: 67%;
 }
 #contents #chk table td:last-child input[type='text'] {
   text-align: left;
+  padding: 5px 3px;
 }
 #contents #chk table td input[type='text'] {
   border: none;
-  width: 100%;
+  width: 97%;
+  padding: 5px 3px;
 }
 .accordion {
-  font-size: 10pt;
   font-weight: bold;
   background-color: lightgray;
   cursor: pointer;
@@ -63,6 +74,7 @@
   border-bottom: 1px solid #000;
   text-align: center;
   transition: 0.4s;
+  padding: 5px 3px;
 }
 .accordion span {
   float: right;
@@ -76,4 +88,8 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+}
+#etc table th,
+#etc table td {
+  padding: 5px 3px;
 }

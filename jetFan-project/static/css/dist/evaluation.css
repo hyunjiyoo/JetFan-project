@@ -10,23 +10,44 @@
 #body-header select {
   width: 30%;
   margin: 1%;
+  font-size: 13pt;
 }
 .gap {
   height: 10px;
 }
-#contents h5 {
-  background-color: lightyellow;
-  margin-bottom: 10px;
-}
-#contents #operation table {
+table {
   border-collapse: collapse;
+}
+table th,
+table td {
+  font-size: 13pt;
+  padding: 5px 3px;
+}
+#contents #info table {
+  margin-top: 40px;
+}
+#contents #info table th,
+#contents #info table td {
+  border: 1px solid #000;
+}
+#contents #info table th {
+  width: 2%;
+}
+#contents #info table td {
+  width: 3%;
+  text-align: center;
+}
+#contents h3 {
+  background-color: lightyellow;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  color: #000;
+  text-align: left;
 }
 #contents #operation table th,
 #contents #operation table td {
   border: 1px solid #000;
   width: 1%;
-  font-size: 10pt;
-  padding-left: 3px;
 }
 #contents #operation table tr th:first-child {
   width: 1.2%;
@@ -43,13 +64,7 @@
   border: none;
   width: 100%;
   text-align: right;
-}
-#contents #chkAppearance table {
-  border-collapse: collapse;
-}
-#contents #chkAppearance table th,
-#contents #chkAppearance table td {
-  font-size: 10pt;
+  font-size: 13pt;
 }
 #contents #chkAppearance table th {
   width: 2.2%;
@@ -64,18 +79,12 @@
 }
 #contents #chkAppearance table select {
   width: 100%;
+  font-size: 13pt;
 }
 #contents #chkAppearance table tr:last-child th,
 #contents #chkAppearance table tr:last-child td {
   text-align: center;
   border: 1px solid #000;
-}
-#contents #useYear table {
-  border-collapse: collapse;
-}
-#contents #useYear table th,
-#contents #useYear table td {
-  font-size: 10pt;
 }
 #contents #useYear table th {
   width: 2.2%;
@@ -93,18 +102,12 @@
   text-align: right;
   border: none;
   border-bottom: 1px solid #000;
+  font-size: 13pt;
 }
 #contents #useYear table tr:last-child th,
 #contents #useYear table tr:last-child td {
   border: 1px solid #000;
   text-align: center;
-}
-#contents #useEnv table {
-  border-collapse: collapse;
-}
-#contents #useEnv table th,
-#contents #useEnv table td {
-  font-size: 10pt;
 }
 #contents #useEnv table th {
   width: 2.2%;
@@ -120,6 +123,7 @@
 #contents #useEnv table select {
   width: 100%;
   text-align: right;
+  font-size: 13pt;
 }
 #contents #useEnv table tr:last-child th,
 #contents #useEnv table tr:last-child td {
@@ -132,12 +136,10 @@
   margin-bottom: 20%;
 }
 #body-footer table {
-  border-collapse: collapse;
   margin-bottom: 5%;
 }
 #body-footer table th,
 #body-footer table td {
-  font-size: 10pt;
   border: 1px solid #000;
 }
 #body-footer table th {
@@ -150,4 +152,5 @@
 #body-footer button {
   margin: 0 auto;
   width: 35%;
+  font-size: 13pt;
 }

@@ -2,11 +2,11 @@
   margin: 12% 8% 0 8%;
   overflow: hidden;
 }
-.body h2 {
+.body h1 {
   margin-top: 5%;
   text-align: center;
 }
-.body h5 {
+.body h4 {
   margin: 10px 0 8% 0;
   text-align: center;
 }
@@ -17,5 +17,5 @@
   margin: 2%;
   width: 37%;
   height: 100px;
-  font-size: 11pt;
+  font-size: 13pt;
 }

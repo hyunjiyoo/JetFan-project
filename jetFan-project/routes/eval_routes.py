@@ -16,4 +16,4 @@ class Eval(MethodView):
 		data={'headquater': headquater['data'],
 			  'tunnel': tunnel['data']}
 
-		return render_template('standardEval.html', data=data)
+		return render_template('evaluation.html', data=data)

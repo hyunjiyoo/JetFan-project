@@ -1,4 +1,5 @@
-@table-font: 10pt;
+@basic-font: 13pt;
+@table-padding: 5px 3px;
 
 #body-header {
     display: flex;
@@ -8,6 +9,8 @@
     select {
         margin: 0 1%;
         width: 25%;
+        font-size: @basic-font;
+        padding: @table-padding;
         &:first-child {
             width: 40%;    
         }
@@ -20,21 +23,25 @@
         width: 100%;
         th, td {
             border: 1px solid #000;
-            font-size: @table-font;
+            font-size: @basic-font;
+            padding: @table-padding;
         }
 
         tr:first-child td {
-            font-size: 11pt;
             font-weight: bold;
             background-color: lightgrey;
         }
         input {
             border: none;
             &.contentInput {
-                width: 97%;
+                width: 96%;
+                font-size: @basic-font;
+                padding: @table-padding;
             }
             &.refInput {
-                width: 82%;
+                width: 80%;
+                font-size: @basic-font;
+                padding: @table-padding;
                 & + button#delBtn {
                     float: right;
                     width: 13%;
@@ -51,11 +58,15 @@
 
         select {
             width: 100%;
+            padding: @table-padding;
+            font-size: @basic-font;
         }
     }
 
     button#submitBtn {
         display: flex;
+        font-size: @basic-font;
+        padding: @table-padding;
         justify-content: center;
         margin: 20px auto 20% auto;
         width: 35%;

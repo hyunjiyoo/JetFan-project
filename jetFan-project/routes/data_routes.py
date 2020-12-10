@@ -8,5 +8,5 @@ import json
 class Data(MethodView):
 	def get(self):
 
-		return render_template('createData.html', data='')
+		return render_template('basic.html', data='')
 

@@ -1,4 +1,5 @@
-@table-font: 10pt;
+@basic-font: 13pt;
+@table-padding: 5px 3px;
 
 #body-header {
     div:nth-child(n+1):nth-child(-n+2) {
@@ -25,9 +26,14 @@ table {
     th, td {
         border: 1px solid #000;
         width: 1%;
-        font-size: @table-font;
-        padding-left: 3px;
+        font-size: @basic-font;
+        padding: @table-padding;
+
     }
+}
+
+select {
+    font-size: @basic-font;
 }
 
 .table-header {
@@ -49,15 +55,19 @@ table {
 }
 
 #curStatusChk input {
-    width: 97%;
+    width: 96%;
     border: none;
+    font-size: @basic-font;
+    padding: @table-padding;
 }
 
 #etc {
     margin-bottom: 20%;
 
     input {
-        width: 95%;
+        width: 94%;
         border: none;
+        font-size: @basic-font;
+        padding: @table-padding;
     }
 }

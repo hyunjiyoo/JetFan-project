@@ -1,8 +1,8 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/standardEval.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/evaluation.css') }}">
 
 {% include 'header.html' %}
 <div class='content-body'>
-    <h4>JetFan 평가표 관리</h4>
+    <h3>JetFan 평가표 관리</h3>
 
     <div id='body-header'>
         <div>
@@ -52,8 +52,30 @@
     </div>
 
     <div id='contents'>
+        <div id="info">
+            <table>
+                <tr>
+                    <th>터널명</th>
+                    <td>장성3터널</td>
+                </tr>
+                <tr>
+                    <th>뱡향</th>
+                    <td>고창</td>
+                </tr>
+                <tr>
+                    <th>차선</th>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <th>제트팬관리번호</th>
+                    <td>101</td>
+                </tr>
+            </table>
+
+        </div>
+
         <div id='operation'>
-            <h5>1. 작동기능 지수</h5>
+            <h3>1. 작동기능 지수</h3>
             <table>
                 <tr>
                     <th></th>
@@ -84,17 +106,21 @@
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
-                    <th>운전전류(A)</th>
+                    <th rowspan='2'>운전전류(A)</th>
                     <th>R</th>
                     <th>S</th>
                     <th>T</th>
                 </tr>
                 <tr>
-                    <td></td>
                     <td><input type="number" name="" id=""></td>
                     <td><input type="number" name="" id=""></td>
                     <td><input type="number" name="" id=""></td>
                 </tr>
+                <tr>
+                    <th>터널온도</th>
+                    <td colspan='3'><input type="number" name="" id=""></td>
+                </tr>
+
                 <tr>
                     <th>모터 운전전류(%)</th>
                     <td colspan='3' class='center'>0.0</td>
@@ -135,7 +161,7 @@
         </div>
 
         <div id='chkAppearance'>
-            <h5>2. 외관점검 지수</h5>
+            <h3>2. 외관점검 지수</h3>
             <table>
                 <tr>
                     <th>(1) 브레이드 이상음 발생여부</th>
@@ -251,7 +277,7 @@
         </div>
 
         <div id='useYear'>
-            <h5>3. 사용연수 지수</h5>
+            <h3>3. 사용연수 지수</h3>
 
             <table>
                 <tr>
@@ -269,7 +295,7 @@
         </div>
 
         <div id='useEnv'>
-            <h5>4. 사용환경(강설일수) 지수</h5>
+            <h3>4. 사용환경(강설일수) 지수</h3>
 
             <table>
                 <tr>

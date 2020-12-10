@@ -1,3 +1,5 @@
+@basic-font: 13pt;
+
 body {
   margin: 0;
   display: flex;
@@ -11,12 +13,14 @@ header {
   display: block;
   position: fixed;
   width: 100%;
-  h4 {
+  h3 {
     color: #fff;
-    padding: 7px 4%;
+    padding: 10px 4%;
     margin-top: 0;
     margin-bottom: 5px;
     background-color: #2d669d;
+    position: relative;
+    z-index: 2;
   }
 
   #menu-ic {
@@ -25,6 +29,7 @@ header {
     right: 4%;
     color: #fff;
     cursor: pointer;
+    z-index: 3;
   }
 
   .sidenav {
@@ -32,20 +37,21 @@ header {
     width: 0;
     position: fixed;
     z-index: 1;
-    top: 35px;
+    top: 0;
     right: 0;
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 20px;
+    padding-top: 60px;
+    z-index: 1;
   
     a {
-      padding: 8px 20px;
+      padding: 12px 20px;
       text-decoration: none;
       color: #818181;
       display: block;
       transition: 0.3s;
-      font-size: 10pt;
+      font-size: @basic-font;
       
       &:hover {
         color: #f1f1f1;
@@ -56,7 +62,7 @@ header {
 
 .content-body {
   margin: 12% 4% 0 4%;
-  h4 {
+  h3 {
     margin-top: 5px;
     text-align: center;
     padding: 5px;
@@ -79,6 +85,7 @@ footer {
   button {
     margin: 2%;
     width: 24%;
+    font-size: @basic-font;
   }
 }
 
