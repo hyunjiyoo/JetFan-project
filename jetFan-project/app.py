@@ -7,6 +7,9 @@ from routes.apitest_routes import TestDept
 from routes.apitest_routes import TestJetfan
 from routes.apitest_routes import TestTunnel
 
+from routes.test2_routes import Test2
+
+
 ## Import routes
 # 평가표 Eval
 from routes.eval_routes import Eval
@@ -41,7 +44,8 @@ app.add_url_rule('/evaluation', view_func=Eval.as_view('eval_view'), methods=['G
 # 안전점검
 app.add_url_rule('/inspection', view_func=Safety.as_view('safety_view'), methods=['GET'])
 # 추적도면
-app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET'])
+app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST'])
+# app.add_url_rule('/trace', view_func=Trace.as_view('test3_view'), methods=['POST'])
 app.add_url_rule('/trace2', view_func=Trace2.as_view('trace2_view'), methods=['GET'])
 # 이상발생보고서
 app.add_url_rule('/abnormal', view_func=Error.as_view('error_view'), methods=['GET'])
@@ -49,6 +53,16 @@ app.add_url_rule('/abnormal', view_func=Error.as_view('error_view'), methods=['G
 app.add_url_rule('/photo', view_func=Album.as_view('album_view'), methods=['GET'])
 # 데이터생성
 app.add_url_rule('/basic', view_func=Data.as_view('data_view'), methods=['GET'])
+
+
+app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET', 'POST'])
+# app.add_url_rule('/post', view_func=Test3.as_view('test3_view'))
+
+# @app.route('/test2')
+# def test2():
+#     return render_template('post.html')
+
+
 
 
 if __name__ == "__main__":

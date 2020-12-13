@@ -24,7 +24,7 @@ class TestTest(MethodView):
 		deptName = json.loads(r.text)
 
 		return deptName['data'][1]['a']
-	# return deptName['data'][1]
+
 
 # 본부 테이블
 class TestDept(MethodView):

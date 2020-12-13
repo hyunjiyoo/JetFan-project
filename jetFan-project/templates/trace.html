@@ -5,40 +5,48 @@
 <div class="content-body">
     <h3>JetFan 추적도면 관리</h3>
 
+    <!-- <meta id='my-data' data-branch='{{ branch }}'> -->
+
     <div id='body-header'>
         <div>
-            <select name="" id="">
-                <option value="">수도권본부</option>
-                <option value="">대전충남본부</option>
-                <option value="">부산경남본부</option>
-                <option value="">광주전남본부</option>
+            <select name="dept" id="dept" onchange='getDeptCode()'>
+                <option value=" 0">본부</option>
+                {% for dept in data['dept'] %}
+                <option value=" {{ dept['div_code'] }}">
+                    {{ dept['div_name'] }}
+                </option>
+                {% endfor %}
             </select>
             
-            <select name="" id="">
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
+            <select name="branch" id="branch">
+                <option value="">지사</option>
             </select>
 
-            <select name="" id="">
-                <option value="">수암</option>
-                <option value="">수암</option>
-                <option value="">수암</option>
-                <option value="">수암</option>
+
+            <select name="tunnel" id="tunnel" onchange='setTunnel()'>
+                {% for tunnel in data['tunnel'] %}
+                <option name='tunn_name' value="{{ tunnel['tunn_name'] }}">
+                    {{ tunnel['tunn_name'] }}
+                </option>
+                {% endfor %}
             </select>
         </div>
 
         <div>
-            <select name="" id="">
-                <option value="">상</option>
-                <option value="">하</option>
+            <select name="" id="select_jetfan_way" onchange='setJetfanWay()'>
+                {% for jetfan in data['jetfan'] %}
+                    <option name='jetfan_way' value="{{ jetfan['jetfan_way'] }}">
+                        {{ jetfan['jetfan_way'] }}
+                    </option>
+                {% endfor %}
             </select>
 
             <select name="" id="">
-                <option value="">좌</option>
-                <option value="">우</option>
+                {% for jetfan in data['jetfan'] %}
+                    <option name='jetfan_lane' value="{{ jetfan['jetfan_lane'] }}">
+                        {{ jetfan['jetfan_lane'] }}
+                    </option>
+                {% endfor %}
             </select>
 
             <select name="" id="">
@@ -62,9 +70,9 @@
                 </tr>
                 <tr>
                     <td class='table-title'>터널명</td>
-                    <td>장성3터널</td>
+                    <td id='tunn_name'></td>
                     <td class='table-title'>방향</td>
-                    <td>고창</td>
+                    <td id='jetfan_way'></td>
                 </tr>
                 <tr>
                     <td class='table-title'>차선</td>
@@ -78,7 +86,7 @@
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>점검자</td>
-                    <td colspan='3'>프라임방재(주)</td>
+                    <td colspan='3'>손정화(개인)</td>
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>점검일자</td>
@@ -150,14 +158,14 @@
                 <tr>
                     <td class='table-header'>현상태점검현황</td>
                 </tr>
+                <!-- <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr> -->
+                <!-- <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
                 <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
                 <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
                 <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
                 <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
                 <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr> -->
             </table>
         </div>
 
@@ -167,12 +175,12 @@
                     <td class='table-header'>비고(기능상태 등)</td>
                 </tr>
                 <tr><td class='table-title'>2019년도</td></tr>
-                <tr><td>1) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <!-- <tr><td>1) <input type="text" name="" id="" maxlength="28"></td></tr>
                 <tr><td>2) <input type="text" name="" id="" maxlength="28"></td></tr>
                 <tr><td>3) <input type="text" name="" id="" maxlength="28"></td></tr>
                 <tr><td>4) <input type="text" name="" id="" maxlength="28"></td></tr>
                 <tr><td>5) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>6) <input type="text" name="" id="" maxlength="28"></td></tr>
+                <tr><td>6) <input type="text" name="" id="" maxlength="28"></td></tr> -->
 
                 <tr><td class='table-title'>2018년도</td></tr>
                 <tr><td>1)</td></tr>
@@ -193,3 +201,55 @@
 </div>
 
 {% include 'footer.html' %}
+<script>
+
+const getDeptCode = () => {
+    const div_code = document.querySelector('#dept').value;
+    
+    console.log('div_code :>> ', div_code);
+    
+    const opt_len = document.querySelectorAll('#branch option').length;
+    if(opt_len > 1) {
+        for(let i = opt_len-1; i > 0; i--) {
+            document.querySelectorAll('#branch option')[i].remove();
+        }
+    }
+
+    const data = { 'div_code': div_code };
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = this.responseText;
+            let branch = data.slice(1,-1).split(',');
+
+            console.log('data :>> ', data);
+            
+            for(let j = 0; j < branch.length; j++) {
+                let opt = document.createElement('option');
+                document.querySelector('#branch').appendChild(opt);
+                opt.innerText = branch[j].trim().slice(1, -1);
+            }
+        }
+    };
+    xhttp.open("POST", "./trace", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
+
+
+
+
+const setTunnel = () => {
+    const tunn_name = document.querySelector('#tunnel').value;
+    document.querySelector('#tunn_name').innerText = tunn_name + '터널';
+}
+
+const setJetfanWay = () => {
+    const jetfan_way = document.querySelector('#select_jetfan_way').value;
+    document.querySelector('#jetfan_way').innerText = jetfan_way;
+}
+
+
+
+
+</script>
