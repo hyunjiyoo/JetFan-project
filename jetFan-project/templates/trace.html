@@ -10,7 +10,7 @@
             <select name="dept" id="dept" onchange='setOptionBox("dept", "branch")'>
                 <option value="0">본부</option>
                 {% for dept in depts %}
-                <option value=" {{ dept['div_code'] }}">
+                <option value="{{ dept['div_code'] }}">
                     {{ dept['div_name'] }}
                 </option>
                 {% endfor %}
@@ -34,13 +34,13 @@
                 <option>차선</option>
             </select>
 
-            <select name="jetfan_no" id="jetfan_no" data-div='jetfan_no'>
+            <select name="jetfan_no" id="jetfan_no" data-div='jetfan_no' onchange='setOptionBox("jetfan_no", "year")'>
                 <option>제트팬</option>
             </select>
         </div>
         <div>
-            <select name="" id="">
-                <option value="">2020</option>
+            <select name="year" id="year" data-div='eval_year'>
+                <option>연도</option>
             </select>
         </div>
     </div>
@@ -61,7 +61,7 @@
                     <td class='table-title'>차선</td>
                     <td id='lane'></td>
                     <td class='table-title'>관리번호</td>
-                    <td>109</td>
+                    <td id='jetfan_name'></td>
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>제조사</td>
@@ -200,7 +200,7 @@ const setOptionBox = (target, targetOption) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let data = this.responseText.slice(1,-1).split(',');
+            let data = this.responseText.slice(1,-1).split(', ');
 
             switch(targetOption) {
                 case 'branch':
@@ -256,16 +256,31 @@ const setOptionBox = (target, targetOption) => {
                     break;
                 
                 case 'jetfan_no':
-                    let jetfan_no = data.filter((x, i, a) => a.indexOf(x) == i);
+                    let jetfan_no = data.filter((elem, i) => i%2===0)
+                                        .filter((x, i, a) => a.indexOf(x) == i);
+                    let jetfan_code = data.filter((elem, i) => i%2===1);
+
                     const lane = document.querySelectorAll('#jetfan_lane option')[document.querySelector('#jetfan_lane').selectedIndex].text;
                     document.querySelector('#lane').innerText = lane + '차선';
-                    console.log('data :>> ', data);
-                    console.log('jetfan_no :>> ', jetfan_no);
 
                     for(let j = 0; j < jetfan_no.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${targetOption}`).appendChild(opt);
                         opt.innerText = jetfan_no[j].replaceAll("'", "");
+                        opt.value = jetfan_code[j];
+                    }
+                    break;
+
+                case 'year':
+                    let eval_year = data.filter((x, i, a) => a.indexOf(x) == i);
+                    
+                    const jetfan_name = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex].text;
+                    document.querySelector('#jetfan_name').innerText = jetfan_name;
+
+                    for(let j = 0; j < eval_year.length; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${targetOption}`).appendChild(opt);
+                        opt.innerText = eval_year[j].replaceAll("'", "");
                     }
                     break;
                 
