@@ -16,49 +16,45 @@ class Trace(MethodView):
 		if request.method == 'POST':
 			dataArr = []
 			value = request.get_json()
-
+			
 			if(value['div'] == 'branch'):
-				r = requests.get('http://api.jetfan.ga:5007/branch')
+				r = requests.get('http://api.jetfan.ga:5007/branch/bran_div_code/' + value['div_code'])
 				branch = json.loads(r.text)
 
 				for item in branch:
-					if(item['bran_div_code'] == int(value['div_code'])):
-						dataArr.append(item['bran_name'])
-						dataArr.append(item['bran_code'])
+					dataArr.append(item['bran_name'])
+					dataArr.append(item['bran_code'])
 
 			elif(value['div'] == 'tunnel'):
-				r = requests.get('http://api.jetfan.ga:5007/tunnel')
+				r = requests.get('http://api.jetfan.ga:5007/tunnel/tunn_bran_code/' + value['div_code'])
 				tunnel = json.loads(r.text)
 
 				for item in tunnel:
-					if(item['tunn_bran_code'] == int(value['div_code'])):
-						dataArr.append(item['tunn_name'])
-						dataArr.append(item['tunn_code'])
+					dataArr.append(item['tunn_name'])
+					dataArr.append(item['tunn_code'])
 
 			elif(value['div'] == 'jetfan_way'):
-				r = requests.get('http://api.jetfan.ga:5007/jetfan')
+				r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
 				jetfan = json.loads(r.text)
 
 				for item in jetfan:
-					if(item['tunn_code'] == int(value['div_code'])):
-						dataArr.append(item['jetfan_way'])
+					dataArr.append(item['jetfan_way'])
 
 			elif(value['div'] == 'jetfan_lane'):
-				r = requests.get('http://api.jetfan.ga:5007/jetfan')
+				r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
 				jetfan = json.loads(r.text)
 
 				for item in jetfan:
-					if(item['tunn_code'] == int(value['div_code'])):
-						dataArr.append(item['jetfan_lane'])
+					dataArr.append(item['jetfan_lane'])
 
 			elif(value['div'] == 'jetfan_no'):
-				r = requests.get('http://api.jetfan.ga:5007/jetfan')
+				r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
 				jetfan = json.loads(r.text)
 
 				for item in jetfan:
-					if(item['tunn_code'] == int(value['div_code'])):
-						dataArr.append(item['jetfan_no'])
-						dataArr.append(item['jetfan_code'])
+					dataArr.append(item['jetfan_no'])
+					dataArr.append(item['jetfan_code'])
+					# dataArr.append(item['jetfan_maker'])
 			
 			elif(value['div'] == 'eval_year'):
 				r = requests.get('http://api.jetfan.ga:5007/evaluation')
@@ -69,6 +65,7 @@ class Trace(MethodView):
 						dataArr.append(item['eval_year'])
 				
 
+			# return str(value)
 			return str(dataArr)
 
 
