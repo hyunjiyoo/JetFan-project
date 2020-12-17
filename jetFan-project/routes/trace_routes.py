@@ -65,9 +65,18 @@ class Trace(MethodView):
 					if(item['eval_jetfan_code'] == int(value['div_code'])):
 						dataArr.append(item['eval_year'])
 						dataArr.append(item['eval_emp'])
+						dataArr.append(item['eval_vibrate_y_1'])
+						dataArr.append(item['eval_vibrate_x_1'])
+						dataArr.append(item['eval_vibrate_z_1'])
+						dataArr.append(item['eval_vibrate_y_2'])
+						dataArr.append(item['eval_vibrate_x_2'])
+						dataArr.append(item['eval_vibrate_z_2'])
+						dataArr.append(item['eval_amp_r'])
+						dataArr.append(item['eval_amp_s'])
+						dataArr.append(item['eval_amp_t'])
+						dataArr.append(item['eval_volt'])
 				
 
-			# return str(value)
 			return str(dataArr)
 
 

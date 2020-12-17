@@ -100,15 +100,15 @@
                 </tr>
                 <tr>
                     <td class='table-title'>①</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class='center' id='eval_vibrate_y_1'></td>
+                    <td class='center' id='eval_vibrate_x_1'></td>
+                    <td class='center' id='eval_vibrate_z_1'></td>
                 </tr>
                 <tr>
                     <td class='table-title'>②</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class='center' id='eval_vibrate_y_2'></td>
+                    <td class='center' id='eval_vibrate_x_2'></td>
+                    <td class='center' id='eval_vibrate_z_2'></td>
                 </tr>
                 <tr>
                     <td class='table-title'>운전 전류</td>
@@ -120,13 +120,13 @@
                 <tr>
                     <td class='table-title'>(A)</td>
                     <td class='table-title'>측정값</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class='center' id='eval_amp_r'></td>
+                    <td class='center' id='eval_amp_s'></td>
+                    <td class='center' id='eval_amp_t'></td>
                 </tr>
                 <tr>
                     <td colspan='2' class='table-title'>전압(V)</td>
-                    <td colspan='3'></td>
+                    <td colspan='3' class='center' id='eval_volt'></td>
                 </tr>
 
             </table>
@@ -197,7 +197,6 @@ const setOptionBox = (target, nextTarget) => {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let data = this.responseText.slice(1,-1).split(', ');
-            // console.log('this.responseText :>> ', this.responseText);
 
             switch(nextTarget) {
                 case 'branch':
@@ -282,14 +281,24 @@ const setOptionBox = (target, nextTarget) => {
                     break;
 
                 case 'year':
-                    const eval_year = data.filter((elem, i) => i%2===0).filter((x, i, a) => a.indexOf(x) == i);
-                    const eval_emp = data.filter((elem, i) => i%2===1).filter((x, i, a) => a.indexOf(x) == i)[0].replaceAll("'", "");
+                    const eval_year = data[0];
+                    const eval_emp = data[1].replaceAll("'", "");
                     const jetfanNoElem = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex];
 
                     document.querySelector('#jetfan_name').innerText = jetfanNoElem.text;
+                    document.querySelector('#eval_emp').innerText = eval_emp;
                     document.querySelector('#jetfan_maker').innerText = jetfanNoElem.dataset.jetfan_maker;
                     document.querySelector('#planImg img').src = './jetfan/2020/' + jetfanNoElem.dataset.jetfan_diagram;
-                    document.querySelector('#eval_emp').innerText = eval_emp;
+                    document.querySelector('#eval_vibrate_y_1').innerText = data[2];
+                    document.querySelector('#eval_vibrate_x_1').innerText = data[3];
+                    document.querySelector('#eval_vibrate_z_1').innerText = data[4];
+                    document.querySelector('#eval_vibrate_y_2').innerText = data[5];
+                    document.querySelector('#eval_vibrate_x_2').innerText = data[6];
+                    document.querySelector('#eval_vibrate_z_2').innerText = data[7];
+                    document.querySelector('#eval_amp_r').innerText = data[8];
+                    document.querySelector('#eval_amp_s').innerText = data[9];
+                    document.querySelector('#eval_amp_t').innerText = data[10];
+                    document.querySelector('#eval_volt').innerText = data[11];
 
                     for(let j = 0; j < eval_year.length; j++) {
                         let opt = document.createElement('option');
