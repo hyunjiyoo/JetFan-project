@@ -65,7 +65,7 @@
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>점검자</td>
-                    <td colspan='3'>손정화(개인)</td>
+                    <td colspan='3' id='eval_emp'></td>
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>점검일자</td>
@@ -197,7 +197,8 @@ const setOptionBox = (target, nextTarget) => {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let data = this.responseText.slice(1,-1).split(', ');
-            console.log('this.responseText :>> ', this.responseText);
+            // console.log('this.responseText :>> ', this.responseText);
+
             switch(nextTarget) {
                 case 'branch':
                     const bran_name = data.filter((elem, i) => i%2===0);
@@ -224,10 +225,10 @@ const setOptionBox = (target, nextTarget) => {
                     break;
                 
                 case 'jetfan_way':
+                    const jetfan_way = data.filter((x, i, a) => a.indexOf(x) == i);
                     const tunnel_name = document.querySelectorAll('#tunnel option')[document.querySelector('#tunnel').selectedIndex].text;
                     document.querySelector('#tunn_name').innerText = tunnel_name + '터널';
                     
-                    const jetfan_way = data.filter((x, i, a) => a.indexOf(x) == i);
                     for(let j = 0; j < jetfan_way.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
@@ -236,10 +237,10 @@ const setOptionBox = (target, nextTarget) => {
                     break;
                 
                 case 'jetfan_lane':
+                    const jetfan_lane = data.filter((x, i, a) => a.indexOf(x) == i);
                     const way = document.querySelectorAll('#jetfan_way option')[document.querySelector('#jetfan_way').selectedIndex].text;
                     document.querySelector('#way').innerText = way + '방향';
                     
-                    const jetfan_lane = data.filter((x, i, a) => a.indexOf(x) == i);
                     for(let j = 0; j < jetfan_lane.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
@@ -248,29 +249,53 @@ const setOptionBox = (target, nextTarget) => {
                     break;
                 
                 case 'jetfan_no':
-                    const lane = document.querySelectorAll('#jetfan_lane option')[document.querySelector('#jetfan_lane').selectedIndex].text;
-                    document.querySelector('#lane').innerText = lane + '차선';
+                    let jetfan_no = data.filter((elem, i) => i%4===0).filter((x, i, a) => a.indexOf(x) == i);
+                    const jetfan_code = data.filter((elem, i) => i%4===1);
+                    const jetfan_maker = data.filter((elem, i) => i%4===2).filter((x, i, a) => a.indexOf(x) == i)[0].replaceAll("'", "");
+                    const jetfan_diagram = data.filter((elem, i) => i%4===3);
+
+                    const jetfanLaneElem = document.querySelectorAll('#jetfan_lane option')[document.querySelector('#jetfan_lane').selectedIndex];
+                    document.querySelector('#lane').innerText = jetfanLaneElem.text + '차선';
                     
-                    const jetfan_no = data.filter((elem, i) => i%2===0).filter((x, i, a) => a.indexOf(x) == i);
-                    const jetfan_code = data.filter((elem, i) => i%2===1);
+                    if(jetfanLaneElem.text === '주행') {
+                        jetfan_no = jetfan_no.filter((jetfan)=>jetfan.includes('JF-1'))
+                    } else {
+                        jetfan_no = jetfan_no.filter((jetfan)=>jetfan.includes('JF-2'))
+                        
+                        let j = 0;
+                        for(let i = jetfan_no.length+1; i < jetfan_code.length; i++) {
+                            jetfan_code[j] = jetfan_code[i];
+                            jetfan_diagram[j] = jetfan_diagram[i];
+                            j++;
+                        }
+                    }
 
                     for(let j = 0; j < jetfan_no.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
                         opt.innerText = jetfan_no[j].replaceAll("'", "");
                         opt.value = jetfan_code[j];
+                        opt.dataset.jetfan_maker = jetfan_maker;
+                        opt.dataset.jetfan_diagram = jetfan_diagram[j].replaceAll("'", "");
                     }
+                    
                     break;
 
                 case 'year':
-                    const jetfan_name = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex].text;
-                    document.querySelector('#jetfan_name').innerText = jetfan_name;
+                    const eval_year = data.filter((elem, i) => i%2===0).filter((x, i, a) => a.indexOf(x) == i);
+                    const eval_emp = data.filter((elem, i) => i%2===1).filter((x, i, a) => a.indexOf(x) == i)[0].replaceAll("'", "");
+                    const jetfanNoElem = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex];
 
-                    const eval_year = data.filter((x, i, a) => a.indexOf(x) == i);
+                    document.querySelector('#jetfan_name').innerText = jetfanNoElem.text;
+                    document.querySelector('#jetfan_maker').innerText = jetfanNoElem.dataset.jetfan_maker;
+                    document.querySelector('#planImg img').src = './jetfan/2020/' + jetfanNoElem.dataset.jetfan_diagram;
+                    document.querySelector('#eval_emp').innerText = eval_emp;
+
                     for(let j = 0; j < eval_year.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
                         opt.innerText = eval_year[j].replaceAll("'", "");
+
                     }
                     break;
                 

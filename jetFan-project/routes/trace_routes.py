@@ -54,7 +54,8 @@ class Trace(MethodView):
 				for item in jetfan:
 					dataArr.append(item['jetfan_no'])
 					dataArr.append(item['jetfan_code'])
-					# dataArr.append(item['jetfan_maker'])
+					dataArr.append(item['jetfan_maker'])
+					dataArr.append(item['jetfan_diagram'])
 			
 			elif(value['div'] == 'eval_year'):
 				r = requests.get('http://api.jetfan.ga:5007/evaluation')
@@ -63,6 +64,7 @@ class Trace(MethodView):
 				for item in year:
 					if(item['eval_jetfan_code'] == int(value['div_code'])):
 						dataArr.append(item['eval_year'])
+						dataArr.append(item['eval_emp'])
 				
 
 			# return str(value)
