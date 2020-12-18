@@ -55,3 +55,11 @@ select {
   font-size: 13pt;
   padding: 5px 3px;
 }
+#inputBtn {
+  margin: 0 auto;
+  width: 35%;
+  font-size: 13pt;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}

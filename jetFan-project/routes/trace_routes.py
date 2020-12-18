@@ -65,6 +65,7 @@ class Trace(MethodView):
 					if(item['eval_jetfan_code'] == int(value['div_code'])):
 						dataArr.append(item['eval_year'])
 						dataArr.append(item['eval_emp'])
+						dataArr.append(item['eval_ymd'])
 						dataArr.append(item['eval_vibrate_y_1'])
 						dataArr.append(item['eval_vibrate_x_1'])
 						dataArr.append(item['eval_vibrate_z_1'])

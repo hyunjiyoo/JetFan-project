@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <td colspan='1' class='table-title'>점검일자</td>
-                    <td colspan='3'>2019.06.24</td>
+                    <td colspan='3' id='eval_ymd'></td>
                 </tr>
             </table>
 
@@ -137,14 +137,14 @@
                 <tr>
                     <td class='table-header'>현상태점검현황</td>
                 </tr>
-                <!-- <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr> -->
-                <!-- <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" id="" maxlength="40"></td></tr> -->
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
             </table>
         </div>
 
@@ -154,12 +154,12 @@
                     <td class='table-header'>비고(기능상태 등)</td>
                 </tr>
                 <tr><td class='table-title'>2019년도</td></tr>
-                <!-- <tr><td>1) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>2) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>3) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>4) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>5) <input type="text" name="" id="" maxlength="28"></td></tr>
-                <tr><td>6) <input type="text" name="" id="" maxlength="28"></td></tr> -->
+                <tr><td>1) <input type="text" name="" maxlength="28"></td></tr>
+                <tr><td>2) <input type="text" name="" maxlength="28"></td></tr>
+                <tr><td>3) <input type="text" name="" maxlength="28"></td></tr>
+                <tr><td>4) <input type="text" name="" maxlength="28"></td></tr>
+                <tr><td>5) <input type="text" name="" maxlength="28"></td></tr>
+                <tr><td>6) <input type="text" name="" maxlength="28"></td></tr>
 
                 <tr><td class='table-title'>2018년도</td></tr>
                 <tr><td>1)</td></tr>
@@ -175,9 +175,12 @@
                 <tr><td>4)</td></tr>
                 <tr><td>5)</td></tr>
             </table>
+            <button id='inputBtn' type='button'>입력</button>
         </div>
     </div>
 </div>
+
+
 
 {% include 'footer.html' %}
 <script>
@@ -281,30 +284,31 @@ const setOptionBox = (target, nextTarget) => {
                     break;
 
                 case 'year':
-                    const eval_year = data[0];
+                    const eval_year = data[0].split(', ');
                     const eval_emp = data[1].replaceAll("'", "");
+                    const eval_ymd = data[2].replaceAll("'", "").slice(0, 10);
                     const jetfanNoElem = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex];
 
                     document.querySelector('#jetfan_name').innerText = jetfanNoElem.text;
                     document.querySelector('#eval_emp').innerText = eval_emp;
+                    document.querySelector('#eval_ymd').innerText = eval_ymd;
                     document.querySelector('#jetfan_maker').innerText = jetfanNoElem.dataset.jetfan_maker;
                     document.querySelector('#planImg img').src = './jetfan/2020/' + jetfanNoElem.dataset.jetfan_diagram;
-                    document.querySelector('#eval_vibrate_y_1').innerText = data[2];
-                    document.querySelector('#eval_vibrate_x_1').innerText = data[3];
-                    document.querySelector('#eval_vibrate_z_1').innerText = data[4];
-                    document.querySelector('#eval_vibrate_y_2').innerText = data[5];
-                    document.querySelector('#eval_vibrate_x_2').innerText = data[6];
-                    document.querySelector('#eval_vibrate_z_2').innerText = data[7];
-                    document.querySelector('#eval_amp_r').innerText = data[8];
-                    document.querySelector('#eval_amp_s').innerText = data[9];
-                    document.querySelector('#eval_amp_t').innerText = data[10];
-                    document.querySelector('#eval_volt').innerText = data[11];
+                    document.querySelector('#eval_vibrate_y_1').innerText = data[3];
+                    document.querySelector('#eval_vibrate_x_1').innerText = data[4];
+                    document.querySelector('#eval_vibrate_z_1').innerText = data[5];
+                    document.querySelector('#eval_vibrate_y_2').innerText = data[6];
+                    document.querySelector('#eval_vibrate_x_2').innerText = data[7];
+                    document.querySelector('#eval_vibrate_z_2').innerText = data[8];
+                    document.querySelector('#eval_amp_r').innerText = data[9];
+                    document.querySelector('#eval_amp_s').innerText = data[10];
+                    document.querySelector('#eval_amp_t').innerText = data[11];
+                    document.querySelector('#eval_volt').innerText = data[12];
 
                     for(let j = 0; j < eval_year.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
                         opt.innerText = eval_year[j].replaceAll("'", "");
-
                     }
                     break;
                 
