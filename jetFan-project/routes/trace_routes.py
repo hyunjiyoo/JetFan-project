@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import render_template, request
 
+import datetime
 import requests
 import json
 
@@ -10,7 +11,7 @@ class Trace(MethodView):
 		if request.method == 'GET':
 			r = requests.get('http://api.jetfan.ga:5007/division')
 			depts = json.loads(r.text)
-			return render_template('trace.html', depts=depts)
+			return render_template('trace.html', depts=depts, today_date= datetime.date.today())
 	
 	def post(self):
 		if request.method == 'POST':
@@ -78,15 +79,42 @@ class Trace(MethodView):
 						dataArr.append(item['eval_volt'])
 				
 			elif(value['div'] == 'curStatusChk'):
-				r = requests.get('http://api.jetfan.ga:5007/trace-check')
-				trace_check = json.loads(r.text)
-				# dataArr = trace_check
+				trace_chk_r = requests.get('http://api.jetfan.ga:5007/trace-check')
+				trace_note_r = requests.get('http://api.jetfan.ga:5007/trace-note')
+				trace_check = json.loads(trace_chk_r.text)
+				trace_note = json.loads(trace_note_r.text)
+				
+				checkArr = []
+				noteArr1 = []
+				noteArr2 = []
+				noteArr3 = []
+				curYear = datetime.date.today().year
 				for item in trace_check:
 					if(item['tc_jetfan_code'] == int(value['div_code'])):
-						dataArr.append(item['tc_seq'])
-						dataArr.append(item['tc_content'])
+						checkArr.append(item['tc_seq'])
+						checkArr.append(item['tc_content'])
+				
+				for item in trace_note:
+					if(item['tn_jetfan_code'] == int(value['div_code'])):
+						if(int(item['tn_year']) == curYear):
+							noteArr1.append(item['tn_year'])
+							noteArr1.append(item['tn_seq'])
+							noteArr1.append(item['tn_content'])
+						elif(int(item['tn_year']) == curYear-1):
+							noteArr2.append(item['tn_year'])
+							noteArr2.append(item['tn_seq'])
+							noteArr2.append(item['tn_content'])
+						elif(int(item['tn_year']) == curYear-2):
+							noteArr3.append(item['tn_year'])
+							noteArr3.append(item['tn_seq'])
+							noteArr3.append(item['tn_content'])
 
-			return str(dataArr)
+				dataArr.append(checkArr)
+				dataArr.append(noteArr1)
+				dataArr.append(noteArr2)
+				dataArr.append(noteArr3)
+
+			return json.dumps(dataArr)
 
 
 class Trace2(MethodView):

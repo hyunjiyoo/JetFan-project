@@ -84,19 +84,19 @@
                     <td colspan='5' class='table-header'>운전점검</td>
                 </tr>
                 <tr>
-                    <td rowspan='5' colspan='1' class='table-title'>진동<br>(K.S 기준 6mm/sec이하)</td>
-                    <td colspan='4' class='table-title'>턴버클 & FAN 안정판 체결부위<br>(대당 2Point)</td>
+                    <td rowspan='5' colspan='1' class='table-title'>진동</td>
+                    <td colspan='4' class='table-title'>턴버클 & FAN 안정판 체결부위</td>
                 </tr>
                 <tr>
                     <td rowspan='2' class='table-title'>구분</td>
-                    <td class='table-title'>Vertical</td>
-                    <td class='table-title'>Horizontal</td>
-                    <td class='table-title'>Axial</td>
+                    <td class='table-title'>V</td>
+                    <td class='table-title'>H</td>
+                    <td class='table-title'>A</td>
                 </tr>
                 <tr>
-                    <td class='table-title'>수직방향</td>
-                    <td class='table-title'>수평방향</td>
-                    <td class='table-title'>축방향</td>
+                    <td class='table-title'>수직</td>
+                    <td class='table-title'>수평</td>
+                    <td class='table-title'>축</td>
                 </tr>
                 <tr>
                     <td class='table-title'>①</td>
@@ -140,30 +140,7 @@
 
         <div id='etc'>
             <table>
-                <tr>
-                    <td class='table-header'>비고(기능상태 등)</td>
-                </tr>
-                <tr><td class='table-title'>2019년도</td></tr>
-                <tr><td>1) <input type="text" name="" maxlength="28"></td></tr>
-                <tr><td>2) <input type="text" name="" maxlength="28"></td></tr>
-                <tr><td>3) <input type="text" name="" maxlength="28"></td></tr>
-                <tr><td>4) <input type="text" name="" maxlength="28"></td></tr>
-                <tr><td>5) <input type="text" name="" maxlength="28"></td></tr>
-                <tr><td>6) <input type="text" name="" maxlength="28"></td></tr>
-
-                <tr><td class='table-title'>2018년도</td></tr>
-                <tr><td>1)</td></tr>
-                <tr><td>2)</td></tr>
-                <tr><td>3)</td></tr>
-                <tr><td>4)</td></tr>
-                <tr><td>5)</td></tr>
-
-                <tr><td class='table-title'>2017년도</td></tr>
-                <tr><td>1)</td></tr>
-                <tr><td>2)</td></tr>
-                <tr><td>3)</td></tr>
-                <tr><td>4)</td></tr>
-                <tr><td>5)</td></tr>
+                <tr><td class='table-header'>비고(기능상태 등)</td></tr>
             </table>
             <button id='inputBtn' type='button'>입력</button>
         </div>
@@ -175,6 +152,7 @@
 {% include 'footer.html' %}
 <script>
 
+// 콤보박스 세팅
 const setOptionBox = (target, nextTarget) => {
     const opt = document.querySelectorAll(`#${nextTarget} option`);
     if(opt.length > 1) {
@@ -189,8 +167,8 @@ const setOptionBox = (target, nextTarget) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            let data = this.responseText.slice(1,-1).split(', ');
-
+            let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
             switch(nextTarget) {
                 case 'branch':
                     const bran_name = data.filter((elem, i) => i%2===0);
@@ -199,7 +177,7 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < data.length/2; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = bran_name[j].replaceAll("'", "");
+                        opt.innerText = bran_name[j];
                         opt.value = bran_code[j];
                     }
                     break;
@@ -211,7 +189,7 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < data.length/2; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = tunn_name[j].replaceAll("'", "");
+                        opt.innerText = tunn_name[j];
                         opt.value = tunn_code[j];
                     }
                     break;
@@ -224,7 +202,7 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < jetfan_way.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = jetfan_way[j].replaceAll("'", "");
+                        opt.innerText = jetfan_way[j];
                     }
                     break;
                 
@@ -236,14 +214,14 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < jetfan_lane.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = jetfan_lane[j].replaceAll("'", "");
+                        opt.innerText = jetfan_lane[j];
                     }
                     break;
                 
                 case 'jetfan_no':
                     let jetfan_no = data.filter((elem, i) => i%4===0).filter((x, i, a) => a.indexOf(x) == i);
                     const jetfan_code = data.filter((elem, i) => i%4===1);
-                    const jetfan_maker = data.filter((elem, i) => i%4===2).filter((x, i, a) => a.indexOf(x) == i)[0].replaceAll("'", "");
+                    const jetfan_maker = data.filter((elem, i) => i%4===2).filter((x, i, a) => a.indexOf(x) == i)[0];
                     const jetfan_diagram = data.filter((elem, i) => i%4===3);
 
                     const jetfanLaneElem = document.querySelectorAll('#jetfan_lane option')[document.querySelector('#jetfan_lane').selectedIndex];
@@ -265,18 +243,18 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < jetfan_no.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = jetfan_no[j].replaceAll("'", "");
+                        opt.innerText = jetfan_no[j];
                         opt.value = jetfan_code[j];
                         opt.dataset.jetfan_maker = jetfan_maker;
-                        opt.dataset.jetfan_diagram = jetfan_diagram[j].replaceAll("'", "");
+                        opt.dataset.jetfan_diagram = jetfan_diagram[j];
                     }
                     
                     break;
 
                 case 'year':
                     const eval_year = data[0].split(', ');
-                    const eval_emp = data[1].replaceAll("'", "");
-                    const eval_ymd = data[2].replaceAll("'", "").slice(0, 10);
+                    const eval_emp = data[1];
+                    const eval_ymd = data[2].slice(0, 10);
                     const jetfanNoElem = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex];
 
                     document.querySelector('#jetfan_name').innerText = jetfanNoElem.text;
@@ -284,6 +262,8 @@ const setOptionBox = (target, nextTarget) => {
                     document.querySelector('#eval_ymd').innerText = eval_ymd;
                     document.querySelector('#jetfan_maker').innerText = jetfanNoElem.dataset.jetfan_maker;
                     document.querySelector('#planImg img').src = './jetfan/2020/' + jetfanNoElem.dataset.jetfan_diagram;
+                    
+                    // 운전 점검
                     document.querySelector('#eval_vibrate_y_1').innerText = data[3];
                     document.querySelector('#eval_vibrate_x_1').innerText = data[4];
                     document.querySelector('#eval_vibrate_z_1').innerText = data[5];
@@ -298,8 +278,9 @@ const setOptionBox = (target, nextTarget) => {
                     for(let j = 0; j < eval_year.length; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = eval_year[j].replaceAll("'", "");
+                        opt.innerText = eval_year[j];
                     }
+
                     break;
                 
             }
@@ -321,22 +302,64 @@ const setStatusChk = () => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState === 4 && this.status === 200) {
-            let data = this.responseText.slice(1,-1).split(', ');
-            const tc_seq = data.filter((elem, i) => i%2===0);
-            const tc_content = data.filter((elem, i) => i%2===1);
+            let data = JSON.parse(this.responseText);
 
-            const table = document.querySelector('#curStatusChk table');
+            // 현 상태 점검 현황
+            const tc_seq = data[0].filter((elem, i) => i%2===0);
+            const tc_content = data[0].filter((elem, i) => i%2===1);
+            const chkTbl = document.querySelector('#curStatusChk table');
             for(let i = 0; i < tc_content.length; i++) {
                 let tr = document.createElement('tr');
                 let td = document.createElement('td');
                 let input = document.createElement('input');
-                table.appendChild(tr);
+                chkTbl.appendChild(tr);
                 tr.appendChild(td);
                 td.appendChild(input);
                 input.type = 'text';
                 input.maxLength = 40;
-                input.value = tc_content[i].replaceAll("'", "");
+                input.value = tc_content[i];
             }
+
+            
+            // 비고 데이터
+            const setNoteArr = (arr, opt) => {
+                const tn_year = arr.filter((elem, i) => i%3===0);
+                const tn_seq = arr.filter((elem, i) => i%3===1);
+                const tn_content = arr.filter((elem, i) => i%3===2);
+
+                const etcTbl = document.querySelector('#etc table');
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                etcTbl.appendChild(tr);
+                tr.appendChild(td);
+                td.className = 'table-title';
+                td.innerText = tn_year[0].replaceAll("'", "") + '년도';
+
+                for(let i = 0; i < tn_content.length; i++) {
+                    let tr = document.createElement('tr');
+                    let td = document.createElement('td');
+                    etcTbl.appendChild(tr);
+                    tr.appendChild(td);
+                    switch(opt) {
+                        case 'noteCurYear':
+                            let input = document.createElement('input');
+                            td.appendChild(input);
+                            input.type = 'text';
+                            input.maxLength = 28;
+                            input.value = tn_content[i];
+                            break;
+                        
+                        case 'noteOneYearAgo':
+                        case 'noteTowYearAgo':
+                            td.innerText = tn_content[i];
+                            break;
+                    }
+                }
+            }
+
+            setNoteArr(data[1], 'noteCurYear');
+            setNoteArr(data[2], 'noteOneYearAgo');
+            setNoteArr(data[3], 'noteTowYearAgo');
         }
     }
 
