@@ -46,7 +46,6 @@ app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), metho
 app.add_url_rule('/inspection', view_func=Safety.as_view('inspection_view'), methods=['GET'])
 # 추적도면
 app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST'])
-# app.add_url_rule('/trace', view_func=Trace.as_view('test3_view'), methods=['POST'])
 app.add_url_rule('/trace2', view_func=Trace2.as_view('trace2_view'), methods=['GET'])
 # 이상발생보고서
 app.add_url_rule('/abnormal', view_func=Error.as_view('abnormal_view'), methods=['GET'])

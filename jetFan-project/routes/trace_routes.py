@@ -77,6 +77,14 @@ class Trace(MethodView):
 						dataArr.append(item['eval_amp_t'])
 						dataArr.append(item['eval_volt'])
 				
+			elif(value['div'] == 'curStatusChk'):
+				r = requests.get('http://api.jetfan.ga:5007/trace-check')
+				trace_check = json.loads(r.text)
+				# dataArr = trace_check
+				for item in trace_check:
+					if(item['tc_jetfan_code'] == int(value['div_code'])):
+						dataArr.append(item['tc_seq'])
+						dataArr.append(item['tc_content'])
 
 			return str(dataArr)
 

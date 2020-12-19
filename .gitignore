@@ -1,1 +1,6 @@
-*.txt
+.vscode
+/jetfan-project/routes/__pycache__
+/jetfan-project/static/jetfan
+
+/jetfan-project/routes/test2_routes.py
+/jetfan-project/templates/post.html

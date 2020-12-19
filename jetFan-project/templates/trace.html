@@ -35,7 +35,7 @@
             </select>
         </div>
         <div>
-            <select name="year" id="year" data-div='eval_year'>
+            <select name="year" id="year" data-div='eval_year' onchange='setStatusChk()'>
                 <option value="0">연도</option>
             </select>
         </div>
@@ -132,19 +132,9 @@
             </table>
         </div>
 
-        <div id="curStatusChk">
+        <div id="curStatusChk" data-div='curStatusChk'>
             <table>
-                <tr>
-                    <td class='table-header'>현상태점검현황</td>
-                </tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
-                <tr><td>- <input type="text" name="" maxlength="40"></td></tr>
+                <tr><td class='table-header'>현상태점검현황</td></tr>
             </table>
         </div>
 
@@ -198,7 +188,7 @@ const setOptionBox = (target, nextTarget) => {
     const data = { 'div_code': _target.value, 'div': _nextTarget.dataset.div };
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             let data = this.responseText.slice(1,-1).split(', ');
 
             switch(nextTarget) {
@@ -314,7 +304,7 @@ const setOptionBox = (target, nextTarget) => {
                 
             }
         }
-    };
+    }
 
     xhttp.open("POST", "/trace", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -323,9 +313,36 @@ const setOptionBox = (target, nextTarget) => {
 
 
 
-const setJetfanWay = () => {
-    const jetfan_way = document.querySelector('#select_jetfan_way').value;
-    document.querySelector('#jetfan_way').innerText = jetfan_way;
+const setStatusChk = () => {
+    const curStatusChk = document.querySelector('#curStatusChk');
+    const jetfan_no = document.querySelector('#jetfan_no');
+    
+    const data = { 'div_code': jetfan_no.value, 'div': curStatusChk.dataset.div };
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState === 4 && this.status === 200) {
+            let data = this.responseText.slice(1,-1).split(', ');
+            const tc_seq = data.filter((elem, i) => i%2===0);
+            const tc_content = data.filter((elem, i) => i%2===1);
+
+            const table = document.querySelector('#curStatusChk table');
+            for(let i = 0; i < tc_content.length; i++) {
+                let tr = document.createElement('tr');
+                let td = document.createElement('td');
+                let input = document.createElement('input');
+                table.appendChild(tr);
+                tr.appendChild(td);
+                td.appendChild(input);
+                input.type = 'text';
+                input.maxLength = 40;
+                input.value = tc_content[i].replaceAll("'", "");
+            }
+        }
+    }
+
+    xhttp.open('POST', '/trace', true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
 }
 
 </script>
