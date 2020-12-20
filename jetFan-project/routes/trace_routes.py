@@ -40,13 +40,7 @@ class Trace(MethodView):
 
 				for item in jetfan:
 					dataArr.append(item['jetfan_way'])
-
-			elif(value['div'] == 'jetfan_lane'):
-				r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
-				jetfan = json.loads(r.text)
-
-				for item in jetfan:
-					dataArr.append(item['jetfan_lane'])
+				dataArr = list(set(dataArr))
 
 			elif(value['div'] == 'jetfan_no'):
 				r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
@@ -55,7 +49,6 @@ class Trace(MethodView):
 				for item in jetfan:
 					dataArr.append(item['jetfan_no'])
 					dataArr.append(item['jetfan_code'])
-					dataArr.append(item['jetfan_maker'])
 					dataArr.append(item['jetfan_diagram'])
 			
 			elif(value['div'] == 'eval_year'):
@@ -65,6 +58,11 @@ class Trace(MethodView):
 				for item in year:
 					if(item['eval_jetfan_code'] == int(value['div_code'])):
 						dataArr.append(item['eval_year'])
+						dataArr.append(item['tunn_name'])
+						dataArr.append(item['jetfan_way'])
+						dataArr.append(item['jetfan_lane'])
+						dataArr.append(item['jetfan_no'])
+						dataArr.append(item['jetfan_maker'])
 						dataArr.append(item['eval_emp'])
 						dataArr.append(item['eval_ymd'])
 						dataArr.append(item['eval_vibrate_y_1'])
@@ -85,9 +83,9 @@ class Trace(MethodView):
 				trace_note = json.loads(trace_note_r.text)
 				
 				checkArr = []
-				noteArr1 = []
-				noteArr2 = []
-				noteArr3 = []
+				noteCurYear = []
+				noteOneYearAgo = []
+				noteTowYearAgo = []
 				curYear = datetime.date.today().year
 				for item in trace_check:
 					if(item['tc_jetfan_code'] == int(value['div_code'])):
@@ -97,22 +95,22 @@ class Trace(MethodView):
 				for item in trace_note:
 					if(item['tn_jetfan_code'] == int(value['div_code'])):
 						if(int(item['tn_year']) == curYear):
-							noteArr1.append(item['tn_year'])
-							noteArr1.append(item['tn_seq'])
-							noteArr1.append(item['tn_content'])
+							noteCurYear.append(item['tn_year'])
+							noteCurYear.append(item['tn_seq'])
+							noteCurYear.append(item['tn_content'])
 						elif(int(item['tn_year']) == curYear-1):
-							noteArr2.append(item['tn_year'])
-							noteArr2.append(item['tn_seq'])
-							noteArr2.append(item['tn_content'])
+							noteOneYearAgo.append(item['tn_year'])
+							noteOneYearAgo.append(item['tn_seq'])
+							noteOneYearAgo.append(item['tn_content'])
 						elif(int(item['tn_year']) == curYear-2):
-							noteArr3.append(item['tn_year'])
-							noteArr3.append(item['tn_seq'])
-							noteArr3.append(item['tn_content'])
+							noteTowYearAgo.append(item['tn_year'])
+							noteTowYearAgo.append(item['tn_seq'])
+							noteTowYearAgo.append(item['tn_content'])
 
 				dataArr.append(checkArr)
-				dataArr.append(noteArr1)
-				dataArr.append(noteArr2)
-				dataArr.append(noteArr3)
+				dataArr.append(noteCurYear)
+				dataArr.append(noteOneYearAgo)
+				dataArr.append(noteTowYearAgo)
 
 			return json.dumps(dataArr)
 

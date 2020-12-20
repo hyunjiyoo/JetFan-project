@@ -1,11 +1,36 @@
-#body-header div:nth-child(n+1):nth-child(-n+2) {
+#body-header div:first-child {
+  display: flex;
+  margin-right: auto;
+  margin-left: 2%;
+}
+#body-header div:first-child > div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 23px;
+  width: 30%;
+}
+#body-header div:first-child > div span {
+  width: 35%;
+  height: 20px;
+  background: green;
+  margin-left: 10%;
+}
+#body-header div:nth-child(2) {
   display: flex;
   justify-content: center;
 }
 #body-header div:last-child {
   display: flex;
-  margin-right: auto;
-  margin-left: 2%;
+  justify-content: center;
+}
+#body-header div:last-child > div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 28.5%;
+  margin: 1%;
+  padding-left: 1.5%;
 }
 #body-header select {
   width: 30%;

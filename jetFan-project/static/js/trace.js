@@ -1,0 +1,203 @@
+
+// 콤보박스 세팅
+const setOptionBox = (target, nextTarget) => {
+    const opt = document.querySelectorAll(`#${nextTarget} option`);
+    if(opt.length > 1) {
+        for(let i = opt.length-1; i > 0; i--) {
+            opt[i].remove();
+        }
+    }
+
+    const _target = document.querySelector(`#${target}`);
+    const _nextTarget = document.querySelector(`#${nextTarget}`);
+    const data = { 'div_code': _target.value, 'div': _nextTarget.dataset.div };
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
+            switch(nextTarget) {
+                case 'branch':
+                    const bran_name = data.filter((elem, i) => i%2===0);
+                    const bran_code = data.filter((elem, i) => i%2===1);
+        
+                    for(let j = 0; j < data.length/2; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${nextTarget}`).appendChild(opt);
+                        opt.innerText = bran_name[j];
+                        opt.value = bran_code[j];
+                    }
+                    break;
+                
+                case 'tunnel':
+                    const tunn_name = data.filter((elem, i) => i%2===0);
+                    const tunn_code = data.filter((elem, i) => i%2===1);
+
+                    for(let j = 0; j < data.length/2; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${nextTarget}`).appendChild(opt);
+                        opt.innerText = tunn_name[j];
+                        opt.value = tunn_code[j];
+                    }
+                    break;
+                
+                case 'jetfan_way':
+                    const jetfan_way = data.filter((x, i, a) => a.indexOf(x) == i);
+                    
+                    for(let j = 0; j < jetfan_way.length; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${nextTarget}`).appendChild(opt);
+                        opt.innerText = jetfan_way[j];
+                    }
+                    break;
+                
+                // case 'jetfan_lane':
+                //     const jetfan_lane = data.filter((x, i, a) => a.indexOf(x) == i);
+                //     const way = document.querySelectorAll('#jetfan_way option')[document.querySelector('#jetfan_way').selectedIndex].text;
+                //     document.querySelector('#way').innerText = way + '방향';
+                    
+                //     for(let j = 0; j < jetfan_lane.length; j++) {
+                //         let opt = document.createElement('option');
+                //         document.querySelector(`#${nextTarget}`).appendChild(opt);
+                //         opt.innerText = jetfan_lane[j];
+                //     }
+                //     break;
+                
+                case 'jetfan_no':
+                    const jetfan_no = data.filter((elem, i) => i%3===0);
+                    const jetfan_code = data.filter((elem, i) => i%3===1);
+                    const jetfan_diagram = data.filter((elem, i) => i%3===2);
+                    console.log('data :>> ', data);
+
+                    for(let j = 0; j < jetfan_no.length; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${nextTarget}`).appendChild(opt);
+                        opt.innerText = jetfan_no[j];
+                        opt.value = jetfan_code[j];
+                        opt.dataset.diagram = jetfan_diagram[j];
+                    }
+                    
+                    break;
+
+                case 'year':
+                    console.log('data :>> ', data);
+                    const jetfan_img = document.querySelectorAll('#jetfan_no option')[document.querySelector('#jetfan_no').selectedIndex].dataset.diagram;
+                    const eval_year = data[0].split(', ');
+
+                    document.querySelector('#tunn_name').innerText = data[1];
+                    document.querySelector('#way').innerText = data[2];
+                    document.querySelector('#lane').innerText = data[3];
+                    document.querySelector('#jetfan_lane').innerText = data[3];
+                    document.querySelector('#jetfan_name').innerText = data[4];
+                    document.querySelector('#jetfan_maker').innerText = data[5];
+                    document.querySelector('#eval_emp').innerText = data[6];
+                    document.querySelector('#eval_ymd').innerText = data[7].slice(0, 10);
+                    document.querySelector('#planImg img').src = './jetfan/2020/' + jetfan_img;
+                    
+                    // 운전 점검
+
+                    document.querySelector('#eval_vibrate_y_1').innerText = data[8];
+                    document.querySelector('#eval_vibrate_x_1').innerText = data[9];
+                    document.querySelector('#eval_vibrate_z_1').innerText = data[10];
+                    document.querySelector('#eval_vibrate_y_2').innerText = data[11];
+                    document.querySelector('#eval_vibrate_x_2').innerText = data[12];
+                    document.querySelector('#eval_vibrate_z_2').innerText = data[13];
+                    document.querySelector('#eval_amp_r').innerText = data[14];
+                    document.querySelector('#eval_amp_s').innerText = data[15];
+                    document.querySelector('#eval_amp_t').innerText = data[16];
+                    document.querySelector('#eval_volt').innerText = data[17];
+
+                    for(let j = 0; j < eval_year.length; j++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#${nextTarget}`).appendChild(opt);
+                        opt.innerText = eval_year[j];
+                    }
+
+                    break;
+                
+            }
+        }
+    }
+
+    xhttp.open("POST", "/trace", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
+
+
+
+const setStatusChk = () => {
+    const curStatusChk = document.querySelector('#curStatusChk');
+    const jetfan_no = document.querySelector('#jetfan_no');
+    
+    const data = { 'div_code': jetfan_no.value, 'div': curStatusChk.dataset.div };
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+
+            // 현 상태 점검 현황
+            const tc_seq = data[0].filter((elem, i) => i%2===0);
+            const tc_content = data[0].filter((elem, i) => i%2===1);
+            const chkTbl = document.querySelector('#curStatusChk table');
+            for(let i = 0; i < tc_content.length; i++) {
+                let tr = document.createElement('tr');
+                let td = document.createElement('td');
+                let input = document.createElement('input');
+                chkTbl.appendChild(tr);
+                tr.appendChild(td);
+                td.appendChild(input);
+                input.type = 'text';
+                input.maxLength = 40;
+                input.value = tc_content[i];
+            }
+
+            
+            // 비고 데이터
+            const setNoteArr = (arr, opt) => {
+                const tn_year = arr.filter((elem, i) => i%3===0);
+                const tn_seq = arr.filter((elem, i) => i%3===1);
+                const tn_content = arr.filter((elem, i) => i%3===2);
+
+                const etcTbl = document.querySelector('#etc table');
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                etcTbl.appendChild(tr);
+                tr.appendChild(td);
+                td.className = 'table-title';
+                td.innerText = tn_year[0].replaceAll("'", "") + '년도';
+
+                for(let i = 0; i < tn_content.length; i++) {
+                    let tr = document.createElement('tr');
+                    let td = document.createElement('td');
+                    etcTbl.appendChild(tr);
+                    tr.appendChild(td);
+                    switch(opt) {
+                        case 'noteCurYear':
+                            let input = document.createElement('input');
+                            td.appendChild(input);
+                            input.type = 'text';
+                            input.maxLength = 28;
+                            input.value = tn_content[i];
+                            break;
+                        
+                        case 'noteOneYearAgo':
+                        case 'noteTowYearAgo':
+                            td.innerText = tn_content[i];
+                            break;
+                    }
+                }
+            }
+
+
+            setNoteArr(data[1], 'noteCurYear');
+            setNoteArr(data[2], 'noteOneYearAgo');
+            setNoteArr(data[3], 'noteTowYearAgo');
+        }
+    }
+
+    xhttp.open('POST', '/trace', true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
