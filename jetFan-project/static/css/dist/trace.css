@@ -3,18 +3,25 @@
   margin-right: auto;
   margin-left: 2%;
 }
-#body-header div:first-child > div {
+#body-header div:first-child > #eval_update {
   display: flex;
   justify-content: left;
   align-items: center;
   margin-left: 23px;
-  width: 30%;
+  width: 12%;
 }
-#body-header div:first-child > div span {
-  width: 35%;
+#body-header div:first-child > span {
+  width: 15%;
   height: 20px;
   background: green;
-  margin-left: 10%;
+  margin-top: 1%;
+}
+#body-header div:first-child > #user {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 13px;
+  width: 12%;
 }
 #body-header div:nth-child(2) {
   display: flex;

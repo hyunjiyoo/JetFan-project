@@ -12,6 +12,8 @@ from routes.test2_routes import Test2, Test3
 
 
 ## Import routes
+# 콤보박스
+from routes.combo_routes import Combo
 # 평가표 Eval
 from routes.eval_routes import Eval
 # 추적도면 Trace
@@ -40,6 +42,8 @@ app.add_url_rule('/dept', view_func=TestDept.as_view('dept_view'), methods=['GET
 app.add_url_rule('/jetfan', view_func=TestJetfan.as_view('jetfan_view'), methods=['GET'])
 app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods=['GET'])
 
+# 콤보박스
+app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
 # 평가표
 app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), methods=['GET'])
 # 안전점검
