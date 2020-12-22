@@ -1,0 +1,45 @@
+#body-header div:first-child {
+  display: flex;
+  margin-right: auto;
+  margin-left: 2%;
+}
+#body-header div:first-child > #eval_update {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 23px;
+  width: 12%;
+}
+#body-header div:first-child > span {
+  width: 15%;
+  height: 20px;
+  background: green;
+  margin-top: 1%;
+}
+#body-header div:first-child > #user {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 13px;
+  width: 12%;
+}
+#body-header div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}
+#body-header div:last-child {
+  display: flex;
+  justify-content: center;
+}
+#body-header div:last-child > div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 28.5%;
+  margin: 1%;
+  padding-left: 1.5%;
+}
+#body-header select {
+  width: 30%;
+  margin: 1%;
+}

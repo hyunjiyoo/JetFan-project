@@ -1,55 +1,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/evaluation.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/combo.css') }}">
+<script src="{{ url_for('static', filename='js/combo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/evaluation.js') }}"></script>
 
 {% include 'header.html' %}
 <div class='content-body'>
     <h3>JetFan 평가표 관리</h3>
 
-    <div id='body-header'>
-        <div>
-            <select name="" id="">
-                {% for i in range(data['headquater'] | length) %}
-                    <option value="">{{ data['headquater'][i]['본부명'] }}</option>
-                {% endfor %}
-            </select>
-            
-            <select name="" id="">
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
-                <option value="">군포</option>
-            </select>
-
-            <select name="" id="">
-                {% for i in range(data['tunnel'] | length) %}
-                    <option value="">{{ data['tunnel'][i]['터널명'] }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div>
-            <select name="" id="">
-                <option value="">상</option>
-                <option value="">하</option>
-            </select>
-
-            <select name="" id="">
-                <option value="">좌</option>
-                <option value="">우</option>
-            </select>
-
-            <select name="" id="">
-                <option value="">101</option>
-                <option value="">101</option>
-                <option value="">101</option>
-            </select>
-        </div>
-        <div>
-            <select name="" id="">
-                <option value="">2020</option>
-            </select>
-        </div>
-    </div>
+    {% include 'combo.html' %}
 
     <div id='contents'>
         <div id="info">

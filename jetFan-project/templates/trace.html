@@ -1,50 +1,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/trace.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/combo.css') }}">
 <script src="{{ url_for('static', filename='js/combo.js') }}"></script>
 <script src="{{ url_for('static', filename='js/trace.js') }}"></script>
 
 {% include 'header.html' %}
-    
+
 <div class="content-body">
     <h3>JetFan 추적도면 관리</h3>
-    <div id='body-header'>
-        <div>
-            <select name="year" id="year" data-div='eval_year' onchange='setStatusChk()'>
-                <option value="0">연도</option>
-                {% for year in years %}
-                <option>{{ year }}</option>
-                {% endfor %}
-            </select>
-            <div id='eval_update'>횟수</div>
-            <span></span>
-            <div id='user'></div>
-        </div>
-        <div>
-            <select name="dept" id="dept" onchange='setComboBox("dept", "branch")'>
-                <option value="0">본부</option>
-                {% for dept in depts %}
-                <option value="{{ dept['div_code'] }}">
-                    {{ dept['div_name'] }}
-                </option>
-                {% endfor %}
-            </select>
-            <select name="branch" id="branch" onchange='setComboBox("branch", "tunnel")' data-div='branch'>
-                <option value="0">지사</option>
-            </select>
-            <select name="tunnel" id="tunnel" onchange='setComboBox("tunnel", "jetfan_way")' data-div='tunnel'>
-                <option value="0">터널</option>
-            </select>
-        </div>
-
-        <div>
-            <select name="jetfan_way" id="jetfan_way" onchange='setComboBox("tunnel", "jetfan_no")' data-div='jetfan_way'>
-                <option value="0">방향</option>
-            </select>
-            <select name="jetfan_no" id="jetfan_no" data-div='jetfan_no' onchange='setJetfanData()'>
-                <option value="0">제트팬</option>
-            </select>
-            <div id="jetfan_lane"></div>
-        </div>
-    </div>
+    
+    {% include 'combo.html' %}
 
     <div id="contents">
         <div id="history">

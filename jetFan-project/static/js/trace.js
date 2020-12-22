@@ -6,9 +6,8 @@ const setJetfanData = () => {
         }
     }
 
-    const target = document.querySelector('#jetfan_no');
-    const nextTarget = document.querySelector('#year');
-    const data = { 'div_code': target.value, 'div': nextTarget.dataset.div };
+    const jetfan_no = document.querySelector('#jetfan_no');
+    const data = { 'div_code': jetfan_no.value };
     const xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
@@ -16,7 +15,7 @@ const setJetfanData = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
      
-            const jetfan_img = document.querySelectorAll('#jetfan_no option')[target.selectedIndex].dataset.diagram;
+            const jetfan_img = document.querySelectorAll('#jetfan_no option')[jetfan_no.selectedIndex].dataset.diagram;
             const eval_year = data[0].split(', ');
 
             // 시설 이력
@@ -43,11 +42,11 @@ const setJetfanData = () => {
             document.querySelector('#eval_amp_t').innerText = data[16];
             document.querySelector('#eval_volt').innerText = data[17];
 
-            document.querySelector('#eval_update').innerText = data[18];
+            // document.querySelector('#eval_update').innerText = data[18];
 
             for(let j = 0; j < eval_year.length; j++) {
                 let opt = document.createElement('option');
-                nextTarget.appendChild(opt);
+                document.querySelector('#year').appendChild(opt);
                 opt.innerText = eval_year[j];
             }
         }
@@ -60,10 +59,8 @@ const setJetfanData = () => {
 
 
 const setStatusChk = () => {
-    const curStatusChk = document.querySelector('#curStatusChk');
-    const jetfan_no = document.querySelector('#jetfan_no');
-    
-    const data = { 'div_code': jetfan_no.value, 'div': curStatusChk.dataset.div };
+    const data = { 'div_code': document.querySelector('#jetfan_no').value };
+
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if(this.readyState === 4 && this.status === 200) {
@@ -122,14 +119,13 @@ const setStatusChk = () => {
                 }
             }
 
-
             setNoteArr(data[1], 'noteCurYear');
             setNoteArr(data[2], 'noteOneYearAgo');
             setNoteArr(data[3], 'noteTowYearAgo');
         }
     }
 
-    xhttp.open('POST', '/trace', true);
+    xhttp.open('POST', '/setStatusChk', true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
 }
