@@ -26,22 +26,16 @@ class Combo(MethodView):
 				dataArr.append(item['tunn_name'])
 				dataArr.append(item['tunn_code'])
 
-		elif(value['div'] == 'jetfan_way'):
-			r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
-			jetfan = json.loads(r.text)
-
-			for item in jetfan:
-				dataArr.append(item['jetfan_way'])
-			dataArr = list(set(dataArr))
-
 		elif(value['div'] == 'jetfan_no'):
 			r = requests.get('http://api.jetfan.ga:5007/jetfan/tunn_code/' + value['div_code'])
 			jetfan = json.loads(r.text)
 
 			for item in jetfan:
 				dataArr.append(item['jetfan_no'])
-				dataArr.append(item['jetfan_way'])
 				dataArr.append(item['jetfan_code'])
-				dataArr.append(item['jetfan_diagram'])
+				dataArr.append(item['jetfan_way'])
+				
+	
+		
 
 		return json.dumps(dataArr)

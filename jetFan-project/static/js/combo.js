@@ -1,8 +1,8 @@
 // 콤보박스 세팅
 const setComboBox = (target, nextTarget) => {
     const opt = document.querySelectorAll(`#${nextTarget} option`);
-    if(opt.length > 1) {
-        for(let i = opt.length-1; i > 0; i--) {
+    if(opt.length) {
+        for(let i = opt.length-1; i >= 0; i--) {
             opt[i].remove();
         }
     }
@@ -41,36 +41,28 @@ const setComboBox = (target, nextTarget) => {
                     }
                     break;
                 
-                case 'jetfan_way':
-                    const jetfan_way = data.filter((x, i, a) => a.indexOf(x) == i);
-                    
-                    for(let j = 0; j < jetfan_way.length; j++) {
-                        let opt = document.createElement('option');
-                        document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = jetfan_way[j];
-                    }
-                    break;
-                
                 case 'jetfan_no':
-                    const ways = data.filter((elem, i) => i%4===1);
-                    const selectWay = document.querySelectorAll('#jetfan_way option')[document.querySelector('#jetfan_way').selectedIndex].text;
-                    let jetfan_no = data.filter((elem, i) => i%4===0);
-                    let jetfan_code = data.filter((elem, i) => i%4===2);
-                    let jetfan_diagram = data.filter((elem, i) => i%4===3);
+                    const jetfan_no = data.filter((elem, i) => i%3===0);
+                    const jetfan_code = data.filter((elem, i) => i%3===1);
+                    const jetfan_way = data.filter((elem, i) => i%3===2).filter((x, i, a) => a.indexOf(x) == i);;
 
-                    jetfan_no = jetfan_no.filter((elem, i)=>{ if(ways[i] === selectWay) return jetfan_no[i]; });
-                    jetfan_code = jetfan_code.filter((elem, i)=>{ if(ways[i] === selectWay) return jetfan_code[i]; });
-                    jetfan_diagram = jetfan_diagram.filter((elem, i)=>{ if(ways[i] === selectWay) return jetfan_diagram[i]; });
 
-                    for(let j = jetfan_no.length-1; j >= 0; j--) {
+                    console.log('jetfan_way :>> ', jetfan_way);
+
+                    // 방향
+                    document.querySelector('#wayOption1 + label').innerText = jetfan_way[0] ?? '방향';
+                    document.querySelector('#wayOption2 + label').innerText = jetfan_way[1] ?? '방향';
+
+                    for(let j = 0; j < data.length/3; j++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
-                        opt.innerText = jetfan_no[jetfan_no.length-1-j];
-                        opt.value = jetfan_code[jetfan_no.length-1-j];
-                        opt.dataset.diagram = jetfan_diagram[jetfan_no.length-1-j];
+                        opt.innerText = jetfan_no[j];
+                        opt.value = jetfan_code[j];
                     }
                     
                     break;
+
+                
             }
         }
     }

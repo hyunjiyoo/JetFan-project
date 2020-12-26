@@ -1,45 +1,22 @@
-#body-header div:first-child {
-  display: flex;
-  margin-right: auto;
-  margin-left: 2%;
+#body-header table tr td {
+  border: none;
 }
-#body-header div:first-child > #eval_update {
+#body-header table tr td:first-child {
+  width: 1.5%;
+}
+#body-header table tr td:nth-child(2) {
+  width: 0.3%;
+}
+#body-header table tr td .wayBox {
   display: flex;
-  justify-content: left;
   align-items: center;
-  margin-left: 23px;
-  width: 12%;
 }
-#body-header div:first-child > span {
-  width: 15%;
-  height: 20px;
-  background: green;
-  margin-top: 1%;
+#body-header table tr td input[type='radio'] {
+  width: 20px;
 }
-#body-header div:first-child > #user {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  margin-left: 13px;
-  width: 12%;
-}
-#body-header div:nth-child(2) {
-  display: flex;
-  justify-content: center;
-}
-#body-header div:last-child {
-  display: flex;
-  justify-content: center;
-}
-#body-header div:last-child > div {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 28.5%;
-  margin: 1%;
-  padding-left: 1.5%;
-}
-#body-header select {
-  width: 30%;
-  margin: 1%;
+#body-header table input,
+#body-header table select,
+#body-header table button#search,
+#body-header table button#select {
+  width: 100%;
 }

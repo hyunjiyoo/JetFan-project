@@ -7,9 +7,11 @@ const setJetfanData = () => {
     }
 
     const jetfan_no = document.querySelector('#jetfan_no');
-    const data = { 'div_code': jetfan_no.value };
-    const xhttp = new XMLHttpRequest();
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#eval_update').value;
+    const data = { 'div_code': jetfan_no.value, 'year': year , 'year_no': year_no };
 
+    const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
@@ -59,7 +61,10 @@ const setJetfanData = () => {
 
 
 const setStatusChk = () => {
-    const data = { 'div_code': document.querySelector('#jetfan_no').value };
+    const jetfan_no = document.querySelector('#jetfan_no').value;
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#eval_update').value;
+    const data = { 'div_code': jetfan_no, 'year': year , 'year_no': year_no };
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

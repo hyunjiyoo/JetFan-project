@@ -1,7 +1,10 @@
 .vscode
+/jetfan-project/__pycache__
 /jetfan-project/routes/__pycache__
 /jetfan-project/static/js/dist
 /jetfan-project/static/jetfan
+
+/jetfan-project/logs
 
 /jetfan-project/routes/test2_routes.py
 /jetfan-project/templates/post.html

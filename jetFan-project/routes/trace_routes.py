@@ -5,6 +5,8 @@ import datetime
 import requests
 import json
 
+import log
+
 # 추적도면 GET
 # 추적도면 POST : 시설이력, 운전점검
 class traceSetJetfanData(MethodView):
@@ -25,10 +27,12 @@ class traceSetJetfanData(MethodView):
 		dataArr = []
 		value = request.get_json()
 		
-		r = requests.get('http://api.jetfan.ga:5007/evaluation')
+		url_name = 'http://api.jetfan.ga:5007/evaluation/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
+		r = requests.get(url_name)
 		year = json.loads(r.text)
 
 		for item in year:
+			log.log("trace_routes : eval_jetfan_code-->", item['eval_jetfan_code']) 
 			if(item['eval_jetfan_code'] == int(value['div_code'])):
 				dataArr.append(item['eval_year'])
 				dataArr.append(item['tunn_name'])
@@ -59,8 +63,12 @@ class traceSetStatusChk(MethodView):
 		dataArr = []
 		value = request.get_json()
 
-		trace_chk_r = requests.get('http://api.jetfan.ga:5007/trace-check')
-		trace_note_r = requests.get('http://api.jetfan.ga:5007/trace-note')
+		url_name_chk = 'http://api.jetfan.ga:5007/trace-check/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
+		url_name_note = 'http://api.jetfan.ga:5007/trace-note/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
+
+		trace_chk_r = requests.get(url_name_chk)
+		trace_note_r = requests.get(url_name_note)
+		
 		trace_check = json.loads(trace_chk_r.text)
 		trace_note = json.loads(trace_note_r.text)
 		
@@ -70,11 +78,14 @@ class traceSetStatusChk(MethodView):
 		noteTowYearAgo = []
 		curYear = datetime.date.today().year
 		for item in trace_check:
+			log.log("trace_routes3 : tc_jetfan_code-->", item['tc_jetfan_code']) 
 			if(item['tc_jetfan_code'] == int(value['div_code'])):
 				checkArr.append(item['tc_seq'])
 				checkArr.append(item['tc_content'])
 		
 		for item in trace_note:
+			log.log("trace_routes3 : tn_jetfan_code-->", item['tn_jetfan_code']) 
+			log.log("trace_routes3 : tn_year-->", item['tn_year']) 
 			if(item['tn_jetfan_code'] == int(value['div_code'])):
 				if(int(item['tn_year']) == curYear):
 					noteCurYear.append(item['tn_year'])
