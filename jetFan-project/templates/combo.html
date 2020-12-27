@@ -30,17 +30,18 @@
         </tr>
         <tr>
             <td>
-                <input type="text" placeholder="터널명 입력">
+                <input id='tunn_name' type="text" placeholder="터널명 입력">
             </td>
             <td>
-                <button type='button' id='search'>검색</button>
+                <button type='button' id='search' onclick='searchTunnel()'>검색</button>
             </td>
             <td rowspan=3>
                 <select multiple name="tunnel" id="tunnel" onchange='setComboBox("tunnel", "jetfan_no")' data-div='tunnel'>
                 </select>
             </td>
             <td rowspan=3>
-                <select multiple name="jetfan_no" id="jetfan_no" data-div='jetfan_no' onchange='setJetfanData()'>
+                <!-- <select multiple name="jetfan_no" id="jetfan_no" onchange='setComboBox("jetfan_no","jetfan_way")' data-div='jetfan_no'> -->
+                <select multiple name="jetfan_no" id="jetfan_no"  data-div='jetfan_no'>
                 </select>
             </td>
         </tr>
@@ -55,8 +56,8 @@
                 </select>
             </td>
             <td>
-                <div class='wayBox'>
-                    <input type="radio" id='wayOption1' name='way'>
+                <div class='jetfan_way'>
+                    <input type="radio" id='wayOption1' name='way' onchange='getWayOption("wayOption1")'>
                     <label for="wayOption1">방향</label>
                 </div>
             </td>
@@ -67,65 +68,16 @@
                 </select>
             </td>
             <td>
-                <div class='wayBox'>
-                    <input type="radio" id='wayOption2' name='way'>
+                <div class='jetfan_way'>
+                    <input type="radio" id='wayOption2' name='way' onchange='getWayOption("wayOption2")'>
                     <label for="wayOption2">방향</label>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan='4'>
-                <button type='button' id='select'>데이터 조회</button>
+                <button type='button' id='select' onclick='setData()'>데이터 조회</button>
             </td>
         </tr>
     </table>
-
-    <!-- <div>
-        <select name="year" id="year" data-div='eval_year' onchange='setStatusChk()'>
-            {% for year in years %}
-            <option>{{ year }}</option>
-            {% endfor %}
-        </select>
-        <select id="eval_update">
-            <option value="0">횟수</option>
-            <option value="1" selected >1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-        </select>
-        <span>
-            <span>●</span>
-            <span>●</span>
-        </span>
-        <div id='user'>손정화</div>
-    </div> -->
-
-
-    <!-- <div>
-        <select name="dept" id="dept" onchange='setComboBox("dept", "branch")'>
-            <option value="0">본부</option>
-            {% for dept in depts %}
-            <option value="{{ dept['div_code'] }}">
-                {{ dept['div_name'] }}
-            </option>
-            {% endfor %}
-        </select>
-        <select name="branch" id="branch" onchange='setComboBox("branch", "tunnel")' data-div='branch'>
-            <option value="0">지사</option>
-        </select>
-        <select name="tunnel" id="tunnel" onchange='setComboBox("tunnel", "jetfan_way")' data-div='tunnel'>
-            <option value="0">터널</option>
-        </select>
-    </div> -->
-
-    <!-- <div>
-        <select name="jetfan_way" id="jetfan_way" onchange='setComboBox("tunnel", "jetfan_no")' data-div='jetfan_way'>
-            <option value="0">방향</option>
-        </select>
-        <select name="jetfan_no" id="jetfan_no" data-div='jetfan_no' onchange='setJetfanData()'>
-            <option value="0">제트팬</option>
-        </select>
-        <div id="jetfan_lane"></div>
-    </div> -->
-
-    
 </div>

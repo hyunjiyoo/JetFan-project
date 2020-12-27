@@ -1,4 +1,5 @@
-const setJetfanData = () => {
+const setData = () => {
+
     const opt = document.querySelectorAll('#year option');
     if(opt.length > 1) {
         for(let i = opt.length-1; i > 0; i--) {
@@ -16,7 +17,7 @@ const setJetfanData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
-     
+        
             const jetfan_img = document.querySelectorAll('#jetfan_no option')[jetfan_no.selectedIndex].dataset.diagram;
             const eval_year = data[0].split(', ');
 
@@ -24,7 +25,6 @@ const setJetfanData = () => {
             document.querySelector('#tunn_name').innerText = data[1];
             document.querySelector('#way').innerText = data[2];
             document.querySelector('#lane').innerText = data[3];
-            document.querySelector('#jetfan_lane').innerText = data[3];
             document.querySelector('#jetfan_name').innerText = data[4];
             document.querySelector('#jetfan_maker').innerText = data[5];
             document.querySelector('#eval_emp').innerText = data[6];
@@ -44,6 +44,8 @@ const setJetfanData = () => {
             document.querySelector('#eval_amp_t').innerText = data[16];
             document.querySelector('#eval_volt').innerText = data[17];
 
+            // console.log('data[18] :>> ', data[18]);
+
             // document.querySelector('#eval_update').innerText = data[18];
 
             for(let j = 0; j < eval_year.length; j++) {
@@ -57,10 +59,10 @@ const setJetfanData = () => {
     xhttp.open("POST", "/trace", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
-}
+};
 
 
-const setStatusChk = () => {
+const Data = () => {
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#eval_update').value;

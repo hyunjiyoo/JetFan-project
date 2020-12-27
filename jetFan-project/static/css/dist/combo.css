@@ -7,7 +7,7 @@
 #body-header table tr td:nth-child(2) {
   width: 0.3%;
 }
-#body-header table tr td .wayBox {
+#body-header table tr td .jetfan_way {
   display: flex;
   align-items: center;
 }

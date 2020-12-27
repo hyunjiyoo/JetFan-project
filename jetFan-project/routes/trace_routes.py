@@ -26,14 +26,15 @@ class traceSetJetfanData(MethodView):
 	def post(self):
 		dataArr = []
 		value = request.get_json()
-		
-		url_name = 'http://api.jetfan.ga:5007/evaluation/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
-		r = requests.get(url_name)
-		year = json.loads(r.text)
+		jetfan_no = value['div_code']
+
+		url_status = 'http://api.jetfan.ga:5007/evaluation/' + jetfan_no + '/' + value['year'] + '/' + value['year_no']
+		trace_status_r = requests.get(url_status)
+		year = json.loads(trace_status_r.text)
 
 		for item in year:
 			log.log("trace_routes : eval_jetfan_code-->", item['eval_jetfan_code']) 
-			if(item['eval_jetfan_code'] == int(value['div_code'])):
+			if(item['eval_jetfan_code'] == int(jetfan_no)):
 				dataArr.append(item['eval_year'])
 				dataArr.append(item['tunn_name'])
 				dataArr.append(item['jetfan_way'])
@@ -53,6 +54,12 @@ class traceSetJetfanData(MethodView):
 				dataArr.append(item['eval_amp_t'])
 				dataArr.append(item['eval_volt'])
 				dataArr.append(item['eval_update'])
+				# dataArr.append(item['jetfan_diagram'])
+
+
+
+
+		
 
 		return json.dumps(dataArr)
 
