@@ -46,7 +46,15 @@ const setComboBox = (target, nextTarget) => {
                     const jetfan_code = data.filter((elem, i) => i%3===1);
                     const jetfan_way = data.filter((elem, i) => i%3===2).filter((x, i, a) => a.indexOf(x) == i);;
 
-                    // 방향
+                    // 방향 체크되어있으면 체크해제
+                    if(document.querySelector('#wayOption1').checked) {
+                        document.querySelector('#wayOption1').checked = false;
+                    }
+                    if(document.querySelector('#wayOption2').checked) {
+                        document.querySelector('#wayOption2').checked = false;
+                    }
+
+                    // 방향 데이터 가져오기
                     document.querySelector('#wayOption1 + label').innerText = jetfan_way[0] ?? '방향';
                     document.querySelector('#wayOption2 + label').innerText = jetfan_way[1] ?? '방향';
 

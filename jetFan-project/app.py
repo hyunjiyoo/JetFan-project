@@ -61,9 +61,6 @@ app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET'
 # app.add_url_rule('/test2', view_func=Test2.as_view('test3_view'), methods=['GET', 'POST'])
 app.add_url_rule('/test3', view_func=Test3.as_view('test3_view'), methods=['POST'])
 
-# @app.route('/test2')
-# def test2():
-#     return render_template('post.html')
 
 
 

@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template
+from flask import render_template, request
 
 import datetime
 import requests
@@ -20,4 +20,13 @@ class Eval(MethodView):
 
 		return render_template('evaluation.html', depts=depts, years= years)
 	
-	# def post(self):
+	def post(self):
+		dataArr = []
+		value = request.get_json()
+
+		# 기본 정보
+		r = requests.get('http://api.jetfan.ga:5007/jetfan/jetfan_code/' + value['jetfan_code'])
+		basic_info = json.loads(r.text)
+		dataArr = basic_info[0]
+
+		return json.dumps(dataArr)

@@ -1,9 +1,16 @@
-#body-header {
+@basic-font: 13pt;
+@table-padding: 5px 3px;
 
+#body-header {
     table {
+        margin: 20px auto;
+        border-collapse: collapse;
         tr {
             td {
                 border: none;
+                width: 1%;
+                font-size: @basic-font;
+                padding: @table-padding;
 
                 &:first-child {
                     width: 1.5%;
@@ -27,6 +34,9 @@
         input, select, button#search, button#select {
             width: 100%;
         }
+    }
 
+    select {
+        font-size: @basic-font;
     }
 }

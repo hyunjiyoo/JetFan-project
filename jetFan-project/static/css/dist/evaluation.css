@@ -1,28 +1,3 @@
-#body-header div:nth-child(n+1):nth-child(-n+2) {
-  display: flex;
-  justify-content: center;
-}
-#body-header div:last-child {
-  display: flex;
-  margin-right: auto;
-  margin-left: 2%;
-}
-#body-header select {
-  width: 30%;
-  margin: 1%;
-  font-size: 13pt;
-}
-.gap {
-  height: 10px;
-}
-table {
-  border-collapse: collapse;
-}
-table th,
-table td {
-  font-size: 13pt;
-  padding: 5px 3px;
-}
 #contents #info table {
   margin-top: 40px;
 }

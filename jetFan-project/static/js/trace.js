@@ -1,4 +1,4 @@
-const setData = () => {
+const getData = () => {
 
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;

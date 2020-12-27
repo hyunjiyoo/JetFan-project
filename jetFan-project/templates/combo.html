@@ -20,9 +20,9 @@
                     <option value="3">3</option>
                 </select>
             </td>
-            <td>
-                <span style='color: green;'><b>○</b></span>
-                <span style='color: red;'><b>○</b></span>
+            <td >
+                <span id='greenCircle' style='color: green;'><b>○</b></span>
+                <span id='redCircle' style='color: red;'><b>●</b></span>
             </td>
             <td>
                 <div id='user'>손정화</div>
@@ -40,7 +40,6 @@
                 </select>
             </td>
             <td rowspan=3>
-                <!-- <select multiple name="jetfan_no" id="jetfan_no" onchange='setComboBox("jetfan_no","jetfan_way")' data-div='jetfan_no'> -->
                 <select multiple name="jetfan_no" id="jetfan_no"  data-div='jetfan_no'>
                 </select>
             </td>
@@ -76,7 +75,7 @@
         </tr>
         <tr>
             <td colspan='4'>
-                <button type='button' id='select' onclick='setData()'>데이터 조회</button>
+                <button type='button' id='select' onclick='getData()'>데이터 조회</button>
             </td>
         </tr>
     </table>

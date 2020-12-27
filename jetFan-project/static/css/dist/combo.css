@@ -1,5 +1,12 @@
+#body-header table {
+  margin: 20px auto;
+  border-collapse: collapse;
+}
 #body-header table tr td {
   border: none;
+  width: 1%;
+  font-size: 13pt;
+  padding: 5px 3px;
 }
 #body-header table tr td:first-child {
   width: 1.5%;
@@ -19,4 +26,7 @@
 #body-header table button#search,
 #body-header table button#select {
   width: 100%;
+}
+#body-header select {
+  font-size: 13pt;
 }
