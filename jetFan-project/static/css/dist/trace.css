@@ -42,6 +42,10 @@ select {
   font-size: 13pt;
   padding: 5px 3px;
 }
+#etc .noteOneYearAgo,
+#etc .noteTowYearAgo {
+  height: 30px;
+}
 #inputBtn {
   margin: 0 auto;
   width: 35%;

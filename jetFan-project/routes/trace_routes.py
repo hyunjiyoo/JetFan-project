@@ -9,7 +9,7 @@ import log
 
 # 추적도면 GET
 # 추적도면 POST : 시설이력, 운전점검
-class traceSetJetfanData(MethodView):
+class Trace(MethodView):
 	def get(self):
 		r = requests.get('http://api.jetfan.ga:5007/division')
 		depts = json.loads(r.text)
@@ -26,88 +26,52 @@ class traceSetJetfanData(MethodView):
 	def post(self):
 		dataArr = []
 		value = request.get_json()
-		jetfan_no = value['div_code']
 
-		url_status = 'http://api.jetfan.ga:5007/evaluation/' + jetfan_no + '/' + value['year'] + '/' + value['year_no']
+		# 시설이력 및 운전점검
+		url_status = 'http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 		trace_status_r = requests.get(url_status)
-		year = json.loads(trace_status_r.text)
+		evaluation = json.loads(trace_status_r.text)
 
-		for item in year:
-			log.log("trace_routes : eval_jetfan_code-->", item['eval_jetfan_code']) 
-			if(item['eval_jetfan_code'] == int(jetfan_no)):
-				dataArr.append(item['eval_year'])
-				dataArr.append(item['tunn_name'])
-				dataArr.append(item['jetfan_way'])
-				dataArr.append(item['jetfan_lane'])
-				dataArr.append(item['jetfan_no'])
-				dataArr.append(item['jetfan_maker'])
-				dataArr.append(item['eval_emp'])
-				dataArr.append(item['eval_ymd'])
-				dataArr.append(item['eval_vibrate_y_1'])
-				dataArr.append(item['eval_vibrate_x_1'])
-				dataArr.append(item['eval_vibrate_z_1'])
-				dataArr.append(item['eval_vibrate_y_2'])
-				dataArr.append(item['eval_vibrate_x_2'])
-				dataArr.append(item['eval_vibrate_z_2'])
-				dataArr.append(item['eval_amp_r'])
-				dataArr.append(item['eval_amp_s'])
-				dataArr.append(item['eval_amp_t'])
-				dataArr.append(item['eval_volt'])
-				dataArr.append(item['eval_update'])
-				# dataArr.append(item['jetfan_diagram'])
+		log.log("trace_routes : eval_jetfan_code-->", evaluation[0]['eval_jetfan_code']) 
+		dataArr = evaluation
 
 
-
-
-		
-
-		return json.dumps(dataArr)
-
-
-# 추적도면 POST: 현 상태 점검현황, 비고
-class traceSetStatusChk(MethodView):
-	def post(self):
-		dataArr = []
-		value = request.get_json()
-
-		url_name_chk = 'http://api.jetfan.ga:5007/trace-check/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
-		url_name_note = 'http://api.jetfan.ga:5007/trace-note/' + str(value['div_code']) + '/' + str(value['year']) + '/' + str(value['year_no'])
-
+		# 현상태 점검현황
+		url_name_chk = 'http://api.jetfan.ga:5007/trace-check/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 		trace_chk_r = requests.get(url_name_chk)
-		trace_note_r = requests.get(url_name_note)
-		
 		trace_check = json.loads(trace_chk_r.text)
-		trace_note = json.loads(trace_note_r.text)
-		
+
 		checkArr = []
+		for item in trace_check:
+			log.log("trace_routes3 : tc_jetfan_code-->", item['tc_jetfan_code']) 
+			checkArr.append(item['tc_seq'])
+			checkArr.append(item['tc_content'])
+
+		dataArr.append(checkArr)
+
+
+		# 비고 (기능상태 등)
+		url_name_note = 'http://api.jetfan.ga:5007/trace-note/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		trace_note_r = requests.get(url_name_note)
+		trace_note = json.loads(trace_note_r.text)
+
 		noteCurYear = []
 		noteOneYearAgo = []
 		noteTowYearAgo = []
 		curYear = datetime.date.today().year
-		for item in trace_check:
-			log.log("trace_routes3 : tc_jetfan_code-->", item['tc_jetfan_code']) 
-			if(item['tc_jetfan_code'] == int(value['div_code'])):
-				checkArr.append(item['tc_seq'])
-				checkArr.append(item['tc_content'])
-		
 		for item in trace_note:
 			log.log("trace_routes3 : tn_jetfan_code-->", item['tn_jetfan_code']) 
 			log.log("trace_routes3 : tn_year-->", item['tn_year']) 
-			if(item['tn_jetfan_code'] == int(value['div_code'])):
-				if(int(item['tn_year']) == curYear):
-					noteCurYear.append(item['tn_year'])
-					noteCurYear.append(item['tn_seq'])
-					noteCurYear.append(item['tn_content'])
-				elif(int(item['tn_year']) == curYear-1):
-					noteOneYearAgo.append(item['tn_year'])
-					noteOneYearAgo.append(item['tn_seq'])
-					noteOneYearAgo.append(item['tn_content'])
-				elif(int(item['tn_year']) == curYear-2):
-					noteTowYearAgo.append(item['tn_year'])
-					noteTowYearAgo.append(item['tn_seq'])
-					noteTowYearAgo.append(item['tn_content'])
+			if(int(item['tn_year']) == curYear):
+				noteCurYear.append(item['tn_seq'])
+				noteCurYear.append(item['tn_content'])
+			elif(int(item['tn_year']) == curYear-1):
+				noteOneYearAgo.append(item['tn_seq'])
+				noteOneYearAgo.append(item['tn_content'])
+			elif(int(item['tn_year']) == curYear-2):
+				noteTowYearAgo.append(item['tn_seq'])
+				noteTowYearAgo.append(item['tn_content'])
 
-		dataArr.append(checkArr)
 		dataArr.append(noteCurYear)
 		dataArr.append(noteOneYearAgo)
 		dataArr.append(noteTowYearAgo)

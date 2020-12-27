@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/combo.css') }}">
-<script src="{{ url_for('static', filename='js/combo.js') }}"></script>
+<script defer src="{{ url_for('static', filename='js/combo.js') }}"></script>
 
 <div id='body-header'>
     <table>
@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>
-                <input id='tunn_name' type="text" placeholder="터널명 입력">
+                <input id='tunn_search' type="text" placeholder="터널명 입력">
             </td>
             <td>
                 <button type='button' id='search' onclick='searchTunnel()'>검색</button>

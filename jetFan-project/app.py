@@ -17,8 +17,7 @@ from routes.combo_routes import Combo
 # 평가표 Eval
 from routes.eval_routes import Eval
 # 추적도면 Trace
-from routes.trace_routes import traceSetJetfanData
-from routes.trace_routes import traceSetStatusChk
+from routes.trace_routes import Trace
 # 안전점검 Safety 
 from routes.safety_routes import Safety
 # 이상발생보고서 Error
@@ -49,8 +48,7 @@ app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), metho
 # 안전점검
 app.add_url_rule('/inspection', view_func=Safety.as_view('inspection_view'), methods=['GET', 'POST'])
 # 추적도면
-app.add_url_rule('/trace', view_func=traceSetJetfanData.as_view('trace_view'), methods=['GET', 'POST'])
-app.add_url_rule('/setStatusChk', view_func=traceSetStatusChk.as_view('trace2_view'), methods=['POST'])
+app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST'])
 # 이상발생보고서
 app.add_url_rule('/abnormal', view_func=Error.as_view('abnormal_view'), methods=['GET', 'POST'])
 # 사진첩
