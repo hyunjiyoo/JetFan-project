@@ -41,23 +41,23 @@
                 </tr>
                 <tr>
                     <th>진동1</th>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" class='vibData'></td>
+                    <td><input type="number" class='vibData'></td>
+                    <td><input type="number" class='vibData'></td>
                 </tr>
                 <tr>
                     <th>진동2</th>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" class='vibData'></td>
+                    <td><input type="number" class='vibData'></td>
+                    <td><input type="number" class='vibData'></td>
                 </tr>
                 <tr>
                     <th>진동(mm/s)</th>
-                    <td colspan='3' class='center'>0.0</td>
+                    <td colspan='3' id='vibrate' class='center'></td>
                 </tr>
                 <tr>
                     <th>진동점수</th>
-                    <td colspan='3' class='center'>0</td>
+                    <td colspan='3' id='vibScore' class='center'></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
 
@@ -68,9 +68,9 @@
                     <th>T</th>
                 </tr>
                 <tr>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
-                    <td><input type="number" name="" id=""></td>
+                    <td><input type="number" id="" class='current'></td>
+                    <td><input type="number" id="" class='current'></td>
+                    <td><input type="number" id="" class='current'></td>
                 </tr>
                 <tr>
                     <th>터널온도</th>
@@ -79,39 +79,38 @@
 
                 <tr>
                     <th>모터 운전전류(%)</th>
-                    <td colspan='3' class='center'>0.0</td>
+                    <td colspan='3' class='center' id='motorCurr'></td>
                 </tr>
                 <tr>
                     <th>운전전류 점수</th>
-                    <td colspan='3' class='center'>0</td>
+                    <td colspan='3' class='center' id='motorCurrScore'></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
                 
                 <tr>
                     <th>베어링온도(℃)</th>
-                    <td><input type="number" name="" id=""></td>
-                    <td colspan='2'>0</td>
+                    <td><input type="number" id="bearingTemp"></td>
+                    <td colspan='2' id='bearTmpScore'></td>
                 </tr>
                 <tr>
                     <th>모터표면온도(℃)</th>
-                    <td><input type="number" name="" id=""></td>
-                    <td colspan='2'>0</td>
+                    <td><input type="number" id="motorSurfTmp"></td>
+                    <td colspan='2' id='motorSurfTmpScore'></td>
                 </tr>
                 <tr>
                     <th>모터 절연상태(㏁)</th>
-                    <td><input type="number" name="" id=""></td>
-                    <td colspan='2'>0</td>
+                    <td><input type="number" id="motorStatus"></td>
+                    <td colspan='2' id='motorStatusScore'></td>
                 </tr>
                 <tr>
                     <th>전압(V)</th>
-                    <!-- <td><input type="number" name="" id=""></td> -->
-                    <td colspan='3' class='center'>0</td>
+                    <td colspan='3'><input type="number" id="volt"></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
                 
                 <tr>
                     <th colspan='2'>소계</th>
-                    <td colspan='2' class='center'>0</td>
+                    <td colspan='2' class='center' id='firstTotalScore'></td>
                 </tr>
             </table>
         </div>

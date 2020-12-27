@@ -1,3 +1,16 @@
+table {
+  border-collapse: collapse;
+}
+table tr,
+table td {
+  font-size: 13pt;
+  padding: 5px 3px;
+}
+.gap {
+  height: 10px !important;
+  border-left: none !important;
+  border-right: none !important;
+}
 #contents #info table {
   margin-top: 40px;
 }
@@ -23,10 +36,10 @@
 #contents #operation table td {
   border: 1px solid #000;
   width: 1%;
+  height: 34px;
 }
 #contents #operation table tr th:first-child {
   width: 1.2%;
-  text-align: left;
 }
 #contents #operation table tr:nth-child(n+12):nth-child(-n+15) td {
   text-align: right;
@@ -38,7 +51,7 @@
 #contents #operation table input[type='number'] {
   border: none;
   width: 100%;
-  text-align: right;
+  text-align: center;
   font-size: 13pt;
 }
 #contents #chkAppearance table th {

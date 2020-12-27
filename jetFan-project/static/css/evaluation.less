@@ -1,6 +1,20 @@
 @basic-font: 13pt;
 @table-padding: 5px 3px;
 
+table {
+    border-collapse: collapse;
+    tr, td {
+        font-size: @basic-font;
+        padding: @table-padding;
+    }
+}
+
+.gap {
+    height: 10px !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
 #contents {
 
     #info table {
@@ -32,12 +46,12 @@
         th, td {
             border: 1px solid #000;
             width: 1%;
+            height: 34px;
         }
 
         tr {
             th:first-child {
                 width: 1.2%;
-                text-align: left;
             }
 
             &:nth-child(n+12):nth-child(-n+15) td {
@@ -53,7 +67,7 @@
         input[type='number'] {
             border: none;
             width: 100%;
-            text-align: right;
+            text-align: center;
             font-size: @basic-font;
         }
     }
