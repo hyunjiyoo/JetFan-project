@@ -1,3 +1,4 @@
+// 콤보박스 아래 데이터 조회 버튼클릭 함수
 const getData = () => {
 
     const jetfan_no = document.querySelector('#jetfan_no').value;
@@ -47,7 +48,6 @@ const getData = () => {
             }
 
 
-
             // 비고 데이터
             const setNoteArr = (arr, opt) => {
                 const tn_seq = arr.filter((elem, i) => i%2===0);
@@ -84,3 +84,63 @@ const getData = () => {
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
 };
+
+
+// 현상태 점검현황 및 비고 데이터 입력/수정
+const inputData = () => {
+    const jetfan_no = document.querySelector('#jetfan_no').value;
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#eval_update').value;
+    const checkReports = document.querySelectorAll('.checkReport');
+    const noteCurYears = document.querySelectorAll('.noteCurYear');
+    
+    let tc_contents = Array();
+    let tn_contents = Array();
+    checkReports.forEach((checkReport, i) => {
+        if(checkReport.value) {
+            tc_contents.push({ 'tc_seq': String(i+1), 'tc_content': checkReport.value });
+        }
+    });
+
+    noteCurYears.forEach((noteCurYear, i) => {
+        if(noteCurYear.value) {
+            tn_contents.push({ 'tn_seq': String(i+1), 'tn_content': noteCurYear.value });
+        }
+    });
+
+    const data = {
+        'jetfan_no': jetfan_no, 
+        'year': year , 
+        'year_no': year_no,
+        'tc_content': tc_contents,
+        'tn_content': tn_contents
+    };
+    console.log('data :>> ', data);
+    
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
+            const chk_status = data[0].status.status_code;
+            const note_status = data[1].status.status_code;
+            if(chk_status === 200 && note_status === 200) {
+                alert('데이터가 정상적으로 입력되었습니다.');
+
+            } else {
+                console.log(chk_status);
+                console.log(note_status);
+            }
+            
+        }
+    }
+
+    xhttp.open("PUT", "/trace", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
+
+
+const load = (() => {
+    document.querySelector('#inputBtn').addEventListener('click', inputData);
+})();

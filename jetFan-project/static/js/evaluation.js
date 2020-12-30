@@ -8,7 +8,9 @@ window.onload = () => {
     // 운전전류, 전압
     const currents = document.querySelectorAll('.current');
     const volt = document.querySelector('#volt');
+    const tunnTmp = document.querySelector('#tunnTmp');
     volt.addEventListener('change', getCurrent);
+    tunnTmp.addEventListener('change', getCurrent);
     currents.forEach((current) => {
         current.addEventListener('change', getCurrent);
     });
@@ -85,8 +87,21 @@ const getvibration = () => {
 const getCurrent = () => {
     // 운전전류
     let currents = Object.values(document.querySelectorAll('.current'));
-    let avg = currents.map((cur) => Number(cur.value))
-                      .reduce((a,b) => (a+b))/currents.length;
+    let tunnTmp = Number(document.querySelector('#tunnTmp').value);
+    let avg = currents.map((cur) => Number(cur.value)).reduce((a,b) => (a+b))/currents.length;
+
+    // 터널온도에 따른 전류값 보정
+    if(tunnTmp <= -15) {
+        avg *= 1.136;
+    } else if(tunnTmp <= -10) {
+        avg *= 1.114;
+    } else if(tunnTmp <= -5) {
+        avg *= 1.094;
+    } else if(tunnTmp <= 0) {
+        avg *= 1.074;
+    } else {
+        avg = avg;
+    }
 
     // 측정전압, 정격전압
     const volt = document.querySelector('#volt').value;

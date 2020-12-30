@@ -77,3 +77,20 @@ class Trace(MethodView):
 		dataArr.append(noteTowYearAgo)
 
 		return json.dumps(dataArr)
+
+	
+	# 현상태 점검현황 및 비고 데이터 입력/수정
+	def put(self):
+		data = []
+		value = request.get_json()
+
+		url="http://api.jetfan.ga:5007/trace-check/" +  value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		chk_r = requests.put(url, data=json.dumps(value['tc_content']))
+		note_r = requests.put(url, data=json.dumps(value['tn_content']))
+		chk_data = json.loads(chk_r.text);
+		note_data = json.loads(note_r.text);
+		
+		data.append(chk_data)
+		data.append(note_data)
+
+		return json.dumps(data)

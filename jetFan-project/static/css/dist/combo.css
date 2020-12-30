@@ -26,6 +26,7 @@
 #body-header table button#search,
 #body-header table button#select {
   width: 100%;
+  font-size: 13pt;
 }
 #body-header select {
   font-size: 13pt;
