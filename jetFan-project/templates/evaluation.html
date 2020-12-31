@@ -41,15 +41,15 @@
                 </tr>
                 <tr>
                     <th>진동1</th>
-                    <td><input type="number" class='eval_vibrate'></td>
-                    <td><input type="number" class='eval_vibrate'></td>
-                    <td><input type="number" class='eval_vibrate'></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
                 </tr>
                 <tr>
                     <th>진동2</th>
-                    <td><input type="number" class='eval_vibrate'></td>
-                    <td><input type="number" class='eval_vibrate'></td>
-                    <td><input type="number" class='eval_vibrate'></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
                 </tr>
                 <tr>
                     <th>진동(mm/s)</th>
@@ -237,14 +237,14 @@
             <table>
                 <tr>
                     <th>(1) 사용연수</th>
-                    <td><input type="number" name="" id="" placeholder="숫자입력"></td>
-                    <td>0</td>
+                    <td><input type="number" class='center' id="eval_useyear" data-durable='' placeholder="숫자입력"></td>
+                    <td id='eval_useyear_score'>0</td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
                     <th colspan='1'>소계</th>
-                    <td colspan='2'>0</td>
+                    <td colspan='2' id='eval_useyear_sum'>0</td>
                 </tr>
             </table>
         </div>
@@ -256,21 +256,21 @@
                 <tr>
                     <th>(1) 연평균 강설일수</th>
                     <td>
-                        <select name="" id="">
-                            <option value="">10일이하</option>
-                            <option value="">11일이상</option>
-                            <option value="">15일이상</option>
-                            <option value="">19일이상</option>
-                            <option value="">22일이상</option>
+                        <select id="eval_snow">
+                            <option>10일이하</option>
+                            <option>11일이상</option>
+                            <option>15일이상</option>
+                            <option>19일이상</option>
+                            <option>22일이상</option>
                         </select>
                     </td>
-                    <td>0</td>
+                    <td id='eval_snow_score'>1</td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
                     <th colspan='1'>소계</th>
-                    <td colspan='2'>0</td>
+                    <td colspan='2' id='eval_env_sum'>1</td>
                 </tr>
             </table>
         </div>
@@ -281,15 +281,15 @@
         <table>
             <tr>
                 <th>점수합계</th>
-                <td>0</td>
+                <td class='center' id="eval_score_sum">0</td>
             </tr>
             <tr>
                 <th>(서로다른 2개이상 지수중 20점 항목수)</th>
-                <td>0</td>
+                <td class='center' id='eval_twenty'>0</td>
             </tr>
             <tr>
                 <th>팬 등급</th>
-                <td>0</td>
+                <td class='center' id='eval_grade'>0</td>
             </tr>
         </table>
 
