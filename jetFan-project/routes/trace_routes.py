@@ -84,9 +84,10 @@ class Trace(MethodView):
 		data = []
 		value = request.get_json()
 
-		url="http://api.jetfan.ga:5007/trace-check/" +  value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
-		chk_r = requests.put(url, data=json.dumps(value['tc_content']))
-		note_r = requests.put(url, data=json.dumps(value['tn_content']))
+		chk_url="http://api.jetfan.ga:5007/trace-check/" +  value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		note_url="http://api.jetfan.ga:5007/trace-note/" +  value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		chk_r = requests.put(chk_url, data=json.dumps(value['tc_content']))
+		note_r = requests.put(note_url, data=json.dumps(value['tn_content']))
 		chk_data = json.loads(chk_r.text);
 		note_data = json.loads(note_r.text);
 		

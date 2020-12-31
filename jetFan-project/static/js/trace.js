@@ -107,6 +107,7 @@ const inputData = () => {
             tn_contents.push({ 'tn_seq': String(i+1), 'tn_content': noteCurYear.value });
         }
     });
+    console.log('tn_contents :>> ', tn_contents);
 
     const data = {
         'jetfan_no': jetfan_no, 
@@ -116,7 +117,6 @@ const inputData = () => {
         'tn_content': tn_contents
     };
     console.log('data :>> ', data);
-    
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
