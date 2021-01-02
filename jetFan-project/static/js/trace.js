@@ -3,7 +3,7 @@ const getData = () => {
 
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#eval_update').value;
+    const year_no = document.querySelector('#update').value;
     const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
 
     const xhttp = new XMLHttpRequest();
@@ -11,6 +11,7 @@ const getData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
+            changeCircleColor(data[0].eval_update);
 
             // 시설 이력
             statusArr = data[0];
@@ -90,7 +91,7 @@ const getData = () => {
 const inputData = () => {
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#eval_update').value;
+    const year_no = document.querySelector('#update').value;
     const checkReports = document.querySelectorAll('.checkReport');
     const noteCurYears = document.querySelectorAll('.noteCurYear');
     
@@ -99,12 +100,16 @@ const inputData = () => {
     checkReports.forEach((checkReport, i) => {
         if(checkReport.value) {
             tc_contents.push({ 'tc_seq': String(i+1), 'tc_content': checkReport.value });
+        } else {
+            tc_contents = [{'tc_seq': '', 'tc_content': ''}];
         }
     });
 
     noteCurYears.forEach((noteCurYear, i) => {
         if(noteCurYear.value) {
             tn_contents.push({ 'tn_seq': String(i+1), 'tn_content': noteCurYear.value });
+        } else {
+            tn_contents = [{'tn_seq': '', 'tn_content': ''}];
         }
     });
     console.log('tn_contents :>> ', tn_contents);

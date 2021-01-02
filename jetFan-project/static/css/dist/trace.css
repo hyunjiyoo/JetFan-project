@@ -18,6 +18,10 @@ select {
   letter-spacing: 8px;
   font-weight: bold;
 }
+textarea {
+  width: 100% ;
+  font-size: 13pt;
+}
 .table-title {
   text-align: center;
   background-color: #f0f0f0;
