@@ -25,8 +25,24 @@ class Eval(MethodView):
 		value = request.get_json()
 
 		# 기본 정보
-		r = requests.get('http://api.jetfan.ga:5007/jetfan/jetfan_code/' + value['jetfan_code'])
+		r = requests.get('http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no'])
 		basic_info = json.loads(r.text)
-		dataArr = basic_info[0]
+		if(basic_info != []):
+			dataArr = basic_info[0]
+		else:
+			dataArr = basic_info
 
 		return json.dumps(dataArr)
+
+	
+	def put(self):
+		dataArr = []
+		value = request.get_json()
+
+		# 기본 정보
+		url = 'http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		r = requests.put(url, data=json.dumps(value['data']))
+		data = json.loads(r.text)
+
+		# return json.dumps(data)
+		return data

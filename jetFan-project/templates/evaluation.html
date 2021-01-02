@@ -41,19 +41,19 @@
                 </tr>
                 <tr>
                     <th>진동1</th>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" id='eval_vibrate_y_1' class='eval_vibrate'></td>
+                    <td><input type="number" id='eval_vibrate_x_1' class='eval_vibrate'></td>
+                    <td><input type="number" id='eval_vibrate_z_1' class='eval_vibrate'></td>
                 </tr>
                 <tr>
                     <th>진동2</th>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
-                    <td><input type="number" class='eval_vibrate' placeholder="입력"></td>
+                    <td><input type="number" id='eval_vibrate_y_2' class='eval_vibrate'></td>
+                    <td><input type="number" id='eval_vibrate_x_2' class='eval_vibrate'></td>
+                    <td><input type="number" id='eval_vibrate_z_2' class='eval_vibrate'></td>
                 </tr>
                 <tr>
                     <th>진동(mm/s)</th>
-                    <td colspan='3' id='vibrate' class='center'></td>
+                    <td colspan='3' id='eval_vibrate' class='center'></td>
                 </tr>
                 <tr>
                     <th>진동점수</th>
@@ -68,13 +68,13 @@
                     <th>T</th>
                 </tr>
                 <tr>
-                    <td><input type="number" class='eval_amp' placeholder="입력"></td>
-                    <td><input type="number" class='eval_amp' placeholder="입력"></td>
-                    <td><input type="number" class='eval_amp' placeholder="입력"></td>
+                    <td><input type="number" id='eval_amp_r' class='eval_amp'></td>
+                    <td><input type="number" id='eval_amp_s' class='eval_amp'></td>
+                    <td><input type="number" id='eval_amp_t' class='eval_amp'></td>
                 </tr>
                 <tr>
                     <th>터널온도</th>
-                    <td colspan='3'><input type="number" id="eval_temp" placeholder="입력"></td>
+                    <td colspan='3'><input type="number" id="eval_temp"></td>
                 </tr>
 
                 <tr>
@@ -89,22 +89,22 @@
                 
                 <tr>
                     <th>베어링온도(℃)</th>
-                    <td><input type="number" id="eval_beartemp" placeholder="입력"></td>
-                    <td colspan='2' id='eval_beartemp_score'></td>
+                    <td><input type="number" id="eval_beartemp" class='center'></td>
+                    <td colspan='2' id='eval_beartemp_score' class='center'></td>
                 </tr>
                 <tr>
                     <th>모터표면온도(℃)</th>
-                    <td><input type="number" id="eval_motortemp" placeholder="입력"></td>
-                    <td colspan='2' id='eval_motortemp_score'></td>
+                    <td><input type="number" id="eval_motortemp" class='center'></td>
+                    <td colspan='2' id='eval_motortemp_score' class='center'></td>
                 </tr>
                 <tr>
                     <th>모터 절연상태(㏁)</th>
-                    <td><input type="number" id="eval_motorinsul" placeholder="입력"></td>
-                    <td colspan='2' id='eval_motorinsul_score'></td>
+                    <td><input type="number" id="eval_motorinsul" class='center'></td>
+                    <td colspan='2' id='eval_motorinsul_score' class='center'></td>
                 </tr>
                 <tr>
                     <th>전압(V)</th>
-                    <td colspan='3'><input type="number" id="eval_volt" placeholder="입력"></td>
+                    <td colspan='3'><input type="number" id="eval_volt"></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
                 
@@ -126,17 +126,17 @@
                             <option>있음</option>
                         </select>
                     </td>
-                    <td id='eval_braidnoise_score'>1</td>
+                    <td id='eval_braidnoise_score'></td>
                 </tr>
                 <tr>
                     <th>(2) 브레이드 파손여부</th>
                     <td>
                         <select id="eval_braidbroken">
-                            <option >없음</option>
-                            <option >있음</option>
+                            <option>없음</option>
+                            <option>있음</option>
                         </select>
                     </td>
-                    <td id='eval_braidbroken_score'>1</td>
+                    <td id='eval_braidbroken_score'></td>
                 </tr>
                 <tr>
                     <th>(3) 베어링 이상음 발생여부</th>
@@ -146,7 +146,7 @@
                             <option>있음</option>
                         </select>
                     </td>
-                    <td id='eval_bearnoise_score'>1</td>
+                    <td id='eval_bearnoise_score'></td>
                 </tr>
                 <tr>
                     <th>(4) 케이싱 카바 부식정도</th>
@@ -159,7 +159,7 @@
                             <option>천공_낙하물</option>
                         </select>
                     </td>
-                    <td id='eval_casing_score'>1</td>
+                    <td id='eval_casing_score'></td>
                 </tr>
                 <tr>
                     <th>(5) 외관 충격 여부</th>
@@ -169,7 +169,7 @@
                             <option>있음</option>
                         </select>
                     </td>
-                    <td id='eval_exterior_score'>1</td>
+                    <td id='eval_exterior_score'></td>
                 </tr>
                 <tr>
                     <th>(6) 턴버클 부식</th>
@@ -179,7 +179,7 @@
                             <option>불량</option>
                         </select>
                     </td>
-                    <td id='eval_buckle_score'>1</td>
+                    <td id='eval_buckle_score'></td>
                 </tr>
                 <tr>
                     <th>(7) 아이볼트 부식</th>
@@ -189,7 +189,7 @@
                             <option>불량</option>
                         </select>
                     </td>
-                    <td id='eval_eyebolt_score'>1</td>
+                    <td id='eval_eyebolt_score'></td>
                 </tr>
                 <tr>
                     <th>(8) 브라켓 체결상태</th>
@@ -199,7 +199,7 @@
                             <option>불량</option>
                         </select>
                     </td>
-                    <td id='eval_bracket_score'>1</td>
+                    <td id='eval_bracket_score'></td>
                 </tr>
                 <tr>
                     <th>(9) 앙카볼트 체결상태</th>
@@ -209,7 +209,7 @@
                             <option>불량</option>
                         </select>
                     </td>
-                    <td id='eval_anchor_score'>1</td>
+                    <td id='eval_anchor_score'></td>
                 </tr>
                 <tr>
                     <th>(10) 안전체인 체결상태</th>
@@ -219,14 +219,14 @@
                             <option>불량</option>
                         </select>
                     </td>
-                    <td id='eval_chain_score'>1</td>
+                    <td id='eval_chain_score'></td>
                 </tr>
                 
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
                     <th colspan='1'>소계</th>
-                    <td colspan='2' id='eval_exterior_sum'>10</td>
+                    <td colspan='2' id='eval_exterior_sum'></td>
                 </tr>
             </table>
         </div>
@@ -238,13 +238,13 @@
                 <tr>
                     <th>(1) 사용연수</th>
                     <td><input type="number" class='center' id="eval_useyear" data-durable='' placeholder="숫자입력"></td>
-                    <td id='eval_useyear_score'>0</td>
+                    <td id='eval_useyear_score'></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
                     <th colspan='1'>소계</th>
-                    <td colspan='2' id='eval_useyear_sum'>0</td>
+                    <td colspan='2' id='eval_useyear_sum'></td>
                 </tr>
             </table>
         </div>
@@ -264,13 +264,13 @@
                             <option>22일이상</option>
                         </select>
                     </td>
-                    <td id='eval_snow_score'>1</td>
+                    <td id='eval_snow_score'></td>
                 </tr>
                 <tr><td colspan='4' class='gap'></td></tr>
 
                 <tr>
                     <th colspan='1'>소계</th>
-                    <td colspan='2' id='eval_env_sum'>1</td>
+                    <td colspan='2' id='eval_env_sum'></td>
                 </tr>
             </table>
         </div>
@@ -281,19 +281,19 @@
         <table>
             <tr>
                 <th>점수합계</th>
-                <td class='center' id="eval_score_sum">0</td>
+                <td class='center' id="eval_score_sum"></td>
             </tr>
             <tr>
                 <th>(서로다른 2개이상 지수중 20점 항목수)</th>
-                <td class='center' id='eval_twenty'>0</td>
+                <td class='center' id='eval_twenty'></td>
             </tr>
             <tr>
                 <th>팬 등급</th>
-                <td class='center' id='eval_grade'>0</td>
+                <td class='center' id='eval_grade'></td>
             </tr>
         </table>
 
-        <button type='button'>입력</button>
+        <button id='inputBtn' type='button'>입력</button>
     </div>
 </div>
 

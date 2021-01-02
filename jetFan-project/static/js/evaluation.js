@@ -1,5 +1,8 @@
 window.onload = () => {
 
+    const inputBtn = document.querySelector('#inputBtn');
+    inputBtn.addEventListener('click', inputData);
+
     // 작동기능지수 *****************************************
     // 진동
     const eval_vibrates = document.querySelectorAll('.eval_vibrate');
@@ -84,27 +87,137 @@ window.onload = () => {
 
 
 const getData = () => {
-    const jetfan_code = document.querySelector('#jetfan_no').value;
-    const data = { 'jetfan_code': jetfan_code };
+    const jetfan_no = document.querySelector('#jetfan_no').value;
+    const year = String(document.querySelector('#year').value-1);
+    const year_no = document.querySelector('#eval_update').value;
+    const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
     console.log('data :>> ', data);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
-            
-            // 선택한 제트팬에 대한 기본 데이터
-            document.querySelector('#tunn_name').innerText = data.tunn_name;
-            document.querySelector('#way').innerText = data.jetfan_way;
-            document.querySelector('#lane').innerText = data.jetfan_lane;
-            document.querySelector('#jetfan_name').innerText = data.jetfan_no;
-            
-            // 3. 사용연수지수 구하기 위한 제트팬 내구 연수
-            document.querySelector('#eval_useyear').dataset.durable = data.jetfan_durable;
-            
+            if(data.length === 0) {
+                alert('전년도 데이터가 없습니다.');
+
+            } else {
+                // 선택한 제트팬에 대한 기본 데이터
+                document.querySelector('#tunn_name').innerText = data.tunn_name;
+                document.querySelector('#way').innerText = data.jetfan_way;
+                document.querySelector('#lane').innerText = data.jetfan_lane;
+                document.querySelector('#jetfan_name').innerText = data.jetfan_no;
+                document.querySelector('#jetfan_name').dataset.update = data.eval_update;
+                
+                // 전년도 데이터 뿌려주기
+                // 1. 작동기능 지수 - 진동
+                document.querySelector('#eval_vibrate_y_1').value = data.eval_vibrate_y_1;
+                document.querySelector('#eval_vibrate_x_1').value = data.eval_vibrate_x_1;
+                document.querySelector('#eval_vibrate_z_1').value = data.eval_vibrate_z_1;
+                document.querySelector('#eval_vibrate_y_2').value = data.eval_vibrate_y_2;
+                document.querySelector('#eval_vibrate_x_2').value = data.eval_vibrate_x_2;
+                document.querySelector('#eval_vibrate_z_2').value = data.eval_vibrate_z_2;
+                document.querySelector('#eval_vibrate').innerText = data.eval_vibrate;
+                document.querySelector('#eval_vibrate_score').innerText = data.eval_vibrate_score;
+                
+                // 1. 작동기능 지수 - 운전전류
+                document.querySelector('#eval_amp_r').value = data.eval_amp_r;
+                document.querySelector('#eval_amp_s').value = data.eval_amp_s;
+                document.querySelector('#eval_amp_t').value = data.eval_amp_t;
+                document.querySelector('#eval_temp').value = data.eval_temp;
+                document.querySelector('#eval_amp').innerText = data.eval_amp;
+                document.querySelector('#eval_amp_score').innerText = data.eval_amp_score;
+                
+                
+                // 1. 작동기능 지수 - 베어링온도, 모터표면온도, 절연상태, 전압
+                document.querySelector('#eval_beartemp').value = data.eval_beartemp;
+                document.querySelector('#eval_beartemp_score').innerText = data.eval_beartemp_score;
+                document.querySelector('#eval_motortemp').value = data.eval_motortemp;
+                document.querySelector('#eval_motortemp_score').innerText = data.eval_motortemp_score;
+                document.querySelector('#eval_motorinsul').value = data.eval_motorinsul;
+                document.querySelector('#eval_motorinsul_score').innerText = data.eval_motorinsul_score;
+                document.querySelector('#eval_volt').value = data.eval_volt;
+                
+                // 1. 작동기능 지수 - 소계
+                document.querySelector('#eval_operate_sum').innerText = data.eval_operate_sum;
+                
+                
+                // 2. 외관점검 지수
+                const selectedOption = (data) => {
+                    let index;
+                    switch(data) {
+                        case '없음':
+                        case '양호':
+                        case '10일이하':
+                            index = 0;
+                            break;
+                        case '있음':
+                        case '불량':
+                        case '25%':
+                        case '11일이상':
+                            index = 1;
+                            break;
+                        case '50%':
+                        case '15일이상':
+                            index = 2;
+                            break;
+                        case '100%':
+                        case '19일이상':
+                            index = 3;
+                            break;
+                        case '천공_낙하물':
+                        case '22일이상':
+                            index = 4;
+                            break;
+                    }
+                    return index;
+                }
+                
+                // 2. 외관점검 지수 - 콤보박스
+                document.querySelector(`#eval_braidnoise`).selectedIndex = selectedOption(data.eval_braidnoise);
+                document.querySelector(`#eval_braidbroken`).selectedIndex = selectedOption(data.eval_braidbroken);
+                document.querySelector(`#eval_bearnoise`).selectedIndex = selectedOption(data.eval_bearnoise);
+                document.querySelector(`#eval_casing`).selectedIndex = selectedOption(data.eval_casing);
+                document.querySelector(`#eval_exterior`).selectedIndex = selectedOption(data.eval_exterior);
+                document.querySelector(`#eval_buckle`).selectedIndex = selectedOption(data.eval_buckle);
+                document.querySelector(`#eval_eyebolt`).selectedIndex = selectedOption(data.eval_eyebolt);
+                document.querySelector(`#eval_bracket`).selectedIndex = selectedOption(data.eval_bracket);
+                document.querySelector(`#eval_anchor`).selectedIndex = selectedOption(data.eval_anchor);
+                document.querySelector(`#eval_chain`).selectedIndex = selectedOption(data.eval_chain);
+                
+                // 2. 외관점검 지수 - 콤보박스
+                document.querySelector('#eval_braidnoise_score').innerText = data.eval_braidnoise_score;
+                document.querySelector('#eval_braidbroken_score').innerText = data.eval_braidbroken_score;
+                document.querySelector('#eval_bearnoise_score').innerText = data.eval_bearnoise_score;
+                document.querySelector('#eval_casing_score').innerText = data.eval_casing_score;
+                document.querySelector('#eval_exterior_score').innerText = data.eval_exterior_score;
+                document.querySelector('#eval_buckle_score').innerText = data.eval_buckle_score;
+                document.querySelector('#eval_eyebolt_score').innerText = data.eval_eyebolt_score;
+                document.querySelector('#eval_bracket_score').innerText = data.eval_bracket_score;
+                document.querySelector('#eval_anchor_score').innerText = data.eval_anchor_score;
+                document.querySelector('#eval_chain_score').innerText = data.eval_chain_score;
+    
+                // 2. 외관점검 지수 - 소계
+                document.querySelector('#eval_exterior_sum').innerText = data.eval_exterior_sum;
+
+
+                // 3. 사용연수 지수
+                document.querySelector('#eval_useyear').value = data.eval_useyear;
+                document.querySelector('#eval_useyear').dataset.durable = data.jetfan_durable; // 제트팬 내구 연수
+                document.querySelector('#eval_useyear_score').innerText = data.eval_useyear_score;
+                document.querySelector('#eval_useyear_sum').innerText = data.eval_useyear_sum;
+                
+                // 4. 사용환경 지수
+                document.querySelector(`#eval_snow`).selectedIndex = selectedOption(data.eval_snow);
+                document.querySelector('#eval_snow_score').innerText = data.eval_snow_score;
+                document.querySelector('#eval_env_sum').innerText = data.eval_env_sum;
+                
+                // 점수합계
+                document.querySelector('#eval_score_sum').innerText = data.eval_score_sum;
+                document.querySelector('#eval_twenty').innerText = data.eval_twenty;
+                document.querySelector('#eval_grade').innerText = data.eval_grade;
+            }
         }
     }
-
 
     xhttp.open("POST", "/evaluation", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -133,7 +246,7 @@ const getvibration = () => {
         let vibrate = eval_vibrates.map((vib) => Number(vib.value))
                         .reduce((a, b) => { return Math.max(a, b); });
 
-        document.querySelector('#vibrate').innerText = vibrate;
+        document.querySelector('#eval_vibrate').innerText = vibrate;
         const eval_vibrate_score = document.querySelector('#eval_vibrate_score');
 
         // 진동점수
@@ -300,7 +413,7 @@ const getOperTotalScore = () => {
 // 브레이드 이상음 발생여부
 const getBraidNoise = () => {
     findJetfan().then(() => {
-        const eval_braidnoise = document.querySelectorAll('#eval_braidnoise option')[document.querySelector('#eval_braidnoise').selectedIndex];
+        const eval_braidnoise = document.querySelector('#eval_braidnoise').selectedOptions[0];
         const eval_braidnoise_score = document.querySelector('#eval_braidnoise_score');
         if(eval_braidnoise.text === '없음') {
             eval_braidnoise_score.innerText = 1;
@@ -317,7 +430,7 @@ const getBraidNoise = () => {
 // 브레이드 파손여부 
 const getBraidBroken = () => {
     findJetfan().then(() => {
-        const eval_braidbroken = document.querySelectorAll('#eval_braidbroken option')[document.querySelector('#eval_braidbroken').selectedIndex];
+        const eval_braidbroken = document.querySelector('#eval_braidbroken').selectedOptions[0];
         const eval_braidbroken_score = document.querySelector('#eval_braidbroken_score');
 
         if(eval_braidbroken.text === '없음') {
@@ -337,7 +450,7 @@ const getBraidBroken = () => {
 // 베어링 이상음 발생여부
 const getBearNoise = () => {
     findJetfan().then(() => {
-        const eval_bearnoise = document.querySelectorAll('#eval_bearnoise option')[document.querySelector('#eval_bearnoise').selectedIndex];
+        const eval_bearnoise = document.querySelector('#eval_bearnoise').selectedOptions[0];
         const eval_bearnoise_score = document.querySelector('#eval_bearnoise_score');
 
         if(eval_bearnoise.text === '없음') {
@@ -356,7 +469,7 @@ const getBearNoise = () => {
 // 케이싱 카바 부식정도
 const getCasing = () => {
     findJetfan().then(() => {
-        const eval_casing = document.querySelectorAll('#eval_casing option')[document.querySelector('#eval_casing').selectedIndex];
+        const eval_casing = document.querySelector('#eval_casing').selectedOptions[0];
         const eval_casing_score = document.querySelector('#eval_casing_score');
 
         if(eval_casing.text === '없음') {
@@ -382,7 +495,7 @@ const getCasing = () => {
 // 외관 충격 여부
 const getExterior  = () => {
     findJetfan().then(() => {
-        const eval_exterior = document.querySelectorAll('#eval_exterior option')[document.querySelector('#eval_exterior').selectedIndex];
+        const eval_exterior = document.querySelector('#eval_exterior').selectedOptions[0];
         const eval_exterior_score = document.querySelector('#eval_exterior_score');
 
         if(eval_exterior.text === '없음') {
@@ -401,7 +514,7 @@ const getExterior  = () => {
 // 턴버클 부식
 const getBuckle = () => {
     findJetfan().then(() => {
-        const eval_buckle = document.querySelectorAll('#eval_buckle option')[document.querySelector('#eval_buckle').selectedIndex];
+        const eval_buckle = document.querySelector('#eval_buckle').selectedOptions[0];
         const eval_buckle_score = document.querySelector('#eval_buckle_score');
 
         if(eval_buckle.text === '양호') {
@@ -420,7 +533,7 @@ const getBuckle = () => {
 // 아이볼트 부식
 const getEyebolt = () => {
     findJetfan().then(() => {
-        const eval_eyebolt = document.querySelectorAll('#eval_eyebolt option')[document.querySelector('#eval_eyebolt').selectedIndex];
+        const eval_eyebolt = document.querySelector('#eval_eyebolt').selectedOptions[0];
         const eval_eyebolt_score = document.querySelector('#eval_eyebolt_score');
 
         if(eval_eyebolt.text === '양호') {
@@ -439,7 +552,7 @@ const getEyebolt = () => {
 // 브라켓 체결상태
 const getBracket = () => {
     findJetfan().then(() => {
-        const eval_bracket = document.querySelectorAll('#eval_bracket option')[document.querySelector('#eval_bracket').selectedIndex];
+        const eval_bracket = document.querySelector('#eval_bracket').selectedOptions[0];
         const eval_bracket_score = document.querySelector('#eval_bracket_score');
 
         if(eval_bracket.text === '양호') {
@@ -458,7 +571,7 @@ const getBracket = () => {
 // 앙카볼트 체결상태
 const getAnchor = () => {
     findJetfan().then(() => {
-        const eval_anchor = document.querySelectorAll('#eval_anchor option')[document.querySelector('#eval_anchor').selectedIndex];
+        const eval_anchor = document.querySelector('#eval_anchor').selectedOptions[0];
         const eval_anchor_score = document.querySelector('#eval_anchor_score');
 
         if(eval_anchor.text === '양호') {
@@ -477,7 +590,7 @@ const getAnchor = () => {
 // 안전체인 체결상태
 const getChain = () => {
     findJetfan().then(() => {
-        const eval_chain = document.querySelectorAll('#eval_chain option')[document.querySelector('#eval_chain').selectedIndex];
+        const eval_chain = document.querySelector('#eval_chain').selectedOptions[0];
         const eval_chain_score = document.querySelector('#eval_chain_score');
 
         if(eval_chain.text === '양호') {
@@ -560,7 +673,7 @@ const getUseYear = () => {
 // 4. 사용환경 지수 ###############################
 const getSnow = () => {
     findJetfan().then(() => {
-        const eval_snow = document.querySelectorAll('#eval_snow option')[document.querySelector('#eval_snow').selectedIndex];
+        const eval_snow = document.querySelector('#eval_snow').selectedOptions[0];
         const eval_snow_score = document.querySelector('#eval_snow_score');
 
         if(eval_snow.text === '10일이하') {
@@ -657,4 +770,102 @@ const getGrade = () => {
             eval_grade.innerText = 4;
         }
     }
+}
+
+
+const inputData = () => {
+    const jetfan_no = document.querySelector('#jetfan_no').value;
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#eval_update').value;
+
+    // let dataArr = new Array();
+    // dataArr.push(jetfan_no);
+    // dataArr.push(year);
+    // dataArr.push(year_no);
+
+
+    const data = {
+        'jetfan_no': jetfan_no, 
+        'year': year , 
+        'year_no': year_no,
+        'data': [{
+            "eval_jetfan_code":"1016",
+            "eval_year":"2020",
+            "eval_year_no":"1",
+            "eval_update":"1",
+            "eval_ymd":"2020-11-01",
+            "eval_emp":"손정화",
+            "eval_company":"프라임방재㈜",
+            "eval_vibrate_y_1":"2.1",
+            "eval_vibrate_x_1":"2.1",
+            "eval_vibrate_z_1":"2.1",
+            "eval_vibrate_y_2":"2.1",
+            "eval_vibrate_x_2":"2.1",
+            "eval_vibrate_z_2":"2.1",
+            "eval_vibrate":"2.1",
+            "eval_vibrate_score":"1",
+            "eval_amp_r":"46",
+            "eval_amp_s":"47",
+            "eval_amp_t":"48",
+            "eval_temp":"25",
+            "eval_amp":"47",
+            "eval_amp_score":"1",
+            "eval_beartemp":"24",
+            "eval_beartemp_score":"1",
+            "eval_motortemp":"33",
+            "eval_motortemp_score":"1",
+            "eval_motorinsul":"1.9",
+            "eval_motorinsul_score":"1",
+            "eval_volt":"380",
+            "eval_operate_sum":"5",
+            "eval_braidnoise":"없음",
+            "eval_braidnoise_score":"1",
+            "eval_braidbroken":"없음",
+            "eval_braidbroken_score":"1",
+            "eval_bearnoise":"없음",
+            "eval_bearnoise_score":"1",
+            "eval_casing":"0.5",
+            "eval_casing_score":"3",
+            "eval_exterior":"없음",
+            "eval_exterior_score":"1",
+            "eval_buckle":"양호",
+            "eval_buckle_score":"1",
+            "eval_eyebolt":"양호",
+            "eval_eyebolt_score":"1",
+            "eval_bracket":"양호",
+            "eval_bracket_score":"1",
+            "eval_anchor":"양호",
+            "eval_anchor_score":"1",
+            "eval_chain":"양호",
+            "eval_chain_score":"1",
+            "eval_exterior_sum":"12",
+            "eval_useyear":"14",
+            "eval_useyear_score":"20",
+            "eval_useyear_sum":"20",
+            "eval_snow":"15일이상",
+            "eval_snow_score":"3",
+            "eval_env_sum":"3",
+            "eval_score_sum":"40",
+            "eval_twenty":"1",
+            "eval_grade":"2"
+        }]
+    };
+    console.log('data :>> ', data);
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
+            // if(chk_status === 200 && note_status === 200) {
+            //     alert('데이터가 정상적으로 입력되었습니다.');
+
+            // } else {
+            // }
+            
+        }
+    }
+
+    xhttp.open("PUT", "/evaluation", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
 }
