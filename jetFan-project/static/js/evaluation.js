@@ -36,15 +36,21 @@ window.onload = () => {
     // 외관점검지수 *****************************************
     // 브레이드 이상음 발생여부
     const eval_braidnoise = document.querySelector('#eval_braidnoise');
-    eval_braidnoise.addEventListener('change', getBraidNoise);
+    eval_braidnoise.addEventListener('change', () => {
+        yesOrNo('eval_braidnoise', 'eval_braidnoise_score');
+    });
     
     // 브레이드 파손여부
     const eval_braidbroken = document.querySelector('#eval_braidbroken');
-    eval_braidbroken.addEventListener('change', getBraidBroken);
+    eval_braidbroken.addEventListener('change', () => {
+        yesOrNo('eval_braidbroken', 'eval_braidbroken_score');
+    });
     
     // 베어링 이상음 발생여부
     const eval_bearnoise = document.querySelector('#eval_bearnoise');
-    eval_bearnoise.addEventListener('change', getBearNoise);
+    eval_bearnoise.addEventListener('change', () => {
+        yesOrNo('eval_bearnoise', 'eval_bearnoise_score');
+    });
 
     // 케이싱 카바 부식정도
     const eval_casing = document.querySelector('#eval_casing');
@@ -52,27 +58,39 @@ window.onload = () => {
 
     // 외관 충격 여부
     const eval_exterior = document.querySelector('#eval_exterior');
-    eval_exterior.addEventListener('change', getExterior);
+    eval_exterior.addEventListener('change', () => {
+        yesOrNo('eval_exterior', 'eval_exterior_score');
+    });
 
     // 턴버클 부식
     const eval_buckle = document.querySelector('#eval_buckle');
-    eval_buckle.addEventListener('change', getBuckle);
+    eval_buckle.addEventListener('change', () => {
+        goodOrBad('eval_buckle', 'eval_buckle_score');
+    });
 
     // 아이볼트부식
     const eval_eyebolt = document.querySelector('#eval_eyebolt');
-    eval_eyebolt.addEventListener('change', getEyebolt);
+    eval_eyebolt.addEventListener('change', () => {
+        goodOrBad('eval_eyebolt', 'eval_eyebolt_score');
+    });
 
     // 브라켓 체결상태
     const eval_bracket = document.querySelector('#eval_bracket');
-    eval_bracket.addEventListener('change', getBracket);
+    eval_bracket.addEventListener('change', () => {
+        goodOrBad('eval_bracket', 'eval_bracket_score');
+    });
 
     // 앙카볼트 체결상태
     const eval_anchor = document.querySelector('#eval_anchor');
-    eval_anchor.addEventListener('change', getAnchor);
+    eval_anchor.addEventListener('change', () => {
+        goodOrBad('eval_anchor', 'eval_anchor_score');
+    });
 
     // 안전체인 체결상태
     const eval_chain = document.querySelector('#eval_chain');
-    eval_chain.addEventListener('change', getChain);
+    eval_chain.addEventListener('change', () => {
+        goodOrBad('eval_chain', 'eval_chain_score');
+    });
 
 
     // 사용연수지수 *****************************************
@@ -103,6 +121,8 @@ const getData = () => {
                 alert('전년도 데이터가 없습니다.');
 
             } else {
+                changeCircleColor(data.eval_update);
+
                 // 선택한 제트팬에 대한 기본 데이터
                 document.querySelector('#tunn_name').innerText = data.tunn_name;
                 document.querySelector('#way').innerText = data.jetfan_way;
@@ -416,62 +436,6 @@ const getOperTotalScore = () => {
 
 
 // 2. 외관점검 지수 ###############################
-// 브레이드 이상음 발생여부
-const getBraidNoise = () => {
-    findJetfan().then(() => {
-        const eval_braidnoise = document.querySelector('#eval_braidnoise').selectedOptions[0];
-        const eval_braidnoise_score = document.querySelector('#eval_braidnoise_score');
-        if(eval_braidnoise.text === '없음') {
-            eval_braidnoise_score.innerText = 1;
-        } else {
-            eval_braidnoise_score.innerText = 10;
-        }
-
-        geChkAppearanceScore();
-    }).catch(() => {
-        document.querySelector('#eval_braidnoise').selectedIndex = 0;
-    });
-}
-
-// 브레이드 파손여부 
-const getBraidBroken = () => {
-    findJetfan().then(() => {
-        const eval_braidbroken = document.querySelector('#eval_braidbroken').selectedOptions[0];
-        const eval_braidbroken_score = document.querySelector('#eval_braidbroken_score');
-
-        if(eval_braidbroken.text === '없음') {
-            eval_braidbroken_score.innerText = 1;
-        } else {
-            eval_braidbroken_score.innerText = 20;
-        }
-
-        geChkAppearanceScore();
-        getTwentyItem();
-
-    }).catch(() => {
-        document.querySelector('#eval_braidbroken').selectedIndex = 0;
-    });
-}
-
-// 베어링 이상음 발생여부
-const getBearNoise = () => {
-    findJetfan().then(() => {
-        const eval_bearnoise = document.querySelector('#eval_bearnoise').selectedOptions[0];
-        const eval_bearnoise_score = document.querySelector('#eval_bearnoise_score');
-
-        if(eval_bearnoise.text === '없음') {
-            eval_bearnoise_score.innerText = 1;
-        } else {
-            eval_bearnoise_score.innerText = 10;
-        }
-
-        geChkAppearanceScore();
-
-    }).catch(() => {
-        document.querySelector('#eval_bearnoise').selectedIndex = 0;
-    });
-}
-
 // 케이싱 카바 부식정도
 const getCasing = () => {
     findJetfan().then(() => {
@@ -498,119 +462,47 @@ const getCasing = () => {
     });
 }
 
-// 외관 충격 여부
-const getExterior  = () => {
+// Option: 없음/있음
+// - 브레이드 이상음, 브레이드 파손여부, 베어링이상음발생여부, 외관충격여부
+const yesOrNo = (_option, _scoreElement) => {
     findJetfan().then(() => {
-        const eval_exterior = document.querySelector('#eval_exterior').selectedOptions[0];
-        const eval_exterior_score = document.querySelector('#eval_exterior_score');
+        const option = document.querySelector(`#${_option}`).selectedOptions[0];
+        const scoreElement = document.querySelector(`#${_scoreElement}`);
 
-        if(eval_exterior.text === '없음') {
-            eval_exterior_score.innerText = 1;
+        if(option.text === '없음') {
+            scoreElement.innerText = 1;
         } else {
-            eval_exterior_score.innerText = 10;
+            scoreElement.innerText = _option === 'eval_braidbroken' ? 20 : 10;
         }
 
         geChkAppearanceScore();
 
     }).catch(() => {
-        document.querySelector('#eval_exterior').selectedIndex = 0;
+        document.querySelector('#eval_braidnoise').selectedIndex = 0;
     });
 }
 
-// 턴버클 부식
-const getBuckle = () => {
-    findJetfan().then(() => {
-        const eval_buckle = document.querySelector('#eval_buckle').selectedOptions[0];
-        const eval_buckle_score = document.querySelector('#eval_buckle_score');
 
-        if(eval_buckle.text === '양호') {
-            eval_buckle_score.innerText = 1;
+// Option: 양호/불량 
+// - 턴버클 부식, 아이볼트 부식, 브라켓 체결상태, 앙카볼트 체결상태, 안전체인 체결상태
+const goodOrBad = (_option, _scoreElement) => {
+    findJetfan().then(() => {
+        const option = document.querySelector(`#${_option}`).selectedOptions[0];
+        const scoreElement = document.querySelector(`#${_scoreElement}`);
+        if(option.text === '양호') {
+            console.log('scoreElement :>> ', scoreElement);
+            scoreElement.innerText = 1;
         } else {
-            eval_buckle_score.innerText = 3;
+            scoreElement.innerText = 3;
         }
 
         geChkAppearanceScore();
 
     }).catch(() => {
-        document.querySelector('#eval_buckle').selectedIndex = 0;
+        document.querySelector(`#${_option}`).selectedIndex = 0;
     });
 }
 
-// 아이볼트 부식
-const getEyebolt = () => {
-    findJetfan().then(() => {
-        const eval_eyebolt = document.querySelector('#eval_eyebolt').selectedOptions[0];
-        const eval_eyebolt_score = document.querySelector('#eval_eyebolt_score');
-
-        if(eval_eyebolt.text === '양호') {
-            eval_eyebolt_score.innerText = 1;
-        } else {
-            eval_eyebolt_score.innerText = 3;
-        }
-
-        geChkAppearanceScore();
-
-    }).catch(() => {
-        document.querySelector('#eval_eyebolt').selectedIndex = 0;
-    });
-}
-
-// 브라켓 체결상태
-const getBracket = () => {
-    findJetfan().then(() => {
-        const eval_bracket = document.querySelector('#eval_bracket').selectedOptions[0];
-        const eval_bracket_score = document.querySelector('#eval_bracket_score');
-
-        if(eval_bracket.text === '양호') {
-            eval_bracket_score.innerText = 1;
-        } else {
-            eval_bracket_score.innerText = 3;
-        }
-
-        geChkAppearanceScore();
-    }).catch(() => {
-        document.querySelector('#eval_bracket').selectedIndex = 0;
-    });
-
-}
-
-// 앙카볼트 체결상태
-const getAnchor = () => {
-    findJetfan().then(() => {
-        const eval_anchor = document.querySelector('#eval_anchor').selectedOptions[0];
-        const eval_anchor_score = document.querySelector('#eval_anchor_score');
-
-        if(eval_anchor.text === '양호') {
-            eval_anchor_score.innerText = 1;
-        } else {
-            eval_anchor_score.innerText = 3;
-        }
-
-        geChkAppearanceScore();
-
-    }).catch(() => {
-        document.querySelector('#eval_anchor').selectedIndex = 0;
-    });
-}
-
-// 안전체인 체결상태
-const getChain = () => {
-    findJetfan().then(() => {
-        const eval_chain = document.querySelector('#eval_chain').selectedOptions[0];
-        const eval_chain_score = document.querySelector('#eval_chain_score');
-
-        if(eval_chain.text === '양호') {
-            eval_chain_score.innerText = 1;
-        } else {
-            eval_chain_score.innerText = 3;
-        }
-
-        geChkAppearanceScore();
-
-    }).catch(() => {
-        document.querySelector('#eval_chain').selectedIndex = 0;
-    });
-}
 
 // 2. 외관점검 지수 소계
 const geChkAppearanceScore = () => {

@@ -21,6 +21,10 @@
 #body-header table tr td input[type='radio'] {
   width: 20px;
 }
+#body-header table tr td #tunnel,
+#body-header table tr td #jetfan_no {
+  height: 100px;
+}
 #body-header table input,
 #body-header table select,
 #body-header table button#search,

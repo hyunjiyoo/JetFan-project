@@ -154,3 +154,16 @@ const getWayOption = (wayOption) => {
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
 }
+
+
+// 업데이트 횟수조회 데이터 가져와서 circle 색상 채우기
+const changeCircleColor = (eval_update) => {
+    
+    if(eval_update === 1) {
+        document.querySelector('#greenCircle').innerText = '○';
+        document.querySelector('#redCircle').innerText = '●';
+    } else {
+        document.querySelector('#greenCircle').innerText = '●';
+        document.querySelector('#redCircle').innerText = '○';
+    }
+}
