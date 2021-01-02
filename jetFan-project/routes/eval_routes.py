@@ -13,7 +13,6 @@ class Eval(MethodView):
 
 		years = []
 		year = datetime.date.today().year
-		# year = 2023
 		for i in range(year+1-2020):
 			years.append(year-i)
 		years.reverse()
@@ -24,7 +23,7 @@ class Eval(MethodView):
 		dataArr = []
 		value = request.get_json()
 
-		# 기본 정보
+		# 전년도 평가표데이터 가져오기
 		r = requests.get('http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no'])
 		basic_info = json.loads(r.text)
 		if(basic_info != []):
@@ -36,13 +35,11 @@ class Eval(MethodView):
 
 	
 	def put(self):
-		dataArr = []
 		value = request.get_json()
 
-		# 기본 정보
+		# 평가표 데이터 입력/수정
 		url = 'http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 		r = requests.put(url, data=json.dumps(value['data']))
 		data = json.loads(r.text)
 
-		# return json.dumps(data)
-		return data
+		return json.dumps(data)

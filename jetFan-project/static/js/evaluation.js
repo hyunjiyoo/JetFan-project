@@ -88,8 +88,10 @@ window.onload = () => {
 
 const getData = () => {
     const jetfan_no = document.querySelector('#jetfan_no').value;
-    const year = String(document.querySelector('#year').value-1);
-    const year_no = document.querySelector('#eval_update').value;
+    // 전년도 데이터 존재시, 주석풀기
+    // const year = String(document.querySelector('#year').value-1);
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#update').value;
     const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
     console.log('data :>> ', data);
     const xhttp = new XMLHttpRequest();
@@ -107,6 +109,10 @@ const getData = () => {
                 document.querySelector('#lane').innerText = data.jetfan_lane;
                 document.querySelector('#jetfan_name').innerText = data.jetfan_no;
                 document.querySelector('#jetfan_name').dataset.update = data.eval_update;
+                document.querySelector('#jetfan_name').dataset.ymd = data.eval_ymd;
+                document.querySelector('#jetfan_name').dataset.emp = data.eval_emp;
+                document.querySelector('#jetfan_name').dataset.company = data.eval_company;
+
                 
                 // 전년도 데이터 뿌려주기
                 // 1. 작동기능 지수 - 진동
@@ -244,7 +250,7 @@ const getvibration = () => {
         // 진동(mm/s)
         let eval_vibrates = Object.values(document.querySelectorAll('.eval_vibrate'));
         let vibrate = eval_vibrates.map((vib) => Number(vib.value))
-                        .reduce((a, b) => { return Math.max(a, b); });
+                                   .reduce((a, b) => { return Math.max(a, b); });
 
         document.querySelector('#eval_vibrate').innerText = vibrate;
         const eval_vibrate_score = document.querySelector('#eval_vibrate_score');
@@ -746,8 +752,6 @@ const getTwentyItem = () => {
     } else {
         eval_twenty.innerText = sum;
     }
-    
-    
 }
 
 // 팬 등급
@@ -776,92 +780,88 @@ const getGrade = () => {
 const inputData = () => {
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#eval_update').value;
+    const year_no = document.querySelector('#update').value;
 
-    // let dataArr = new Array();
-    // dataArr.push(jetfan_no);
-    // dataArr.push(year);
-    // dataArr.push(year_no);
+    let dataArr = Array();
+    dataArr.push({
+        "eval_jetfan_code": document.querySelector('#jetfan_no').value,
+        "eval_year": document.querySelector('#year').value,
+        "eval_year_no": document.querySelector('#update').value,
+        "eval_update":document.querySelector('#jetfan_name').dataset.update,
+        "eval_ymd": document.querySelector('#jetfan_name').dataset.ymd,
+        "eval_emp": document.querySelector('#jetfan_name').dataset.emp,
+        "eval_company": document.querySelector('#jetfan_name').dataset.company,
+        "eval_vibrate_y_1":document.querySelector('#eval_vibrate_y_1').value,
+        "eval_vibrate_x_1":document.querySelector('#eval_vibrate_x_1').value,
+        "eval_vibrate_z_1":document.querySelector('#eval_vibrate_z_1').value,
+        "eval_vibrate_y_2":document.querySelector('#eval_vibrate_y_2').value,
+        "eval_vibrate_x_2":document.querySelector('#eval_vibrate_x_2').value,
+        "eval_vibrate_z_2":document.querySelector('#eval_vibrate_z_2').value,
+        "eval_vibrate":document.querySelector('#eval_vibrate').textContent,
+        "eval_vibrate_score":document.querySelector('#eval_vibrate_score').textContent,
+        "eval_amp_r":document.querySelector('#eval_amp_r').value,
+        "eval_amp_s":document.querySelector('#eval_amp_s').value,
+        "eval_amp_t":document.querySelector('#eval_amp_t').value,
+        "eval_temp":document.querySelector('#eval_temp').value,
+        "eval_amp":document.querySelector('#eval_amp').textContent,
+        "eval_amp_score":document.querySelector('#eval_amp_score').textContent,
+        "eval_beartemp":document.querySelector('#eval_beartemp').value,
+        "eval_beartemp_score":document.querySelector('#eval_beartemp_score').textContent,
+        "eval_motortemp":document.querySelector('#eval_motortemp').value,
+        "eval_motortemp_score":document.querySelector('#eval_motortemp_score').textContent,
+        "eval_motorinsul":document.querySelector('#eval_motorinsul').value,
+        "eval_motorinsul_score":document.querySelector('#eval_motorinsul_score').textContent,
+        "eval_volt":document.querySelector('#eval_volt').value,
+        "eval_operate_sum":document.querySelector('#eval_operate_sum').textContent,
+        "eval_braidnoise":document.querySelector('#eval_braidnoise').value,
+        "eval_braidnoise_score":document.querySelector('#eval_braidnoise_score').textContent,
+        "eval_braidbroken":document.querySelector('#eval_braidbroken').value,
+        "eval_braidbroken_score":document.querySelector('#eval_braidbroken_score').textContent,
+        "eval_bearnoise":document.querySelector('#eval_bearnoise').value,
+        "eval_bearnoise_score":document.querySelector('#eval_bearnoise_score').textContent,
+        "eval_casing":document.querySelector('#eval_casing').value,
+        "eval_casing_score":document.querySelector('#eval_casing_score').textContent,
+        "eval_exterior":document.querySelector('#eval_exterior').value,
+        "eval_exterior_score":document.querySelector('#eval_exterior_score').textContent,
+        "eval_buckle":document.querySelector('#eval_buckle').value,
+        "eval_buckle_score":document.querySelector('#eval_buckle_score').textContent,
+        "eval_eyebolt":document.querySelector('#eval_eyebolt').value,
+        "eval_eyebolt_score":document.querySelector('#eval_eyebolt_score').textContent,
+        "eval_bracket":document.querySelector('#eval_bracket').value,
+        "eval_bracket_score":document.querySelector('#eval_bracket_score').textContent,
+        "eval_anchor":document.querySelector('#eval_anchor').value,
+        "eval_anchor_score":document.querySelector('#eval_anchor_score').textContent,
+        "eval_chain":document.querySelector('#eval_chain').value,
+        "eval_chain_score":document.querySelector('#eval_chain_score').textContent,
+        "eval_exterior_sum":document.querySelector('#eval_exterior_sum').textContent,
+        "eval_useyear":document.querySelector('#eval_useyear').value,
+        "eval_useyear_score":document.querySelector('#eval_useyear_score').textContent,
+        "eval_useyear_sum":document.querySelector('#eval_useyear_sum').textContent,
+        "eval_snow":document.querySelector('#eval_snow').value,
+        "eval_snow_score":document.querySelector('#eval_snow_score').textContent,
+        "eval_env_sum":document.querySelector('#eval_env_sum').textContent,
+        "eval_score_sum":document.querySelector('#eval_score_sum').textContent,
+        "eval_twenty":document.querySelector('#eval_twenty').textContent,
+        "eval_grade":document.querySelector('#eval_grade').textContent
 
+    });
 
     const data = {
         'jetfan_no': jetfan_no, 
         'year': year , 
         'year_no': year_no,
-        'data': [{
-            "eval_jetfan_code":"1016",
-            "eval_year":"2020",
-            "eval_year_no":"1",
-            "eval_update":"1",
-            "eval_ymd":"2020-11-01",
-            "eval_emp":"손정화",
-            "eval_company":"프라임방재㈜",
-            "eval_vibrate_y_1":"2.1",
-            "eval_vibrate_x_1":"2.1",
-            "eval_vibrate_z_1":"2.1",
-            "eval_vibrate_y_2":"2.1",
-            "eval_vibrate_x_2":"2.1",
-            "eval_vibrate_z_2":"2.1",
-            "eval_vibrate":"2.1",
-            "eval_vibrate_score":"1",
-            "eval_amp_r":"46",
-            "eval_amp_s":"47",
-            "eval_amp_t":"48",
-            "eval_temp":"25",
-            "eval_amp":"47",
-            "eval_amp_score":"1",
-            "eval_beartemp":"24",
-            "eval_beartemp_score":"1",
-            "eval_motortemp":"33",
-            "eval_motortemp_score":"1",
-            "eval_motorinsul":"1.9",
-            "eval_motorinsul_score":"1",
-            "eval_volt":"380",
-            "eval_operate_sum":"5",
-            "eval_braidnoise":"없음",
-            "eval_braidnoise_score":"1",
-            "eval_braidbroken":"없음",
-            "eval_braidbroken_score":"1",
-            "eval_bearnoise":"없음",
-            "eval_bearnoise_score":"1",
-            "eval_casing":"0.5",
-            "eval_casing_score":"3",
-            "eval_exterior":"없음",
-            "eval_exterior_score":"1",
-            "eval_buckle":"양호",
-            "eval_buckle_score":"1",
-            "eval_eyebolt":"양호",
-            "eval_eyebolt_score":"1",
-            "eval_bracket":"양호",
-            "eval_bracket_score":"1",
-            "eval_anchor":"양호",
-            "eval_anchor_score":"1",
-            "eval_chain":"양호",
-            "eval_chain_score":"1",
-            "eval_exterior_sum":"12",
-            "eval_useyear":"14",
-            "eval_useyear_score":"20",
-            "eval_useyear_sum":"20",
-            "eval_snow":"15일이상",
-            "eval_snow_score":"3",
-            "eval_env_sum":"3",
-            "eval_score_sum":"40",
-            "eval_twenty":"1",
-            "eval_grade":"2"
-        }]
+        'data': dataArr
     };
-    console.log('data :>> ', data);
+
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
-            // if(chk_status === 200 && note_status === 200) {
-            //     alert('데이터가 정상적으로 입력되었습니다.');
-
-            // } else {
-            // }
-            
+            if(data.status.status_code === 200) {
+                alert('데이터가 정상적으로 입력되었습니다.');
+            } else {
+                alert('데이터가 입력 실패');
+            }
         }
     }
 
