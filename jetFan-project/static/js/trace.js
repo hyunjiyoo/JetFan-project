@@ -131,8 +131,10 @@ const inputData = () => {
             const note_status = data[1].status.status_code;
             if(chk_status === 200 && note_status === 200) {
                 alert('데이터가 정상적으로 입력되었습니다.');
-
+                
             } else {
+                alert('데이터 입력 실패');
+
                 console.log(chk_status);
                 console.log(note_status);
             }

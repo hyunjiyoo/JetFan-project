@@ -15,7 +15,7 @@ const setComboBox = (target, nextTarget) => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            // console.log('data :>> ', data);
+            console.log('data :>> ', data);
             switch(nextTarget) {
                 case 'branch':
                     const bran_name = data.filter((elem, i) => i%2===0);
@@ -42,9 +42,8 @@ const setComboBox = (target, nextTarget) => {
                     break;
                 
                 case 'jetfan_no':
-                    const jetfan_no = data.filter((elem, i) => i%3===0);
-                    const jetfan_code = data.filter((elem, i) => i%3===1);
-                    const jetfan_way = data.filter((elem, i) => i%3===2).filter((x, i, a) => a.indexOf(x) == i);;
+                    const jetfan_no = data[1].filter((elem, i) =>  i%2===0 );
+                    const jetfan_code = data[1].filter((elem, i) =>  i%2===1 );
 
                     // 방향 체크되어있으면 체크해제
                     if(document.querySelector('#wayOption1').checked) {
@@ -55,10 +54,10 @@ const setComboBox = (target, nextTarget) => {
                     }
 
                     // 방향 데이터 가져오기
-                    document.querySelector('#wayOption1 + label').innerText = jetfan_way[0] ?? '방향';
-                    document.querySelector('#wayOption2 + label').innerText = jetfan_way[1] ?? '방향';
+                    document.querySelector('#wayOption1 + label').innerText = data[0][0] ?? '방향';
+                    document.querySelector('#wayOption2 + label').innerText = data[0][1] ?? '방향';
 
-                    for(let i = 0; i < data.length/3; i++) {
+                    for(let i = 0; i < data[1].length/2; i++) {
                         let opt = document.createElement('option');
                         document.querySelector(`#${nextTarget}`).appendChild(opt);
                         opt.innerText = jetfan_no[i];
@@ -158,7 +157,7 @@ const getWayOption = (wayOption) => {
 
 // 업데이트 횟수조회 데이터 가져와서 circle 색상 채우기
 const changeCircleColor = (eval_update) => {
-    
+    // 나중에 '0'으로 수정될 예정
     if(eval_update === 1) {
         document.querySelector('#greenCircle').innerText = '○';
         document.querySelector('#redCircle').innerText = '●';

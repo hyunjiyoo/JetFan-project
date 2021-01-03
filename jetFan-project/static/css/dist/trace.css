@@ -21,6 +21,7 @@ select {
 textarea {
   width: 100% ;
   font-size: 13pt;
+  font-family: initial;
 }
 .table-title {
   text-align: center;

@@ -7,8 +7,11 @@ import json
 
 # 평가표 
 class Eval(MethodView):
+	global base_url
+	base_url = 'http://api.jetfan.ga:5007/'
+
 	def get(self):
-		r = requests.get('http://api.jetfan.ga:5007/division')
+		r = requests.get(base_url + 'division')
 		depts = json.loads(r.text)
 
 		years = []
@@ -24,7 +27,7 @@ class Eval(MethodView):
 		value = request.get_json()
 
 		# 전년도 평가표데이터 가져오기
-		r = requests.get('http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no'])
+		r = requests.get(base_url + 'evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no'])
 		basic_info = json.loads(r.text)
 		if(basic_info != []):
 			dataArr = basic_info[0]
@@ -38,7 +41,7 @@ class Eval(MethodView):
 		value = request.get_json()
 
 		# 평가표 데이터 입력/수정
-		url = 'http://api.jetfan.ga:5007/evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
+		url = base_url + 'evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 		r = requests.put(url, data=json.dumps(value['data']))
 		data = json.loads(r.text)
 
