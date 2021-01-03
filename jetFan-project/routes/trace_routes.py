@@ -18,7 +18,6 @@ class Trace(MethodView):
 		depts = json.loads(r.text)
 		years = []
 		year = datetime.date.today().year
-		# year = 2020
 		for i in range(year+1-2020):
 			years.append(year-i)
 
@@ -58,18 +57,16 @@ class Trace(MethodView):
 		noteCurYear = []
 		noteOneYearAgo = []
 		noteTowYearAgo = []
-		curYear = datetime.date.today().year
-		# curYear = 2020
 		for item in trace_note:
 			# log.log("trace_routes3 : tn_jetfan_code-->", item['tn_jetfan_code']) 
 			# log.log("trace_routes3 : tn_year-->", item['tn_year']) 
-			if(int(item['tn_year']) == curYear):
+			if(int(item['tn_year']) == int(value['year'])):
 				noteCurYear.append(item['tn_seq'])
 				noteCurYear.append(item['tn_content'])
-			elif(int(item['tn_year']) == curYear-1):
+			elif(int(item['tn_year']) == int(value['year'])-1):
 				noteOneYearAgo.append(item['tn_seq'])
 				noteOneYearAgo.append(item['tn_content'])
-			elif(int(item['tn_year']) == curYear-2):
+			elif(int(item['tn_year']) == int(value['year'])-2):
 				noteTowYearAgo.append(item['tn_seq'])
 				noteTowYearAgo.append(item['tn_content'])
 
