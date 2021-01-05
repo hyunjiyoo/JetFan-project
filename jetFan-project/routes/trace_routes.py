@@ -14,14 +14,25 @@ class Trace(MethodView):
 	base_url = 'http://api.jetfan.ga:5007/'
 
 	def get(self):
-		r = requests.get(base_url + 'division')
-		depts = json.loads(r.text)
+		div_r = requests.get(base_url + 'division')
+		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
+		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
+		jetfan_r = requests.get(base_url + 'jetfan-way/101/수리상행')
+		depts = json.loads(div_r.text)
+		brans = json.loads(bran_r.text)
+		tunns = json.loads(tunn_r.text)
+		jetfans = json.loads(jetfan_r.text)
+
 		years = []
 		year = datetime.date.today().year
 		for i in range(year+1-2020):
 			years.append(year-i)
 
-		return render_template('trace.html', depts=depts, years= years)
+		return render_template('trace.html', depts=depts,
+											 brans=brans,
+											 tunns=tunns,
+											 jetfans=jetfans, 
+											 years= years)
 	
 	def post(self):
 		dataArr = []

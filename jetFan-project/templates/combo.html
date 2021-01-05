@@ -5,7 +5,6 @@
     <table>
         <tr>
             <td>
-                <!-- <select name="year" id="year" data-div='eval_year' onchange='setStatusChk()'> -->
                 <select name="year" id="year" data-div='eval_year'>
                     {% for year in years %}
                     <option>{{ year }}</option>
@@ -37,10 +36,26 @@
             </td>
             <td rowspan=3>
                 <select size=4 name="tunnel" id="tunnel" onchange='setComboBox("tunnel", "jetfan_no")' data-div='tunnel'>
+                    {% for tunn in tunns %}
+                        {% if(tunn['tunn_name'] == '수리') %}
+                        <option value="{{ tunn['tunn_code'] }}" selected>
+                            {{ tunn['tunn_name'] }}
+                        </option>
+                        {% else %}
+                        <option value="{{ tunn['tunn_code'] }}">
+                            {{ tunn['tunn_name'] }}
+                        </option>
+                        {% endif %}
+                    {% endfor %}
                 </select>
             </td>
             <td rowspan=3>
-                <select size=4 name="jetfan_no" id="jetfan_no"  data-div='jetfan_no'>
+                <select size=4 name="jetfan_no" id="jetfan_no" data-div='jetfan_no'>
+                    {% for jetfan in jetfans %}
+                    <option value="{{ jetfan['jetfan_code'] }}">
+                        {{ jetfan['jetfan_no'] }}
+                    </option>
+                    {% endfor %}
                 </select>
             </td>
         </tr>
@@ -56,20 +71,25 @@
             </td>
             <td>
                 <div class='jetfan_way'>
-                    <input type="radio" id='wayOption1' name='way' onchange='getWayOption("wayOption1")'>
-                    <label for="wayOption1">방향</label>
+                    <input type="radio" id='wayOption1' name='way' onchange='getWayOption("wayOption1")' onclick='getWayOption("wayOption1")' checked>
+                    <label for="wayOption1">{{ tunns[0]['tunn_way1'] }}</label>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <select name="branch" id="branch" onchange='setComboBox("branch", "tunnel")' data-div='branch'>
+                    {% for bran in brans %}
+                    <option value="{{ bran['bran_code'] }}">
+                        {{ bran['bran_name'] }}
+                    </option>
+                    {% endfor %}
                 </select>
             </td>
             <td>
                 <div class='jetfan_way'>
-                    <input type="radio" id='wayOption2' name='way' onchange='getWayOption("wayOption2")'>
-                    <label for="wayOption2">방향</label>
+                    <input type="radio" id='wayOption2' name='way' onchange='getWayOption("wayOption2")' onclick='getWayOption("wayOption2")'>
+                    <label for="wayOption2">{{ tunns[0]['tunn_way2'] }}</label>
                 </div>
             </td>
         </tr>
