@@ -70,6 +70,7 @@ const getData = () => {
 
             // 비고 데이터
             const setNoteArr = (arr, opt) => {
+                console.log('arr :>> ', arr);
                 if(arr) {
                     const tn_seq = arr.filter((elem, i) => i%2===0);
                     const tn_content = arr.filter((elem, i) => i%2===1);

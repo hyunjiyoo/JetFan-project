@@ -14,11 +14,14 @@ class Combo(MethodView):
 		# 터널명 검색했을 때 터널 가져오기
 		if(value['div'] == 'tunn_search'):
 			r = requests.get(base_url + 'tunnel-search/' + value['div_code'])
-			tunnel = json.loads(r.text)
+			items = json.loads(r.text)
 
-			for item in tunnel:
-				dataArr.append(item['tunn_name'])
-				dataArr.append(item['tunn_code'])
+			tunnel = []
+			for item in items:
+				tunnel.append(item['tunn_name'])
+				tunnel.append(item['tunn_code'])
+			dataArr.append(tunnel)
+
 
 		# 본부 클릭했을 때 지사 가져오기
 		elif(value['div'] == 'branch'):
@@ -44,20 +47,33 @@ class Combo(MethodView):
 			jetfan_r = requests.get(base_url + 'jetfan/tunn_code/' + value['div_code'])
 			way = json.loads(way_r.text)
 			jetfan = json.loads(jetfan_r.text)
-			wayArr = []
-			jetfanArr = []
-
-			# 방향가져오기
-			wayArr.append(way[0]['tunn_way1'])
-			wayArr.append(way[0]['tunn_way2'])
 
 			# 제트팬가져오기
+			jetfanArr = []
 			for item in jetfan:
 				jetfanArr.append(item['jetfan_no'])
 				jetfanArr.append(item['jetfan_code'])
-
-			dataArr.append(wayArr)
 			dataArr.append(jetfanArr)
+
+			# 본부가져오기
+			divArr = []
+			divArr.append(jetfan[0]['div_name'])
+			divArr.append(jetfan[0]['div_code'])
+			dataArr.append(divArr)
+
+			# 지사가져오기
+			branArr = []
+			branArr.append(jetfan[0]['bran_name'])
+			branArr.append(jetfan[0]['bran_code'])
+			dataArr.append(branArr)
+			
+			# 방향가져오기
+			wayArr = []
+			wayArr.append(way[0]['tunn_way1'])
+			wayArr.append(way[0]['tunn_way2'])
+			dataArr.append(wayArr)
+			
+			
 		
 		# 방향 클릭했을 때 제트팬 가져오기
 		elif(value['div'] == 'jetfan_way'):

@@ -61,7 +61,8 @@
         </tr>
         <tr>
             <td>
-                <select name="dept" id="dept" onchange='setComboBox("dept", "branch")'>
+                <select name="dept" id="dept" onchange='setComboBox("dept", "branch")' onclick='setComboBox("dept", "branch")'>
+                <!-- <select name="dept" id="dept" onchange='setBranch()' onclick='setBranch()'> -->
                     {% for dept in depts %}
                     <option value="{{ dept['div_code'] }}">
                         {{ dept['div_name'] }}
