@@ -1,47 +1,16 @@
-// 본부 초기화
-const deptInit = () => {
-    const dept_opt = document.querySelectorAll(`#dept option`);
-    if(dept_opt.length) {
-        for(let i = dept_opt.length-1; i >= 0; i--) {
-            dept_opt[i].remove();
+// 초기화
+const init = (target) => {
+    const opt = document.querySelectorAll(`#${target} option`);
+    if(opt.length) {
+        for(let i = opt.length-1; i >= 0; i--) {
+            opt[i].remove();
         }
     }
 }
-
-// 지사 초기화
-const branInit = () => {
-    const branch_opt = document.querySelectorAll(`#branch option`);
-    if(branch_opt.length) {
-        for(let i = branch_opt.length-1; i >= 0; i--) {
-            branch_opt[i].remove();
-        }
-    }
-}
-
 // 방향 초기화
 const wayInit = () => {
     document.querySelector('#wayOption1 + label').innerText = '방향';
     document.querySelector('#wayOption2 + label').innerText = '방향';
-}
-
-// 터널 초기화
-const tunnInit = () => {
-    const tunn_opt = document.querySelectorAll(`#tunnel option`);
-    if(tunn_opt.length) {
-        for(let i = tunn_opt.length-1; i >= 0; i--) {
-            tunn_opt[i].remove();
-        }
-    }
-}
-
-// 제트팬 초기화
-const jetfanInit = () => {
-    const jetfan_opt = document.querySelectorAll(`#jetfan_no option`);
-    if(jetfan_opt.length) {
-        for(let i = jetfan_opt.length-1; i >= 0; i--) {
-            jetfan_opt[i].remove();
-        }
-    }
 }
 
 
@@ -62,7 +31,7 @@ const searchTunnel = () => {
         location.reload();
     }
 
-    deptInit(); branInit(); wayInit(); tunnInit(); jetfanInit();
+    init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); wayInit();
 
     const tunn_search = document.querySelector('#tunn_search').value;
     const data = { 'div_code': tunn_search, 'div': 'tunn_search'};
@@ -92,7 +61,7 @@ const searchTunnel = () => {
 
 // 본부선택시 지사세팅
 const setBranch = () => {
-    branInit(); tunnInit(); jetfanInit(); wayInit();
+    init('branch'); init('tunnel'); init('jetfan_no'); wayInit();
 
     const data = { 'div_code': document.querySelector(`#dept`).value, 'div': 'branch'};
 
@@ -102,15 +71,29 @@ const setBranch = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
 
-            const bran_name = data.filter((elem, i) => i%2===0);
-            const bran_code = data.filter((elem, i) => i%2===1);
+            const bran_name = data[0].filter((elem, i) => i%2===0);
+            const bran_code = data[0].filter((elem, i) => i%2===1);
 
-            for(let i = 0; i < data.length/2; i++) {
+            for(let i = 0; i < data[0].length/2; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#branch`).appendChild(opt);
                 opt.innerText = bran_name[i];
                 opt.value = bran_code[i];
             }
+            
+            const tunn_name = data[1].filter((elem, i) => i%2===0);
+            const tunn_code = data[1].filter((elem, i) => i%2===1);
+            if(document.querySelector(`#tunnel option`) === null) {
+                for(let i = 0; i < data[1].length/2; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#tunnel`).appendChild(opt);
+                    opt.innerText = tunn_name[i];
+                    opt.value = tunn_code[i];
+                }
+            }
+
+            document.querySelector('#wayOption1 + label').innerText = data[2] ?? '방향';
+            document.querySelector('#wayOption2 + label').innerText = data[3] ?? '방향';
         } 
     }
 
@@ -122,7 +105,7 @@ const setBranch = () => {
 
 // 지사선택시 터널세팅
 const setTunnel = () => {
-    tunnInit();
+    init('tunnel');
 
     const data = { 'div_code': document.querySelector(`#branch`).value, 'div': 'tunnel'};
     
@@ -151,7 +134,7 @@ const setTunnel = () => {
 
 // 터널선택시 제트팬세팅
 const setJetfan = () => {
-    jetfanInit();
+    init('jetfan_no');
 
     const data = { 'div_code': document.querySelector(`#tunnel`).value, 'div': 'jetfan_no'};
     
@@ -208,12 +191,7 @@ const setJetfan = () => {
 
 // 방향 클릭했을때 제트팬 가져오기
 const getWayOption = (wayOption) => {
-    const opt = document.querySelectorAll(`#jetfan_no option`);
-    if(opt.length) {
-        for(let i = opt.length-1; i >= 0; i--) {
-            opt[i].remove();
-        }
-    }
+    init('jetfan_no');
 
     const tunn_code = document.querySelector('#tunnel').value;
     const way = document.querySelector(`#${wayOption} + label`).textContent;
