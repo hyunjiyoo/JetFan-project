@@ -14,7 +14,7 @@
             <td>
                 <select id="update">
                     <option value="0">차수</option>
-                    <option value="1" selected >1</option>
+                    <option value="1" selected>1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                 </select>
@@ -35,7 +35,7 @@
                 <button type='button' id='search' onclick='searchTunnel()'>검색</button>
             </td>
             <td rowspan=3>
-                <select size=4 name="tunnel" id="tunnel" onchange='setComboBox("tunnel", "jetfan_no")' data-div='tunnel'>
+                <select size=4 name="tunnel" id="tunnel" onchange='setJetfan()'>
                     {% for tunn in tunns %}
                         {% if(tunn['tunn_name'] == '수리') %}
                         <option value="{{ tunn['tunn_code'] }}" selected>
@@ -50,7 +50,7 @@
                 </select>
             </td>
             <td rowspan=3>
-                <select size=4 name="jetfan_no" id="jetfan_no" data-div='jetfan_no'>
+                <select size=4 name="jetfan_no" id="jetfan_no">
                     {% for jetfan in jetfans %}
                     <option value="{{ jetfan['jetfan_code'] }}">
                         {{ jetfan['jetfan_no'] }}
@@ -61,8 +61,7 @@
         </tr>
         <tr>
             <td>
-                <select name="dept" id="dept" onchange='setComboBox("dept", "branch")' onclick='setComboBox("dept", "branch")'>
-                <!-- <select name="dept" id="dept" onchange='setBranch()' onclick='setBranch()'> -->
+                <select name="dept" id="dept" onchange='setBranch()'>
                     {% for dept in depts %}
                     <option value="{{ dept['div_code'] }}">
                         {{ dept['div_name'] }}
@@ -79,7 +78,7 @@
         </tr>
         <tr>
             <td>
-                <select name="branch" id="branch" onchange='setComboBox("branch", "tunnel")' data-div='branch'>
+                <select name="branch" id="branch" onchange='setTunnel()'>
                     {% for bran in brans %}
                     <option value="{{ bran['bran_code'] }}">
                         {{ bran['bran_name'] }}
