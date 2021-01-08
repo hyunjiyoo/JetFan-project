@@ -40,20 +40,40 @@ class Combo(MethodView):
 				tunnArr.append(item['tunn_name'])
 				tunnArr.append(item['tunn_code'])
 			
+			wayArr = []
+			wayArr.append(tunn[0]['tunn_way1'])
+			wayArr.append(tunn[0]['tunn_way2'])
+
 			dataArr.append(branArr)
 			dataArr.append(tunnArr)
-			dataArr.append(tunn[0]['tunn_way1'])
-			dataArr.append(tunn[0]['tunn_way2'])
+			dataArr.append(wayArr)
 
 
 		# 지사 클릭
 		elif(value['div'] == 'tunnel'):
 			r = requests.get(base_url + 'tunnel/tunn_bran_code/' + value['div_code'])
 			tunnel = json.loads(r.text)
+			jetfan_r = requests.get(base_url + 'jetfan-way/' + str(tunnel[0]['tunn_code']) + '/' + tunnel[0]['tunn_way1'])
+			jetfan = json.loads(jetfan_r.text)
 
+			tunnArr = []
 			for item in tunnel:
-				dataArr.append(item['tunn_name'])
-				dataArr.append(item['tunn_code'])
+				tunnArr.append(item['tunn_name'])
+				tunnArr.append(item['tunn_code'])
+			
+			wayArr = []
+			wayArr.append(tunnel[0]['tunn_way1'])
+			wayArr.append(tunnel[0]['tunn_way2'])
+
+			jetfanArr = []
+			for item in jetfan:
+				jetfanArr.append(item['jetfan_no'])
+				jetfanArr.append(item['jetfan_code'])
+
+			dataArr.append(tunnArr)
+			dataArr.append(wayArr)
+			dataArr.append(jetfanArr)
+
 
 
 		# 터널 클릭

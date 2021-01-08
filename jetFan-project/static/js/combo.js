@@ -7,12 +7,6 @@ const init = (target) => {
         }
     }
 }
-// 방향 초기화
-const wayInit = () => {
-    document.querySelector('#wayOption1 + label').innerText = '방향';
-    document.querySelector('#wayOption2 + label').innerText = '방향';
-}
-
 
 // 터널명 입력했을 때 엔터키로 검색 클릭
 const tunnelEnterKeyEvent = (() => {
@@ -31,7 +25,7 @@ const searchTunnel = () => {
         location.reload();
     }
 
-    init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); wayInit();
+    init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');
 
     const tunn_search = document.querySelector('#tunn_search').value;
     const data = { 'div_code': tunn_search, 'div': 'tunn_search'};
@@ -61,7 +55,7 @@ const searchTunnel = () => {
 
 // 본부선택시 지사세팅
 const setBranch = () => {
-    init('branch'); init('tunnel'); init('jetfan_no'); wayInit();
+    init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');
 
     const data = { 'div_code': document.querySelector(`#dept`).value, 'div': 'branch'};
 
@@ -91,9 +85,15 @@ const setBranch = () => {
                     opt.value = tunn_code[i];
                 }
             }
+            
+            if(document.querySelector(`#jetfan_way option`) === null) {
+                for(let i = 0; i < data[2].length; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_way`).appendChild(opt);
+                    opt.innerText = data[2][i];
+                }
+            }
 
-            document.querySelector('#wayOption1 + label').innerText = data[2] ?? '방향';
-            document.querySelector('#wayOption2 + label').innerText = data[3] ?? '방향';
         } 
     }
 
@@ -105,7 +105,7 @@ const setBranch = () => {
 
 // 지사선택시 터널세팅
 const setTunnel = () => {
-    init('tunnel');
+    init('tunnel'); init('jetfan_way'); init('jetfan_no');
 
     const data = { 'div_code': document.querySelector(`#branch`).value, 'div': 'tunnel'};
     
@@ -114,14 +114,29 @@ const setTunnel = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
-            const tunn_name = data.filter((elem, i) => i%2===0);
-            const tunn_code = data.filter((elem, i) => i%2===1);
 
-            for(let i = 0; i < data.length/2; i++) {
+            const tunn_name = data[0].filter((elem, i) => i%2===0);
+            const tunn_code = data[0].filter((elem, i) => i%2===1);
+            for(let i = 0; i < data[0].length/2; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#tunnel`).appendChild(opt);
                 opt.innerText = tunn_name[i];
                 opt.value = tunn_code[i];
+            }
+
+            for(let i = 0; i < data[1].length; i++) {
+                let opt = document.createElement('option');
+                document.querySelector(`#jetfan_way`).appendChild(opt);
+                opt.innerText = data[1][i];
+            }
+
+            const jetfan_name = data[2].filter((elem, i) => i%2===0);
+            const jetfan_code = data[2].filter((elem, i) => i%2===1);
+            for(let i = 0; i < data[2].length/2; i++) {
+                let opt = document.createElement('option');
+                document.querySelector(`#jetfan_no`).appendChild(opt);
+                opt.innerText = jetfan_name[i];
+                opt.value = jetfan_code[i];
             }
         }
     }
@@ -134,7 +149,7 @@ const setTunnel = () => {
 
 // 터널선택시 제트팬세팅
 const setJetfan = () => {
-    init('jetfan_no');
+    init('jetfan_no'); init('jetfan_way');
 
     const data = { 'div_code': document.querySelector(`#tunnel`).value, 'div': 'jetfan_no'};
     
@@ -142,20 +157,8 @@ const setJetfan = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
 
-            const jetfan_no = data[0].filter((elem, i) =>  i%2===0 );
-            const jetfan_code = data[0].filter((elem, i) =>  i%2===1 );
-
-
-            // 방향 체크되어있으면 체크해제
-            if(document.querySelector('#wayOption1').checked) {
-                document.querySelector('#wayOption1').checked = false;
-            }
-            if(document.querySelector('#wayOption2').checked) {
-                document.querySelector('#wayOption2').checked = false;
-            }
-
-            
             // 터널명 검색시 해당 터널에 맞는 본부, 지사 가져오기
             if(document.querySelector('#dept option') === null) {
                 let dept_opt = document.createElement('option');
@@ -171,9 +174,17 @@ const setJetfan = () => {
                 bran_opt.value = data[2][1];
             }
             
-            document.querySelector('#wayOption1 + label').innerText = data[3][0] ?? '방향';
-            document.querySelector('#wayOption2 + label').innerText = data[3][1] ?? '방향';
+            // 방향
+            for(let i = 0; i < data[3].length; i++) {
+                let opt = document.createElement('option');
+                document.querySelector(`#jetfan_way`).appendChild(opt);
+                opt.innerText = data[3][i];
+                // if(i === 0) opt.selected = true;
+            }
 
+            // 제트팬
+            const jetfan_no = data[0].filter((elem, i) =>  i%2===0 );
+            const jetfan_code = data[0].filter((elem, i) =>  i%2===1 );
             for(let i = 0; i < data[0].length/2; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#jetfan_no`).appendChild(opt);
@@ -182,7 +193,6 @@ const setJetfan = () => {
             }
         }
     }
-
     xhttp.open("POST", "/combo", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
@@ -190,7 +200,7 @@ const setJetfan = () => {
 
 
 // 방향 클릭했을때 제트팬 가져오기
-const getWayOption = (wayOption) => {
+const getWayOption = () => {
     init('jetfan_no');
 
     const tunn_code = document.querySelector('#tunnel').value;

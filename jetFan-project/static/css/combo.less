@@ -12,14 +12,6 @@
                 font-size: @basic-font;
                 padding: @table-padding;
 
-                &:first-child {
-                    width: 1.5%;
-                }
-
-                &:nth-child(2) {
-                    width: 0.3%;
-                }
-
                 .jetfan_way {
                     display: flex;
                     align-items: center;
@@ -28,16 +20,24 @@
                 input[type='radio'] {
                     width: 20px;
                 }
-
-                #tunnel, #jetfan_no {
-                    height: 100px;
-                }
             }
         }
         
         input, select, button#search, button#select {
             width: 100%;
             font-size: @basic-font;
+        }
+
+        button#search, button#select {
+            background-color: #458eb0;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            height: 26px;
+            cursor: pointer;
+            &:hover {
+                background-color: #3c72a6;
+            }
         }
     }
 
