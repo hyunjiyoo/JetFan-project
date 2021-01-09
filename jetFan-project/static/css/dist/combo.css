@@ -18,7 +18,8 @@
 #body-header table input,
 #body-header table select,
 #body-header table button#search,
-#body-header table button#select {
+#body-header table button#select,
+#body-header table button#initBtn {
   width: 100%;
   font-size: 13pt;
 }
