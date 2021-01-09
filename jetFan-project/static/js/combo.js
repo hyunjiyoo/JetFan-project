@@ -203,7 +203,7 @@ const setJetfan = () => {
 const clickWay = () => {
     init('jetfan_no');
     
-
+    test
     // const tunn_code = document.querySelector('#tunnel').value;
     // const way = document.querySelector(`#${wayOption} + label`).textContent;
     // const data = { 'tunn_code': tunn_code, 
