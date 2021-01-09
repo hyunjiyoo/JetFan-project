@@ -22,6 +22,7 @@ input::-webkit-inner-spin-button {
 #contents #info table th,
 #contents #info table td {
   border: 1px solid #000;
+  height: 34px;
 }
 #contents #info table th {
   width: 2%;
@@ -53,7 +54,6 @@ input::-webkit-inner-spin-button {
   text-align: center;
 }
 #contents #operation table input[type='number'] {
-  border: none;
   width: 100%;
   text-align: center;
   font-size: 13pt;

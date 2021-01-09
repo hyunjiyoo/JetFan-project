@@ -5,14 +5,15 @@ import datetime
 import requests
 import json
 
+from . import Base_url
+global base_url
+base_url = Base_url.go_url
+
 # import log
 
 # 추적도면 GET
 # 추적도면 POST : 시설이력, 운전점검
 class Trace(MethodView):
-	global base_url
-	base_url = 'http://api.jetfan.ga:5007/'
-
 	def get(self):
 		div_r = requests.get(base_url + 'division')
 		bran_r = requests.get(base_url + 'branch/bran_div_code/11')

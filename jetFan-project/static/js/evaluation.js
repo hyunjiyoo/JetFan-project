@@ -117,131 +117,132 @@ const getData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
+             
+            changeCircleColor(data.eval_update);
+
+            // 선택한 제트팬에 대한 기본 데이터
+            document.querySelector('#tunn_name').innerText = data.tunn_name ?? '';
+            document.querySelector('#way').innerText = data.jetfan_way ?? '';
+            document.querySelector('#lane').innerText = data.jetfan_lane ?? '';
+            document.querySelector('#jetfan_name').innerText = data.jetfan_no ?? '';
+            document.querySelector('#jetfan_name').dataset.update = data.eval_update ?? '';
+            document.querySelector('#jetfan_name').dataset.ymd = data.eval_ymd ?? '';
+            document.querySelector('#jetfan_name').dataset.emp = data.eval_emp ?? '';
+            document.querySelector('#jetfan_name').dataset.company = data.eval_company ?? '';
+
+            
+            // 전년도 데이터 뿌려주기
+            // 1. 작동기능 지수 - 진동
+            document.querySelector('#eval_vibrate_y_1').value = data.eval_vibrate_y_1 ?? '';
+            document.querySelector('#eval_vibrate_x_1').value = data.eval_vibrate_x_1 ?? '';
+            document.querySelector('#eval_vibrate_z_1').value = data.eval_vibrate_z_1 ?? '';
+            document.querySelector('#eval_vibrate_y_2').value = data.eval_vibrate_y_2 ?? '';
+            document.querySelector('#eval_vibrate_x_2').value = data.eval_vibrate_x_2 ?? '';
+            document.querySelector('#eval_vibrate_z_2').value = data.eval_vibrate_z_2 ?? '';
+            document.querySelector('#eval_vibrate').innerText = data.eval_vibrate ?? '';
+            document.querySelector('#eval_vibrate_score').innerText = data.eval_vibrate_score ?? '';
+            
+            // 1. 작동기능 지수 - 운전전류
+            document.querySelector('#eval_amp_r').value = data.eval_amp_r ?? '';
+            document.querySelector('#eval_amp_s').value = data.eval_amp_s ?? '';
+            document.querySelector('#eval_amp_t').value = data.eval_amp_t ?? '';
+            document.querySelector('#eval_temp').value = data.eval_temp ?? '';
+            document.querySelector('#eval_amp').innerText = data.eval_amp ?? '';
+            document.querySelector('#eval_amp_score').innerText = data.eval_amp_score ?? '';
+            
+            
+            // 1. 작동기능 지수 - 베어링온도, 모터표면온도, 절연상태, 전압
+            document.querySelector('#eval_beartemp').value = data.eval_beartemp ?? '';
+            document.querySelector('#eval_beartemp_score').innerText = data.eval_beartemp_score ?? '';
+            document.querySelector('#eval_motortemp').value = data.eval_motortemp ?? '';
+            document.querySelector('#eval_motortemp_score').innerText = data.eval_motortemp_score ?? '';
+            document.querySelector('#eval_motorinsul').value = data.eval_motorinsul ?? '';
+            document.querySelector('#eval_motorinsul_score').innerText = data.eval_motorinsul_score ?? '';
+            document.querySelector('#eval_volt').value = data.eval_volt ?? '';
+            
+            // 1. 작동기능 지수 - 소계
+            document.querySelector('#eval_operate_sum').innerText = data.eval_operate_sum ?? '';
+            
+            
+            // 2. 외관점검 지수
+            const selectedOption = (data) => {
+                let index;
+                switch(data) {
+                    case '없음':
+                    case '양호':
+                    case '10일이하':
+                        index = 0;
+                        break;
+                    case '있음':
+                    case '불량':
+                    case '25%':
+                    case '11일이상':
+                        index = 1;
+                        break;
+                    case '50%':
+                    case '15일이상':
+                        index = 2;
+                        break;
+                    case '100%':
+                    case '19일이상':
+                        index = 3;
+                        break;
+                    case '천공_낙하물':
+                    case '22일이상':
+                        index = 4;
+                        break;
+                }
+                return index;
+            }
+            
+            // 2. 외관점검 지수 - 콤보박스
+            document.querySelector(`#eval_braidnoise`).selectedIndex = selectedOption(data.eval_braidnoise);
+            document.querySelector(`#eval_braidbroken`).selectedIndex = selectedOption(data.eval_braidbroken);
+            document.querySelector(`#eval_bearnoise`).selectedIndex = selectedOption(data.eval_bearnoise);
+            document.querySelector(`#eval_casing`).selectedIndex = selectedOption(data.eval_casing);
+            document.querySelector(`#eval_exterior`).selectedIndex = selectedOption(data.eval_exterior);
+            document.querySelector(`#eval_buckle`).selectedIndex = selectedOption(data.eval_buckle);
+            document.querySelector(`#eval_eyebolt`).selectedIndex = selectedOption(data.eval_eyebolt);
+            document.querySelector(`#eval_bracket`).selectedIndex = selectedOption(data.eval_bracket);
+            document.querySelector(`#eval_anchor`).selectedIndex = selectedOption(data.eval_anchor);
+            document.querySelector(`#eval_chain`).selectedIndex = selectedOption(data.eval_chain);
+            
+            // 2. 외관점검 지수 - 콤보박스
+            document.querySelector('#eval_braidnoise_score').innerText = data.eval_braidnoise_score ?? '';
+            document.querySelector('#eval_braidbroken_score').innerText = data.eval_braidbroken_score ?? '';
+            document.querySelector('#eval_bearnoise_score').innerText = data.eval_bearnoise_score ?? '';
+            document.querySelector('#eval_casing_score').innerText = data.eval_casing_score ?? '';
+            document.querySelector('#eval_exterior_score').innerText = data.eval_exterior_score ?? '';
+            document.querySelector('#eval_buckle_score').innerText = data.eval_buckle_score ?? '';
+            document.querySelector('#eval_eyebolt_score').innerText = data.eval_eyebolt_score ?? '';
+            document.querySelector('#eval_bracket_score').innerText = data.eval_bracket_score ?? '';
+            document.querySelector('#eval_anchor_score').innerText = data.eval_anchor_score ?? '';
+            document.querySelector('#eval_chain_score').innerText = data.eval_chain_score ?? '';
+
+            // 2. 외관점검 지수 - 소계
+            document.querySelector('#eval_exterior_sum').innerText = data.eval_exterior_sum ?? '';
+
+
+            // 3. 사용연수 지수
+            document.querySelector('#eval_useyear').value = data.eval_useyear ?? '';
+            document.querySelector('#eval_useyear').dataset.durable = data.jetfan_durable ?? ''; // 제트팬 내구 연수
+            document.querySelector('#eval_useyear_score').innerText = data.eval_useyear_score ?? '';
+            document.querySelector('#eval_useyear_sum').innerText = data.eval_useyear_sum ?? '';
+            
+            // 4. 사용환경 지수
+            document.querySelector(`#eval_snow`).selectedIndex = selectedOption(data.eval_snow);
+            document.querySelector('#eval_snow_score').innerText = data.eval_snow_score ?? '';
+            document.querySelector('#eval_env_sum').innerText = data.eval_env_sum ?? '';
+            
+            // 점수합계
+            document.querySelector('#eval_score_sum').innerText = data.eval_score_sum ?? '';
+            document.querySelector('#eval_twenty').innerText = data.eval_twenty ?? '';
+            document.querySelector('#eval_grade').innerText = data.eval_grade ?? '';
+        
             if(data.length === 0) {
                 alert('전년도 데이터가 없습니다.');
-
-            } else {
-                changeCircleColor(data.eval_update);
-
-                // 선택한 제트팬에 대한 기본 데이터
-                document.querySelector('#tunn_name').innerText = data.tunn_name;
-                document.querySelector('#way').innerText = data.jetfan_way;
-                document.querySelector('#lane').innerText = data.jetfan_lane;
-                document.querySelector('#jetfan_name').innerText = data.jetfan_no;
-                document.querySelector('#jetfan_name').dataset.update = data.eval_update;
-                document.querySelector('#jetfan_name').dataset.ymd = data.eval_ymd;
-                document.querySelector('#jetfan_name').dataset.emp = data.eval_emp;
-                document.querySelector('#jetfan_name').dataset.company = data.eval_company;
-
-                
-                // 전년도 데이터 뿌려주기
-                // 1. 작동기능 지수 - 진동
-                document.querySelector('#eval_vibrate_y_1').value = data.eval_vibrate_y_1;
-                document.querySelector('#eval_vibrate_x_1').value = data.eval_vibrate_x_1;
-                document.querySelector('#eval_vibrate_z_1').value = data.eval_vibrate_z_1;
-                document.querySelector('#eval_vibrate_y_2').value = data.eval_vibrate_y_2;
-                document.querySelector('#eval_vibrate_x_2').value = data.eval_vibrate_x_2;
-                document.querySelector('#eval_vibrate_z_2').value = data.eval_vibrate_z_2;
-                document.querySelector('#eval_vibrate').innerText = data.eval_vibrate;
-                document.querySelector('#eval_vibrate_score').innerText = data.eval_vibrate_score;
-                
-                // 1. 작동기능 지수 - 운전전류
-                document.querySelector('#eval_amp_r').value = data.eval_amp_r;
-                document.querySelector('#eval_amp_s').value = data.eval_amp_s;
-                document.querySelector('#eval_amp_t').value = data.eval_amp_t;
-                document.querySelector('#eval_temp').value = data.eval_temp;
-                document.querySelector('#eval_amp').innerText = data.eval_amp;
-                document.querySelector('#eval_amp_score').innerText = data.eval_amp_score;
-                
-                
-                // 1. 작동기능 지수 - 베어링온도, 모터표면온도, 절연상태, 전압
-                document.querySelector('#eval_beartemp').value = data.eval_beartemp;
-                document.querySelector('#eval_beartemp_score').innerText = data.eval_beartemp_score;
-                document.querySelector('#eval_motortemp').value = data.eval_motortemp;
-                document.querySelector('#eval_motortemp_score').innerText = data.eval_motortemp_score;
-                document.querySelector('#eval_motorinsul').value = data.eval_motorinsul;
-                document.querySelector('#eval_motorinsul_score').innerText = data.eval_motorinsul_score;
-                document.querySelector('#eval_volt').value = data.eval_volt;
-                
-                // 1. 작동기능 지수 - 소계
-                document.querySelector('#eval_operate_sum').innerText = data.eval_operate_sum;
-                
-                
-                // 2. 외관점검 지수
-                const selectedOption = (data) => {
-                    let index;
-                    switch(data) {
-                        case '없음':
-                        case '양호':
-                        case '10일이하':
-                            index = 0;
-                            break;
-                        case '있음':
-                        case '불량':
-                        case '25%':
-                        case '11일이상':
-                            index = 1;
-                            break;
-                        case '50%':
-                        case '15일이상':
-                            index = 2;
-                            break;
-                        case '100%':
-                        case '19일이상':
-                            index = 3;
-                            break;
-                        case '천공_낙하물':
-                        case '22일이상':
-                            index = 4;
-                            break;
-                    }
-                    return index;
-                }
-                
-                // 2. 외관점검 지수 - 콤보박스
-                document.querySelector(`#eval_braidnoise`).selectedIndex = selectedOption(data.eval_braidnoise);
-                document.querySelector(`#eval_braidbroken`).selectedIndex = selectedOption(data.eval_braidbroken);
-                document.querySelector(`#eval_bearnoise`).selectedIndex = selectedOption(data.eval_bearnoise);
-                document.querySelector(`#eval_casing`).selectedIndex = selectedOption(data.eval_casing);
-                document.querySelector(`#eval_exterior`).selectedIndex = selectedOption(data.eval_exterior);
-                document.querySelector(`#eval_buckle`).selectedIndex = selectedOption(data.eval_buckle);
-                document.querySelector(`#eval_eyebolt`).selectedIndex = selectedOption(data.eval_eyebolt);
-                document.querySelector(`#eval_bracket`).selectedIndex = selectedOption(data.eval_bracket);
-                document.querySelector(`#eval_anchor`).selectedIndex = selectedOption(data.eval_anchor);
-                document.querySelector(`#eval_chain`).selectedIndex = selectedOption(data.eval_chain);
-                
-                // 2. 외관점검 지수 - 콤보박스
-                document.querySelector('#eval_braidnoise_score').innerText = data.eval_braidnoise_score;
-                document.querySelector('#eval_braidbroken_score').innerText = data.eval_braidbroken_score;
-                document.querySelector('#eval_bearnoise_score').innerText = data.eval_bearnoise_score;
-                document.querySelector('#eval_casing_score').innerText = data.eval_casing_score;
-                document.querySelector('#eval_exterior_score').innerText = data.eval_exterior_score;
-                document.querySelector('#eval_buckle_score').innerText = data.eval_buckle_score;
-                document.querySelector('#eval_eyebolt_score').innerText = data.eval_eyebolt_score;
-                document.querySelector('#eval_bracket_score').innerText = data.eval_bracket_score;
-                document.querySelector('#eval_anchor_score').innerText = data.eval_anchor_score;
-                document.querySelector('#eval_chain_score').innerText = data.eval_chain_score;
-    
-                // 2. 외관점검 지수 - 소계
-                document.querySelector('#eval_exterior_sum').innerText = data.eval_exterior_sum;
-
-
-                // 3. 사용연수 지수
-                document.querySelector('#eval_useyear').value = data.eval_useyear;
-                document.querySelector('#eval_useyear').dataset.durable = data.jetfan_durable; // 제트팬 내구 연수
-                document.querySelector('#eval_useyear_score').innerText = data.eval_useyear_score;
-                document.querySelector('#eval_useyear_sum').innerText = data.eval_useyear_sum;
-                
-                // 4. 사용환경 지수
-                document.querySelector(`#eval_snow`).selectedIndex = selectedOption(data.eval_snow);
-                document.querySelector('#eval_snow_score').innerText = data.eval_snow_score;
-                document.querySelector('#eval_env_sum').innerText = data.eval_env_sum;
-                
-                // 점수합계
-                document.querySelector('#eval_score_sum').innerText = data.eval_score_sum;
-                document.querySelector('#eval_twenty').innerText = data.eval_twenty;
-                document.querySelector('#eval_grade').innerText = data.eval_grade;
             }
+        
         }
     }
 
