@@ -200,33 +200,34 @@ const setJetfan = () => {
 
 
 // 방향 클릭했을때 제트팬 가져오기
-const getWayOption = () => {
+const clickWay = () => {
     init('jetfan_no');
+    
 
-    const tunn_code = document.querySelector('#tunnel').value;
-    const way = document.querySelector(`#${wayOption} + label`).textContent;
-    const data = { 'tunn_code': tunn_code, 
-                   'jetfan_way': way, 
-                   'div': 'jetfan_way'};
+    // const tunn_code = document.querySelector('#tunnel').value;
+    // const way = document.querySelector(`#${wayOption} + label`).textContent;
+    // const data = { 'tunn_code': tunn_code, 
+    //                'jetfan_way': way, 
+    //                'div': 'jetfan_way'};
                 
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            let data = JSON.parse(this.responseText);
-            const jetfan_no = data.filter((elem, i) => i%2===0);
-            const jetfan_code = data.filter((elem, i) => i%2===1);
+    // const xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function() {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //         let data = JSON.parse(this.responseText);
+    //         const jetfan_no = data.filter((elem, i) => i%2===0);
+    //         const jetfan_code = data.filter((elem, i) => i%2===1);
 
-            for(let i = 0; i < data.length/2; i++) {
-                let opt = document.createElement('option');
-                document.querySelector('#jetfan_no').appendChild(opt);
-                opt.innerText = jetfan_no[i];
-                opt.value = jetfan_code[i];
-            }
-        }
-    }
-    xhttp.open("POST", "/combo", true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(data));
+    //         for(let i = 0; i < data.length/2; i++) {
+    //             let opt = document.createElement('option');
+    //             document.querySelector('#jetfan_no').appendChild(opt);
+    //             opt.innerText = jetfan_no[i];
+    //             opt.value = jetfan_code[i];
+    //         }
+    //     }
+    // }
+    // xhttp.open("POST", "/combo", true);
+    // xhttp.setRequestHeader('Content-Type', 'application/json');
+    // xhttp.send(JSON.stringify(data));
 }
 
 
