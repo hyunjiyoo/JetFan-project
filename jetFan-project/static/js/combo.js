@@ -39,7 +39,6 @@ const searchTunnel = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
             
             
             // 본부
@@ -110,12 +109,6 @@ const searchTunnel = () => {
             }
 
 
-
-
-
-
-
-
         }
     }
 
@@ -135,7 +128,6 @@ const setBranch = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
 
             const bran_name = data[0].filter((elem, i) => i%2===0);
             const bran_code = data[0].filter((elem, i) => i%2===1);
@@ -157,14 +149,28 @@ const setBranch = () => {
                 }
             }
             
-            if(document.querySelector(`#jetfan_way option`) === null) {
-                for(let i = 0; i < data[2].length; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_way`).appendChild(opt);
-                    opt.innerText = data[2][i];
+            if(data.length > 2) {
+                if(document.querySelector(`#jetfan_way option`) === null) {
+                    for(let i = 0; i < data[2].length; i++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#jetfan_way`).appendChild(opt);
+                        opt.innerText = data[2][i];
+                    }
                 }
             }
 
+            if(data.length > 3) {
+                const jetfan_name = data[3].filter((elem, i) => i%2===0);
+                const jetfan_code = data[3].filter((elem, i) => i%2===1);
+                if(document.querySelector(`#jetfan_no option`) === null) {
+                    for(let i = 0; i < data[3].length/2; i++) {
+                        let opt = document.createElement('option');
+                        document.querySelector(`#jetfan_no`).appendChild(opt);
+                        opt.innerText = jetfan_name[i];
+                        opt.value = jetfan_code[i];
+                    }
+                }
+            }
         } 
     }
 
@@ -184,7 +190,6 @@ const setTunnel = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
 
             const tunn_name = data[0].filter((elem, i) => i%2===0);
             const tunn_code = data[0].filter((elem, i) => i%2===1);
@@ -250,7 +255,6 @@ const setJetfan = () => {
                 let opt = document.createElement('option');
                 document.querySelector(`#jetfan_way`).appendChild(opt);
                 opt.innerText = data[3][i];
-                // if(i === 0) opt.selected = true;
             }
 
             // 제트팬
@@ -282,7 +286,6 @@ const clickWay = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
 
             const jetfan_no = data.filter((elem, i) =>  i%2===0 );
             const jetfan_code = data.filter((elem, i) =>  i%2===1 );

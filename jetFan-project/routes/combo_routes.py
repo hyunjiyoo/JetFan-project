@@ -15,7 +15,7 @@ class Combo(MethodView):
 		if(value['div'] == 'tunn_search'):
 			tunn_r = requests.get(base_url + 'tunnel-search/' + value['div_code'])
 			tunn_items = json.loads(tunn_r.text)
-			
+
 			div_r = requests.get(base_url + 'division')
 			div_items = json.loads(div_r.text)
 
@@ -67,26 +67,38 @@ class Combo(MethodView):
 		elif(value['div'] == 'branch'):
 			bran_r = requests.get(base_url + 'branch/bran_div_code/' + value['div_code'])
 			branch = json.loads(bran_r.text)
-			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/' + str(branch[0]['bran_code']))
-			tunn = json.loads(tunn_r.text)
-			
+
 			branArr = []
 			for item in branch:
 				branArr.append(item['bran_name'])
 				branArr.append(item['bran_code'])
 			
+			dataArr.append(branArr)
+
+			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/' + str(branch[0]['bran_code']))
+			tunn = json.loads(tunn_r.text)
+
 			tunnArr = []
 			for item in tunn:
 				tunnArr.append(item['tunn_name'])
 				tunnArr.append(item['tunn_code'])
-			
-			wayArr = []
-			wayArr.append(tunn[0]['tunn_way1'])
-			wayArr.append(tunn[0]['tunn_way2'])
-
-			dataArr.append(branArr)
 			dataArr.append(tunnArr)
-			dataArr.append(wayArr)
+
+			if(tunn[0]['tunn_way1'] is not None):
+				jetfan_r = requests.get(base_url + 'jetfan-way/' + str(tunn[0]['tunn_code']) + '/' + tunn[0]['tunn_way1']) 
+				jetfan_items = json.loads(jetfan_r.text)
+				
+				wayArr = []
+				wayArr.append(tunn[0]['tunn_way1'])
+				wayArr.append(tunn[0]['tunn_way2'])
+
+				jetfanArr = []
+				for item in jetfan_items:
+					jetfanArr.append(item['jetfan_no'])
+					jetfanArr.append(item['jetfan_code'])
+				
+				dataArr.append(wayArr)
+				dataArr.append(jetfanArr)
 
 
 		# 지사 클릭

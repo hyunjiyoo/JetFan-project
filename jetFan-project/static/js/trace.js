@@ -11,6 +11,30 @@ const changeYear = () => {
     document.querySelector('#towYearAgo').innerText = curYear-2 + '년도';
 }
 
+// 현상태점검현황, 비고데이터 초기화
+const initData = () => {
+    const tc_contents = document.querySelectorAll('#curStatusChk textarea');
+    for(content of tc_contents) {
+        content.value = '';
+    }
+
+    const tn_contents = document.querySelectorAll('#etc textarea');
+    for(content of tn_contents) {
+        content.value = '';
+    }
+
+    const noteOneYearAgo = document.querySelectorAll('.noteOneYearAgo');
+    for(content of noteOneYearAgo) {
+        content.innerText = '';
+    }
+
+    const noteTowYearAgo = document.querySelectorAll('.noteTowYearAgo');
+    for(content of noteTowYearAgo) {
+        content.innerText = '';
+    }
+}
+
+
 // 콤보박스 아래 데이터 조회 버튼클릭 함수
 const getData = () => {
     const jetfan_no = document.querySelector('#jetfan_no').value;
@@ -22,9 +46,10 @@ const getData = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
+            console.log('data22222 :>> ', data);
 
             changeCircleColor(data[0].eval_update);
+            initData();
 
             // 시설 이력
             statusArr = data[0];
@@ -51,6 +76,12 @@ const getData = () => {
             document.querySelector('#eval_amp_s').innerText = statusArr.eval_amp_s ?? '';
             document.querySelector('#eval_amp_t').innerText = statusArr.eval_amp_t ?? '';
             document.querySelector('#eval_volt').innerText = statusArr.eval_volt ?? '';
+
+            
+            if(data.length !== 5) {
+                alert('평가표 데이터가 존재하지 않습니다.');
+                return false;
+            }
 
             
             // 현 상태 점검 현황
@@ -154,17 +185,20 @@ const inputData = () => {
             const chk_status = data[0].status.status_code;
             const note_status = data[1].status.status_code;
 
-            if(chk_status === 200 && note_status === 200) {
-                alert('데이터가 정상적으로 입력되었습니다.');
-                
-            } else {
-                alert('데이터 입력 실패');
 
-                console.log(chk_status);
-                console.log(note_status);
+            if(chk_status === 200 && note_status === 200) {
+                alert(data[0].status.status_msg);                
+                alert(data[1].status.status_msg);
+
+            } else {
+                alert(data[0].status.status_msg);
+                alert(data[1].status.status_msg);
+
             }
-        } else {
+
+        } else if(this.status === 500) {
             alert('서버 응답 실패');
+            return false;
         }
     }
 
