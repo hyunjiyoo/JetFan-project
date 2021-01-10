@@ -24,8 +24,12 @@
   font-family: initial;
   margin: 2px 0;
 }
+#contents table #photo div {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
 #contents table .refInput {
-  width: 90%;
+  width: 87%;
   font-size: 13pt;
   padding: 5px 3px;
   font-family: initial;
@@ -64,10 +68,15 @@
   font-size: 13pt;
 }
 #contents table #comment input {
-  width: 63%;
+  width: 87%;
   display: inline;
+  margin-bottom: 5px;
 }
-#contents table #comment button#addBtn {
+#contents table #comment #myFile {
+  width: 45%;
+  height: 35px;
+}
+#contents table #comment #addBtn {
   font-size: 13pt;
   background-color: #458eb0;
   color: #fff;
@@ -77,7 +86,7 @@
   float: right;
   cursor: pointer;
 }
-#contents table #comment button#addBtn:hover {
+#contents table #comment #addBtn:hover {
   background-color: #3c72a6;
 }
 #contents button#submitBtn {

@@ -1,5 +1,6 @@
 window.onload = () => {
     document.querySelector('#addBtn').addEventListener('click', addContent);
+    
 }
 
 
@@ -26,11 +27,18 @@ const initData = () => {
         }
     }
 
+    const opts = document.querySelectorAll('#jetfan option');
+    if(opts.length) {
+        for(let i = opts.length-1; i >= 0; i--) {
+            opts[i].remove();
+        }
+    }
 }
 
 
-const getData = () => {
 
+
+const getData = () => {
     initData();
 
     const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
@@ -39,17 +47,21 @@ const getData = () => {
     const tunn_code = document.querySelector('#tunnel').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
+    const way = document.querySelector('#jetfan_way').value;
+
     const data = {'tunn_code': tunn_code,
                   'year': year,
-                  'year_no': year_no};
+                  'year_no': year_no,
+                  'way': way,
+                  'option': 'getContent'};
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data22222 :>> ', data);
+            console.log('data :>> ', data);
 
-            if(data[0].length & data[1].length & data[2].length) {
+            if(data[0].length > 1 && data[1].length > 1 && data[2].length > 1) {
                 // 이상소견 내용추가
                 for(let i = 0; i < data[0].length; i++) {
                     let textarea = document.createElement('textarea');
@@ -68,23 +80,25 @@ const getData = () => {
 
 
                 // 참고사진
-                const ap_seq = data[2].filter((elem, i) => i%4===0);
-                const ap_jetfan_no = data[2].filter((elem, i) => i%4===1);
-                const ap_comment = data[2].filter((elem, i) => i%4===2);
-                const ap_photo = data[2].filter((elem, i) => i%4===3);
+                const ap_seq = data[2].filter((elem, i) => i%5===0);
+                const ap_way = data[2].filter((elem, i) => i%5===1);
+                const ap_jetfan_no = data[2].filter((elem, i) => i%5===2);
+                const ap_comment = data[2].filter((elem, i) => i%5===3);
+                const ap_photo = data[2].filter((elem, i) => i%5===4);
                 
-                console.log('ap_jetfan_no :>> ', ap_jetfan_no);
                 const photo = document.querySelector('#photo');
-                const comment = document.querySelector('#comment');
-                for(let i = 0; i < data[2].length/4; i++) {
+                for(let i = 0; i < data[2].length/5; i++) {
+                    let div = document.createElement('div');
                     let input = document.createElement('input');
                     let button = document.createElement('button');
                     let img = document.createElement('img');
                     let hr = document.createElement('hr');
+                    photo.appendChild(div);
                     photo.appendChild(input);
                     photo.appendChild(button);
                     photo.appendChild(img);
                     photo.appendChild(hr);
+                    div.innerText = '⊙ ' + ap_way[i] + ' - ' + ap_jetfan_no[i] ?? '';
                     input.classList.add('refInput');
                     button.classList.add('delBtn');
                     img.classList.add('refImg');
@@ -92,18 +106,23 @@ const getData = () => {
                     button.innerText = '삭제';
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo[i]);
                     img.setAttribute('alt', ap_photo[i]);
-
-                    
-                    let opt = document.createElement('option');
-                    comment.querySelector('select').appendChild(opt);
-                    opt.innerText = ap_jetfan_no[i];
-                    if(ap_jetfan_no[i] === '공통') {
-                        opt.selected = true;
-                        // document.querySelector('#commentText').value = ap_comment[i];
-                    }
                 }
 
 
+                // 추가버튼 왼쪽 콤보박스 - 방향
+                const comment = document.querySelector('#comment');
+                const ways = document.querySelectorAll('#jetfan_way option');
+                for(let i =0; i < ways.length; i++) {
+                    let opt = document.createElement('option');
+                    comment.querySelector('#way').appendChild(opt);
+                    opt.innerText = ways[i].textContent;
+                }
+                // 추가버튼 왼쪽 콤보박스 - 제트팬
+                for(let i = 0; i < data[3].length+1; i++) {
+                    let opt = document.createElement('option');
+                    comment.querySelector('#jetfan').appendChild(opt);
+                    opt.innerText = (i === 0) ? '공통' : data[3][i-1];
+                }
 
             } else {
                 alert('데이터가 존재하지 않습니다.');
@@ -122,6 +141,59 @@ const getData = () => {
 };
 
 
+
+// 방향콤보박스 클릭
+const getJetfan = () => {
+    // 제트팬 초기화
+    const opts = document.querySelectorAll('#jetfan option');
+    if(opts.length) {
+        for(let i = opts.length-1; i >= 0; i--) {
+            opts[i].remove();
+        }
+    }
+
+    const tunn_code = document.querySelector('#tunnel').value;
+    const way = document.querySelector('#way').selectedOptions[0].textContent;
+    const data = {'tunn_code': tunn_code,
+                  'way': way,
+                  'option': 'getJetfan'};
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            
+
+
+
+            const comment = document.querySelector('#comment');
+            for(let i = 0; i < data.length+1; i++) {
+                let opt = document.createElement('option');
+                comment.querySelector('#jetfan').appendChild(opt);
+                opt.innerText = (i === 0) ? '공통' : data[i-1];
+            }
+        }
+    }
+
+    xhttp.open("POST", "/abnormal", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
+
+
+// 이미지 미리보기
+const showImg = (input) => {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.setAttribute('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
 // 사진추가
 const addContent = () => {
 
@@ -130,7 +202,71 @@ const addContent = () => {
         alert('데이터 조회버튼을 먼저 눌러주세요.');
         
     } else {
-        alert('사진 추가');
+        const tunn_code = document.querySelector('#tunnel').value;
+        const year = document.querySelector('#year').value;
+        const year_no = document.querySelector('#update').value;
+        const ap_way = document.querySelector('#way').selectedOptions[0].textContent;
+        const ap_jetfan_no = document.querySelector('#jetfan').selectedOptions[0].textContent;
+        const ap_comment = document.querySelector('#commentText').value;
+        const ap_photo = document.querySelector('#myFile').files[0].name;
+
+        const content = [{
+            'ap_way': ap_way,
+            'ap_jetfan_no': ap_jetfan_no,
+            'ap_comment': ap_comment,
+            'ap_photo': ap_photo
+        }];
         
+        const data = {'tunn_code': tunn_code,
+                      'year': year,
+                      'year_no': year_no,
+                      'data': content,
+                      'option': 'addContent'
+                    };
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let data = JSON.parse(this.responseText);
+                console.log('data22222 :>> ', data);
+                if(data.status.status_code === 200) {
+                    alert(data.status.status_msg);
+
+                    // 추가부분 초기화
+                    document.querySelector('#myFile').value = '';
+                    ap_comment = '';
+                    document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
+
+                    // 참고사진에 추가
+                    const photo = document.querySelector('#photo');
+                    let div = document.createElement('div');
+                    let input = document.createElement('input');
+                    let button = document.createElement('button');
+                    let img = document.createElement('img');
+                    let hr = document.createElement('hr');
+                    photo.appendChild(div);
+                    photo.appendChild(input);
+                    photo.appendChild(button);
+                    photo.appendChild(img);
+                    photo.appendChild(hr);
+                    div.innerText = '⊙ ' + ap_way + ' - ' + ap_jetfan_no ?? '';
+                    input.classList.add('refInput');
+                    button.classList.add('delBtn');
+                    img.classList.add('refImg');
+                    input.value = ap_comment;
+                    button.innerText = '삭제';
+                    img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo);
+                    img.setAttribute('alt', ap_photo);
+
+                }
+
+            }
+        }
+
+        xhttp.open("POST", "/abnormal", true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
+
+
     }
 }
