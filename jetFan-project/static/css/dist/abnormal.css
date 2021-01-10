@@ -1,17 +1,3 @@
-#body-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 8%;
-}
-#body-header select {
-  margin: 0 1%;
-  width: 25%;
-  font-size: 13pt;
-  padding: 5px 3px;
-}
-#body-header select:first-child {
-  width: 40%;
-}
 #contents table {
   border-collapse: collapse;
   width: 100%;
@@ -22,24 +8,29 @@
   font-size: 13pt;
   padding: 5px 3px;
 }
+#contents table th {
+  background-color: #f0f0f0;
+}
 #contents table tr:first-child td {
   font-weight: bold;
   background-color: lightgrey;
 }
-#contents table input {
-  border: none;
+#contents table #tunnel_name {
+  width: 65%;
 }
-#contents table input.contentInput {
-  width: 96%;
+#contents table .content {
+  width: 100%;
+  font-size: 13pt;
+  font-family: initial;
+  margin: 2px 0;
+}
+#contents table .refInput {
+  width: 90%;
   font-size: 13pt;
   padding: 5px 3px;
+  font-family: initial;
 }
-#contents table input.refInput {
-  width: 80%;
-  font-size: 13pt;
-  padding: 5px 3px;
-}
-#contents table input.refInput + button#delBtn {
+#contents table .refInput + button#delBtn {
   float: right;
   width: 13%;
   margin: 1px 1px;
@@ -48,11 +39,46 @@
   display: flex;
   margin: 0 auto;
   padding: 1.5%;
+  width: 97%;
 }
-#contents table select {
+#contents table button.delBtn {
+  font-size: 13pt;
+  background-color: #458eb0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  float: right;
+  height: 37px;
+  cursor: pointer;
+}
+#contents table button.delBtn:hover {
+  background-color: #3c72a6;
+}
+#contents table #comment {
+  border-top: none;
   width: 100%;
+}
+#contents table #comment select {
+  width: 25%;
   padding: 5px 3px;
   font-size: 13pt;
+}
+#contents table #comment input {
+  width: 63%;
+  display: inline;
+}
+#contents table #comment button#addBtn {
+  font-size: 13pt;
+  background-color: #458eb0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 35px;
+  float: right;
+  cursor: pointer;
+}
+#contents table #comment button#addBtn:hover {
+  background-color: #3c72a6;
 }
 #contents button#submitBtn {
   display: flex;

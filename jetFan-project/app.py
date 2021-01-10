@@ -21,7 +21,7 @@ from routes.trace_routes import Trace
 # 안전점검 Safety 
 from routes.safety_routes import Safety
 # 이상발생보고서 Error
-from routes.error_routes import Error
+from routes.abnormal_routes import Abnormal
 # 사진첩 Album
 from routes.album_routes import Album
 # 데이터생성 Data
@@ -50,7 +50,7 @@ app.add_url_rule('/inspection', view_func=Safety.as_view('inspection_view'), met
 # 추적도면
 app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST', 'PUT'])
 # 이상발생보고서
-app.add_url_rule('/abnormal', view_func=Error.as_view('abnormal_view'), methods=['GET', 'POST'])
+app.add_url_rule('/abnormal', view_func=Abnormal.as_view('abnormal_view'), methods=['GET', 'POST'])
 # 사진첩
 app.add_url_rule('/photo', view_func=Album.as_view('photo_view'), methods=['GET', 'POST'])
 # 데이터생성

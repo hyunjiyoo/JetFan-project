@@ -1,36 +1,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/abnormal.css') }}">
+<script src="{{ url_for('static', filename='js/abnormal.js') }}"></script>
 
 {% include 'header.html' %}
 
 <div class='content-body'>
     <h3>이상발생 보고서</h3>
+
+    {% include 'combo.html' %}
     
-    <div id='body-header'>
-        <select name="" id="">
-            <option value="">수도권본부</option>
-            <option value="">수도권본부</option>
-            <option value="">수도권본부</option>
-        </select>
-        
-        <select name="" id="">
-            <option value="">군포</option>
-            <option value="">군포</option>
-            <option value="">군포</option>
-        </select>
-
-        <select name="" id="">
-            <option value="">수암</option>
-            <option value="">수암</option>
-            <option value="">수암</option>
-        </select>
-
-        <select name="" id="">
-            <option value="">2020</option>
-            <option value="">2019</option>
-        </select>
-    </div>
-
-
     <div id="contents">
         <table>
             <tr>
@@ -38,53 +15,37 @@
             </tr>
             <tr>
                 <td class='center'>터널명</td>
-                <td>장성3터널</td>
+                <td id='tunnel_name'></td>
             </tr>
             <tr>
                 <td class='center'>점검일자</td>
-                <td>2019.06~21, 2019.06.24</td>
+                <td></td>
             </tr>
+
+            <tr><th colspan=2 class='center'>이상소견 내용</th></tr>
+            <tr><td colspan=2 id='error'><textarea class="content"></textarea></td></tr>
+            
+
+            <tr><th colspan=2 class='center'>현장 점검에 따른 소견</th></tr>
+            <tr><td colspan=2 id='chk'><textarea class="content"></textarea></td></tr>
+
+
+            <tr><th colspan=2 class='center'>참고사진</th></tr>
             <tr>
-                <td colspan='2' class='center'>이상소견 내용</td>
+                <td colspan=2 id='photo'>
+                    <input class='refInput'>
+                    <button class='delBtn' type='button'>삭제</button>
+                    <img class='refImg' src="http://via.placeholder.com/300x100" alt="reference_image">
+                    <hr>
+                </td>
             </tr>
-            <tr><td colspan='2'>- <input class='contentInput' type="text" name="" id=""></tr>
-            <tr><td colspan='2'>- <input class='contentInput' type="text" name="" id=""></td></tr>
-            <tr><td colspan='2'>- <input class='contentInput' type="text" name="" id=""></td></tr>
 
             <tr>
-                <td colspan='2' class='center'>참고사진</td>
-            </tr>
-            <tr>
-                <td colspan='2'>
-                    - <input class='refInput' type="text" name="" id="">
-                    <button id='delBtn' type='button'>삭제</button>
-                </td>
-                </td>
-            </tr>
-            <tr>
-                <td colspan='2'>
+                <td colspan=2 id='comment'>
+                    <select></select>
+                    <input type="text" id='commentText' class='refImg' placeholder="사진에 들어갈 코멘트">
+                    <button type='button' id='addBtn'>추가</button>
                     <img class='refImg' src="http://via.placeholder.com/300x100" alt="reference_image">
-                </td>
-            </tr>
-            <tr>
-                <td colspan='2'>
-                    - <input class='refInput' type="text" name="" id="">
-                    <button id='delBtn' type='button'>삭제</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan='2'>
-                    <img  class='refImg'src="http://via.placeholder.com/300x100" alt="reference_image">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <select>
-                        <option value="">공통</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" name="" id="" placeholder="사진에 들어갈 코멘트">
                 </td>
             </tr>
         </table>

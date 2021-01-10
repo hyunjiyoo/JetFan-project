@@ -1,22 +1,6 @@
 @basic-font: 13pt;
 @table-padding: 5px 3px;
 
-#body-header {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8%;
-
-    select {
-        margin: 0 1%;
-        width: 25%;
-        font-size: @basic-font;
-        padding: @table-padding;
-        &:first-child {
-            width: 40%;    
-        }
-    }
-}
-
 #contents {
     table {
         border-collapse: collapse;
@@ -26,27 +10,35 @@
             font-size: @basic-font;
             padding: @table-padding;
         }
+        th {
+            background-color:  rgb(240, 240, 240);
+        }
 
         tr:first-child td {
             font-weight: bold;
             background-color: lightgrey;
         }
-        input {
-            border: none;
-            &.contentInput {
-                width: 96%;
-                font-size: @basic-font;
-                padding: @table-padding;
-            }
-            &.refInput {
-                width: 80%;
-                font-size: @basic-font;
-                padding: @table-padding;
-                & + button#delBtn {
-                    float: right;
-                    width: 13%;
-                    margin: 1px 1px;
-                }
+
+        #tunnel_name {
+            width: 65%;
+        }
+
+        .content {
+            width: 100%;
+            font-size: @basic-font;
+            font-family: initial;
+            margin: 2px 0;
+        }
+
+        .refInput {
+            width: 90%;
+            font-size: @basic-font;
+            padding: @table-padding;
+            font-family: initial;
+            & + button#delBtn {
+                float: right;
+                width: 13%;
+                margin: 1px 1px;
             }
         }
         
@@ -54,13 +46,56 @@
             display: flex;
             margin: 0 auto;
             padding: 1.5%;
+            width: 97%;
         }
 
-        select {
-            width: 100%;
-            padding: @table-padding;
+        button.delBtn {
             font-size: @basic-font;
+            background-color: #458eb0;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            float: right;
+
+            height: 37px;
+            cursor: pointer;
+            &:hover {
+                background-color: #3c72a6;
+            }
         }
+
+        
+
+        #comment {
+            border-top: none;
+            width: 100%;
+
+            select {
+                width: 25%;
+                padding: @table-padding;
+                font-size: @basic-font;
+            }
+
+            input {
+                width: 63%;
+                display: inline;
+            }
+
+            button#addBtn {
+                font-size: @basic-font;
+                background-color: #458eb0;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                height: 35px;
+                float: right;
+                cursor: pointer;
+                &:hover {
+                    background-color: #3c72a6;
+                }
+            }
+        }
+
     }
 
     button#submitBtn {
