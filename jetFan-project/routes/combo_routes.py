@@ -4,12 +4,21 @@ from flask import request
 import requests
 import json
 
+from . import Base_url
+global base_url
+base_url = Base_url.go_url
+
+from urllib.parse import urlparse
+
+
 # 콤보박스
 class Combo(MethodView):
 	def post(self):
 		dataArr = []
 		value = request.get_json()
-		base_url = 'http://api.jetfan.ga:5007/'
+		# domain = urlparse('http://www.sdseo.ga:5000/abnormal').path
+		# domain = self.request.url
+		# print(domain)
 		
 		# 터널명 검색
 		if(value['div'] == 'tunn_search'):

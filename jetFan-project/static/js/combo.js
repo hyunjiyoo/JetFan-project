@@ -87,27 +87,28 @@ const searchTunnel = () => {
                 opt.value = tunn_code[i];
             }
 
-
-            // 방향
-            const way = data[3];
-            for(let i = 0; i < way.length; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_way`).appendChild(opt);
-                opt.innerText = way[i];
+            const path = window.location.pathname;
+            if(path === '/evaluation' || path === '/trace') {
+                // 방향
+                const way = data[3];
+                for(let i = 0; i < way.length; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_way`).appendChild(opt);
+                    opt.innerText = way[i];
+                }
+    
+    
+                // 제트팬
+                const jetfan = data[4];
+                const jetfan_name = jetfan.filter((elem, i) => i%2===0);
+                const jetfan_code = jetfan.filter((elem, i) => i%2===1);
+                for(let i = 0; i < jetfan.length/2; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_no`).appendChild(opt);
+                    opt.innerText = jetfan_name[i];
+                    opt.value = jetfan_code[i];
+                }
             }
-
-
-            // 제트팬
-            const jetfan = data[4];
-            const jetfan_name = jetfan.filter((elem, i) => i%2===0);
-            const jetfan_code = jetfan.filter((elem, i) => i%2===1);
-            for(let i = 0; i < jetfan.length/2; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_no`).appendChild(opt);
-                opt.innerText = jetfan_name[i];
-                opt.value = jetfan_code[i];
-            }
-
 
         }
     }
@@ -149,28 +150,32 @@ const setBranch = () => {
                 }
             }
             
-            if(data.length > 2) {
-                if(document.querySelector(`#jetfan_way option`) === null) {
-                    for(let i = 0; i < data[2].length; i++) {
-                        let opt = document.createElement('option');
-                        document.querySelector(`#jetfan_way`).appendChild(opt);
-                        opt.innerText = data[2][i];
+            const path = window.location.pathname;
+            if(path === '/evaluation' || path === '/trace') {
+                if(data.length > 2) {
+                    if(document.querySelector(`#jetfan_way option`) === null) {
+                        for(let i = 0; i < data[2].length; i++) {
+                            let opt = document.createElement('option');
+                            document.querySelector(`#jetfan_way`).appendChild(opt);
+                            opt.innerText = data[2][i];
+                        }
+                    }
+                }
+    
+                if(data.length > 3) {
+                    const jetfan_name = data[3].filter((elem, i) => i%2===0);
+                    const jetfan_code = data[3].filter((elem, i) => i%2===1);
+                    if(document.querySelector(`#jetfan_no option`) === null) {
+                        for(let i = 0; i < data[3].length/2; i++) {
+                            let opt = document.createElement('option');
+                            document.querySelector(`#jetfan_no`).appendChild(opt);
+                            opt.innerText = jetfan_name[i];
+                            opt.value = jetfan_code[i];
+                        }
                     }
                 }
             }
-
-            if(data.length > 3) {
-                const jetfan_name = data[3].filter((elem, i) => i%2===0);
-                const jetfan_code = data[3].filter((elem, i) => i%2===1);
-                if(document.querySelector(`#jetfan_no option`) === null) {
-                    for(let i = 0; i < data[3].length/2; i++) {
-                        let opt = document.createElement('option');
-                        document.querySelector(`#jetfan_no`).appendChild(opt);
-                        opt.innerText = jetfan_name[i];
-                        opt.value = jetfan_code[i];
-                    }
-                }
-            }
+            
         } 
     }
 
@@ -200,19 +205,22 @@ const setTunnel = () => {
                 opt.value = tunn_code[i];
             }
 
-            for(let i = 0; i < data[1].length; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_way`).appendChild(opt);
-                opt.innerText = data[1][i];
-            }
+            const path = window.location.pathname;
+            if(path === '/evaluation' || path === '/trace') {
+                for(let i = 0; i < data[1].length; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_way`).appendChild(opt);
+                    opt.innerText = data[1][i];
+                }
 
-            const jetfan_name = data[2].filter((elem, i) => i%2===0);
-            const jetfan_code = data[2].filter((elem, i) => i%2===1);
-            for(let i = 0; i < data[2].length/2; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_no`).appendChild(opt);
-                opt.innerText = jetfan_name[i];
-                opt.value = jetfan_code[i];
+                const jetfan_name = data[2].filter((elem, i) => i%2===0);
+                const jetfan_code = data[2].filter((elem, i) => i%2===1);
+                for(let i = 0; i < data[2].length/2; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_no`).appendChild(opt);
+                    opt.innerText = jetfan_name[i];
+                    opt.value = jetfan_code[i];
+                }
             }
         }
     }
@@ -250,21 +258,24 @@ const setJetfan = () => {
                 bran_opt.value = data[2][1];
             }
             
-            // 방향
-            for(let i = 0; i < data[3].length; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_way`).appendChild(opt);
-                opt.innerText = data[3][i];
-            }
+            const path = window.location.pathname;
+            if(path === '/evaluation' || path === '/trace') {
+                // 방향
+                for(let i = 0; i < data[3].length; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_way`).appendChild(opt);
+                    opt.innerText = data[3][i];
+                }
 
-            // 제트팬
-            const jetfan_no = data[0].filter((elem, i) =>  i%2===0 );
-            const jetfan_code = data[0].filter((elem, i) =>  i%2===1 );
-            for(let i = 0; i < data[0].length/2; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_no`).appendChild(opt);
-                opt.innerText = jetfan_no[i];
-                opt.value = jetfan_code[i];
+                // 제트팬
+                const jetfan_no = data[0].filter((elem, i) =>  i%2===0 );
+                const jetfan_code = data[0].filter((elem, i) =>  i%2===1 );
+                for(let i = 0; i < data[0].length/2; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_no`).appendChild(opt);
+                    opt.innerText = jetfan_no[i];
+                    opt.value = jetfan_code[i];
+                }
             }
         }
     }

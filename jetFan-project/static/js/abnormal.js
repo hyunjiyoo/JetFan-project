@@ -1,6 +1,5 @@
 window.onload = () => {
     document.querySelector('#addBtn').addEventListener('click', addContent);
-    
 }
 
 
@@ -27,10 +26,17 @@ const initData = () => {
         }
     }
 
-    const opts = document.querySelectorAll('#jetfan option');
-    if(opts.length) {
-        for(let i = opts.length-1; i >= 0; i--) {
-            opts[i].remove();
+    const way_opts = document.querySelectorAll('#way option');
+    if(way_opts.length) {
+        for(let i = way_opts.length-1; i >= 0; i--) {
+            way_opts[i].remove();
+        }
+    }
+
+    const jetfan_opts = document.querySelectorAll('#jetfan option');
+    if(jetfan_opts.length) {
+        for(let i = jetfan_opts.length-1; i >= 0; i--) {
+            jetfan_opts[i].remove();
         }
     }
 }
@@ -43,16 +49,14 @@ const getData = () => {
 
     const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
     document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
-
+    
     const tunn_code = document.querySelector('#tunnel').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
-    const way = document.querySelector('#jetfan_way').value;
 
     const data = {'tunn_code': tunn_code,
                   'year': year,
                   'year_no': year_no,
-                  'way': way,
                   'option': 'getContent'};
 
     const xhttp = new XMLHttpRequest();
@@ -99,9 +103,15 @@ const getData = () => {
                     photo.appendChild(img);
                     photo.appendChild(hr);
                     div.innerText = '⊙ ' + ap_way[i] + ' - ' + ap_jetfan_no[i] ?? '';
+                    div.setAttribute('id', 'div'+ap_seq[i]);
                     input.classList.add('refInput');
+                    input.setAttribute('id', 'input'+ap_seq[i]);
                     button.classList.add('delBtn');
+                    button.setAttribute('id', 'btn'+ap_seq[i]);
+                    button.dataset.seq = ap_seq[i];
+                    button.onclick = deleteContent;
                     img.classList.add('refImg');
+                    img.setAttribute('id', 'img'+ap_seq[i]);
                     input.value = ap_comment[i];
                     button.innerText = '삭제';
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo[i]);
@@ -111,17 +121,17 @@ const getData = () => {
 
                 // 추가버튼 왼쪽 콤보박스 - 방향
                 const comment = document.querySelector('#comment');
-                const ways = document.querySelectorAll('#jetfan_way option');
-                for(let i =0; i < ways.length; i++) {
+                for(let i =0; i < data[3].length; i++) {
                     let opt = document.createElement('option');
                     comment.querySelector('#way').appendChild(opt);
-                    opt.innerText = ways[i].textContent;
+                    opt.innerText = data[3][i];
                 }
+                
                 // 추가버튼 왼쪽 콤보박스 - 제트팬
-                for(let i = 0; i < data[3].length+1; i++) {
+                for(let i = 0; i < data[4].length+1; i++) {
                     let opt = document.createElement('option');
                     comment.querySelector('#jetfan').appendChild(opt);
-                    opt.innerText = (i === 0) ? '공통' : data[3][i-1];
+                    opt.innerText = (i === 0) ? '공통' : data[4][i-1];
                 }
 
             } else {
@@ -163,9 +173,6 @@ const getJetfan = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             
-
-
-
             const comment = document.querySelector('#comment');
             for(let i = 0; i < data.length+1; i++) {
                 let opt = document.createElement('option');
@@ -252,6 +259,8 @@ const addContent = () => {
                     div.innerText = '⊙ ' + ap_way + ' - ' + ap_jetfan_no ?? '';
                     input.classList.add('refInput');
                     button.classList.add('delBtn');
+                    // button.value = ap_seq[i];
+                    button.onclick = deleteContent;
                     img.classList.add('refImg');
                     input.value = ap_comment;
                     button.innerText = '삭제';
@@ -267,6 +276,50 @@ const addContent = () => {
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(data));
 
-
     }
+}
+
+const deleteContent = (e) => {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+
+        const tunn_code = document.querySelector('#tunnel').value;
+        const year = document.querySelector('#year').value;
+        const year_no = document.querySelector('#update').value;
+        const seq = e.target.dataset.seq;
+    
+        const data = {'tunn_code': tunn_code,
+                      'year': year,
+                      'year_no': year_no,
+                      'seq': seq};
+    
+        const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    let data = JSON.parse(this.responseText);
+                    console.log('data :>> ', data);
+                    if(data.status.status_code === 200) {
+                        alert(data.status.status_msg);
+
+                        document.querySelector(`#div${seq}`).remove();
+                        document.querySelector(`#input${seq}`).remove();
+                        document.querySelector(`#btn${seq}`).remove();
+                        document.querySelector(`#img${seq}`).remove();
+
+                    } else {
+                        alert('데이터 삭제 실패');
+                    }
+                }
+    
+            }
+    
+        xhttp.open("DELETE", "/abnormal", true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
+
+
+    } else {
+        console.log('삭제취소');
+    }
+
+    
 }
