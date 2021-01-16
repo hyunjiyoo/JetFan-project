@@ -87,11 +87,15 @@
                     {% endfor %}
                 </select>
             </td>
-            {% endif %}
-            
+
             <td>
                 <button type='button' id='select' onclick='getData()'>데이터 조회</button>
             </td>
+            {% else %}
+            <td colspan=3>
+                <button type='button' id='select' onclick='getData()'>데이터 조회</button>
+            </td>
+            {% endif %}
         </tr>
         
     </table>

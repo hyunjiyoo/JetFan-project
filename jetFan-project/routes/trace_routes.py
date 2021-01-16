@@ -18,7 +18,7 @@ class Trace(MethodView):
 		div_r = requests.get(base_url + 'division')
 		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
 		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
-		jetfan_r = requests.get(base_url + 'jetfan-way/101/수리상행')
+		jetfan_r = requests.get(base_url + 'jetfan-way/101/일산')
 		depts = json.loads(div_r.text)
 		brans = json.loads(bran_r.text)
 		tunns = json.loads(tunn_r.text)

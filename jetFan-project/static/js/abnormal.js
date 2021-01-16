@@ -239,11 +239,6 @@ const addContent = () => {
                 if(data.status.status_code === 200) {
                     alert(data.status.status_msg);
 
-                    // 추가부분 초기화
-                    document.querySelector('#myFile').value = '';
-                    ap_comment = '';
-                    document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
-
                     // 참고사진에 추가
                     const photo = document.querySelector('#photo');
                     let div = document.createElement('div');
@@ -267,8 +262,13 @@ const addContent = () => {
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo);
                     img.setAttribute('alt', ap_photo);
 
-                }
+                    // 추가부분 초기화
+                    document.querySelector('#myFile').value = '';
+                    document.querySelector('#commentText').value = '';
+                    document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
 
+
+                }
             }
         }
 
@@ -309,17 +309,13 @@ const deleteContent = (e) => {
                         alert('데이터 삭제 실패');
                     }
                 }
-    
             }
     
         xhttp.open("DELETE", "/abnormal", true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.send(JSON.stringify(data));
 
-
     } else {
         console.log('삭제취소');
     }
-
-    
 }

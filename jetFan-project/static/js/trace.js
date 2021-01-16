@@ -79,7 +79,12 @@ const getData = () => {
 
             
             if(data.length !== 5) {
-                alert('평가표 데이터가 존재하지 않습니다.');
+                Swal.fire({
+                    title: '데이터 없음!', 
+                    text: '평가표 데이터가 존재하지 않습니다.',
+                    icon: 'info',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
 
