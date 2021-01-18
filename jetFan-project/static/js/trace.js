@@ -100,7 +100,12 @@ const getData = () => {
                     chkInput[i].value = tc_content[i];
                 }
             } else {
-                alert('현 상태 점검 현황 데이터가 존재하지 않습니다.');
+                Swal.fire({
+                    title: '데이터 없음!', 
+                    text: '현 상태 점검 현황 데이터가 존재하지 않습니다.',
+                    icon: 'info',
+                    confirmButtonText: '확인'
+                });
             }
 
 
@@ -131,7 +136,12 @@ const getData = () => {
                         }
                     }
                 } else {
-                    alert('비고 데이터가 존재하지 않습니다.');
+                    Swal.fire({
+                        title: '데이터 없음!', 
+                        text: '비고 데이터가 존재하지 않습니다.',
+                        icon: 'info',
+                        confirmButtonText: '확인'
+                    });
                 }
             }
             
@@ -192,17 +202,30 @@ const inputData = () => {
 
 
             if(chk_status === 200 && note_status === 200) {
-                alert(data[0].status.status_msg);                
-                alert(data[1].status.status_msg);
+                Swal.fire({
+                    title: '입력성공', 
+                    text: '정상적으로 입력되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                });
 
             } else {
-                alert(data[0].status.status_msg);
-                alert(data[1].status.status_msg);
+                Swal.fire({
+                    title: '입력실패', 
+                    text: '입력에 실패하였습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
 
             }
 
         } else if(this.status === 500) {
-            alert('서버 응답 실패');
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인'
+            });
             return false;
         }
     }

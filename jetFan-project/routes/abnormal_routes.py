@@ -99,6 +99,14 @@ class Abnormal(MethodView):
 
 			return json.dumps(result)
 
+	def put(self):
+		v = request.get_json()
+		url = base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
+		r = requests.put(url, data=json.dumps(v['data']))
+		result = json.loads(r.text)
+
+		return json.dumps(result)
+
 	def delete(self):
 		v = request.get_json()
 		url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'] + '/' + v['seq']

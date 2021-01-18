@@ -240,7 +240,12 @@ const getData = () => {
             document.querySelector('#eval_grade').innerText = data.eval_grade ?? '';
         
             if(data.length === 0) {
-                alert('전년도 데이터가 없습니다.');
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: '해당년도 데이터가 없습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                })
             }
         
         }
@@ -255,7 +260,12 @@ const getData = () => {
 const findJetfan = () => {
     return new Promise((resolve, reject) => {
         if(document.querySelector('#jetfan_name').textContent === '') {
-            alert('제트팬을 먼저 선택해주세요');
+            Swal.fire({
+                title: '사전점검', 
+                text: '제트팬을 먼저 선택해주세요.',
+                icon: 'info',
+                confirmButtonText: '확인'
+            });
             reject();
         } else {
             resolve();
@@ -751,9 +761,19 @@ const inputData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             if(data.status.status_code === 200) {
-                alert('데이터가 정상적으로 입력되었습니다.');
+                Swal.fire({
+                    title: '입력성공', 
+                    text: '데이터가 정상적으로 입력되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                });
             } else {
-                alert('데이터가 입력 실패');
+                Swal.fire({
+                    title: '입력실패', 
+                    text: '데이터 입력에 실패하였습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
             }
         }
     }

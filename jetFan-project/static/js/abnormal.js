@@ -1,5 +1,6 @@
 window.onload = () => {
     document.querySelector('#addBtn').addEventListener('click', addContent);
+    document.querySelector('#submitBtn').addEventListener('click', modifyData);
 }
 
 
@@ -135,13 +136,23 @@ const getData = () => {
                 }
 
             } else {
-                alert('데이터가 존재하지 않습니다.');
+                Swal.fire({
+                    title: '데이터 없음!', 
+                    text: '평가표 데이터가 존재하지 않습니다.',
+                    icon: 'info',
+                    confirmButtonText: '확인'
+                });
                 location.reload();
                 
             }
             
         } else if(this.status === 500) {
-            alert('서버응답 실패');
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인'
+            });
         }
     }
 
@@ -206,7 +217,12 @@ const addContent = () => {
 
     const opts = document.querySelector('#comment option');
     if(opts === null) {
-        alert('데이터 조회버튼을 먼저 눌러주세요.');
+        Swal.fire({
+            title: '사전점검', 
+            text: '데이터조회버튼을 먼저 눌러주세요.',
+            icon: 'info',
+            confirmButtonText: '확인'
+        });
         
     } else {
         const tunn_code = document.querySelector('#tunnel').value;
@@ -214,8 +230,8 @@ const addContent = () => {
         const year_no = document.querySelector('#update').value;
         const ap_way = document.querySelector('#way').selectedOptions[0].textContent;
         const ap_jetfan_no = document.querySelector('#jetfan').selectedOptions[0].textContent;
-        const ap_comment = document.querySelector('#commentText').value;
-        const ap_photo = document.querySelector('#myFile').files[0].name;
+        const ap_comment = document.querySelector('#commentText').value ?? '';
+        const ap_photo = document.querySelector('#myFile').files[0]?.name ?? 'sample.jpg';
 
         const content = [{
             'ap_way': ap_way,
@@ -237,30 +253,44 @@ const addContent = () => {
                 let data = JSON.parse(this.responseText);
                 console.log('data22222 :>> ', data);
                 if(data.status.status_code === 200) {
-                    alert(data.status.status_msg);
+                    Swal.fire({
+                        title: '성공', 
+                        text: '사진이 정상적으로 추가되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    });
 
                     // 참고사진에 추가
                     const photo = document.querySelector('#photo');
+                    const delBtn = document.querySelectorAll('.delBtn');
+                    const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
                     let div = document.createElement('div');
                     let input = document.createElement('input');
                     let button = document.createElement('button');
                     let img = document.createElement('img');
                     let hr = document.createElement('hr');
+                    
                     photo.appendChild(div);
                     photo.appendChild(input);
                     photo.appendChild(button);
                     photo.appendChild(img);
                     photo.appendChild(hr);
                     div.innerText = '⊙ ' + ap_way + ' - ' + ap_jetfan_no ?? '';
+                    input.value = ap_comment;
                     input.classList.add('refInput');
                     button.classList.add('delBtn');
-                    // button.value = ap_seq[i];
+                    button.dataset.seq = seq;
                     button.onclick = deleteContent;
-                    img.classList.add('refImg');
-                    input.value = ap_comment;
                     button.innerText = '삭제';
+                    img.classList.add('refImg');
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo);
                     img.setAttribute('alt', ap_photo);
+
+                    div.setAttribute('id', 'div'+seq);
+                    input.setAttribute('id', 'input'+seq);
+                    button.setAttribute('id', 'btn'+seq);
+                    img.setAttribute('id', 'img'+seq);
+                    
 
                     // 추가부분 초기화
                     document.querySelector('#myFile').value = '';
@@ -279,6 +309,7 @@ const addContent = () => {
     }
 }
 
+// 사진삭제
 const deleteContent = (e) => {
     if (confirm('정말로 삭제하시겠습니까?')) {
 
@@ -293,23 +324,32 @@ const deleteContent = (e) => {
                       'seq': seq};
     
         const xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    let data = JSON.parse(this.responseText);
-                    console.log('data :>> ', data);
-                    if(data.status.status_code === 200) {
-                        alert(data.status.status_msg);
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let data = JSON.parse(this.responseText);
+                console.log('data :>> ', data);
+                if(data.status.status_code === 200) {
+                    Swal.fire({
+                        title: '사진삭제', 
+                        text: '사진이 정상적으로 삭제되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    });
+                    document.querySelector(`#div${seq}`).remove();
+                    document.querySelector(`#input${seq}`).remove();
+                    document.querySelector(`#btn${seq}`).remove();
+                    document.querySelector(`#img${seq}`).remove();
 
-                        document.querySelector(`#div${seq}`).remove();
-                        document.querySelector(`#input${seq}`).remove();
-                        document.querySelector(`#btn${seq}`).remove();
-                        document.querySelector(`#img${seq}`).remove();
-
-                    } else {
-                        alert('데이터 삭제 실패');
-                    }
+                } else {
+                    Swal.fire({
+                        title: '사진삭제', 
+                        text: '사진을 삭제하는데 실패하였습니다.',
+                        icon: 'warning',
+                        confirmButtonText: '확인'
+                    });
                 }
             }
+        }
     
         xhttp.open("DELETE", "/abnormal", true);
         xhttp.setRequestHeader('Content-Type', 'application/json');
@@ -318,4 +358,60 @@ const deleteContent = (e) => {
     } else {
         console.log('삭제취소');
     }
+}
+
+
+// 전체 데이터 반영
+const modifyData = () => {
+
+    const tunn_code = document.querySelector('#tunnel').value;
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#update').value;
+
+    const contents = [];
+    const errorContents = document.querySelectorAll('#error textarea');
+    const chkContents = document.querySelectorAll('#chk textarea');
+
+    errorContents.forEach((content, i) => {
+        contents.push({'ar_tunn_code': tunn_code,
+                       'ar_year': year,
+                       'ar_year_no': year_no,
+                       'ar_type': 1,
+                       'ar_seq': i+1,
+                       'ar_content': content.textContent});
+    });
+
+    chkContents.forEach((content, i) => {
+        contents.push({'ar_tunn_code': tunn_code,
+                       'ar_year': year,
+                       'ar_year_no': year_no,
+                       'ar_type': 2,
+                       'ar_seq': i+1,
+                       'ar_content': content.textContent});
+    });
+
+    console.log('contents :>> ', contents);
+
+    const data = {'tunn_code': tunn_code,
+                  'year': year,
+                  'year_no': year_no,
+                  'data': contents};
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            let data = JSON.parse(this.responseText);
+            Swal.fire({
+                title: '입력성공', 
+                text: '데이터가 정상적으로 입력되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인'
+            });
+
+        }
+    }
+
+    xhttp.open("PUT", "/abnormal", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
 }
