@@ -9,9 +9,6 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-from urllib.parse import urlparse
-
-
 
 class Abnormal(MethodView):
 	def get(self):

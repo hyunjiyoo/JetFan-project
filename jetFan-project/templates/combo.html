@@ -56,13 +56,9 @@
                 <select name="tunnel" id="tunnel" onchange='setJetfan()'>
                     {% for tunn in tunns %}
                         {% if(tunn['tunn_name'] == '수리') %}
-                        <option value="{{ tunn['tunn_code'] }}" selected>
-                            {{ tunn['tunn_name'] }}
-                        </option>
+                        <option value="{{ tunn['tunn_code'] }}" selected>{{ tunn['tunn_name'] }}</option>
                         {% else %}
-                        <option value="{{ tunn['tunn_code'] }}">
-                            {{ tunn['tunn_name'] }}
-                        </option>
+                        <option value="{{ tunn['tunn_code'] }}">{{ tunn['tunn_name'] }}</option>
                         {% endif %}
                     {% endfor %}
                 </select>
