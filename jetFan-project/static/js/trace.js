@@ -83,7 +83,8 @@ const getData = () => {
                     title: '데이터 없음!', 
                     text: '평가표 데이터가 존재하지 않습니다.',
                     icon: 'info',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
                 return false;
             }
@@ -104,7 +105,8 @@ const getData = () => {
                     title: '데이터 없음!', 
                     text: '현 상태 점검 현황 데이터가 존재하지 않습니다.',
                     icon: 'info',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
             }
 
@@ -140,7 +142,8 @@ const getData = () => {
                         title: '데이터 없음!', 
                         text: '비고 데이터가 존재하지 않습니다.',
                         icon: 'info',
-                        confirmButtonText: '확인'
+                        confirmButtonText: '확인',
+                        onAfterClose: () => window.scrollTo(0,0)
                     });
                 }
             }
@@ -206,7 +209,8 @@ const inputData = () => {
                     title: '입력성공', 
                     text: '정상적으로 입력되었습니다.',
                     icon: 'success',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
 
             } else {
@@ -214,7 +218,8 @@ const inputData = () => {
                     title: '입력실패', 
                     text: '입력에 실패하였습니다.',
                     icon: 'warning',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
 
             }
@@ -224,7 +229,8 @@ const inputData = () => {
                 title: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
             return false;
         }

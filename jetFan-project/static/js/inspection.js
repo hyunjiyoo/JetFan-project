@@ -1,4 +1,11 @@
+// window.onbeforeunload = function () {
+//     window.scrollTo(0, 0);
+// }
+
 window.onload = () => {
+    // document.body.scrollTop(0);
+    window.scrollTo(0, 0);
+    // document.documentElement.scrollTop = 0;
 
     document.querySelector('#submitBtn').addEventListener('click', modifyData);
 
@@ -81,7 +88,8 @@ const getData = () => {
                 title: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
         }
     }
@@ -92,7 +100,7 @@ const getData = () => {
 }
 
 
-const modifyData = () => {
+const modifyData = (e) => {
 
     const data = {
         'data': [{
@@ -159,18 +167,22 @@ const modifyData = () => {
             changeCircleColor(eval_update);
             
             if(data.status.status_code === 200) {
+
                 Swal.fire({
                     title: '입력성공', 
                     text: '데이터가 정상적으로 입력되었습니다.',
                     icon: 'success',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
+
             } else {
                 Swal.fire({
                     title: '입력실패', 
                     text: '데이터 입력에 실패하였습니다.',
                     icon: 'warning',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
             }
 
@@ -179,7 +191,8 @@ const modifyData = () => {
                 title: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
         }
     }

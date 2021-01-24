@@ -319,11 +319,11 @@ const clickWay = () => {
 const changeCircleColor = (eval_update) => {
     
     if(eval_update === 0) {
-        document.querySelector('#greenCircle').innerText = '●';
-        document.querySelector('#redCircle').innerText = '○';
-    } else {
         document.querySelector('#greenCircle').innerText = '○';
         document.querySelector('#redCircle').innerText = '●';
+    } else {
+        document.querySelector('#greenCircle').innerText = '●';
+        document.querySelector('#redCircle').innerText = '○';
     }
 
     document.querySelector('#greenCircle').dataset.update = eval_update;

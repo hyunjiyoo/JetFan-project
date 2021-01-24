@@ -103,7 +103,8 @@ const getData = () => {
                     title: '데이터 없음!', 
                     text: '해당년도 데이터가 없습니다.',
                     icon: 'info',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
                 location.reload();
             }
@@ -113,7 +114,8 @@ const getData = () => {
                 ttitle: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
 
             location.reload();
@@ -254,7 +256,8 @@ const addContent = () => {
                     title: '실패', 
                     text: '서버 응답에 실패하였습니다.',
                     icon: 'warning',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
             }
         }
@@ -353,7 +356,8 @@ const modifyData = () => {
                 title: '입력성공', 
                 text: '데이터가 정상적으로 입력되었습니다.',
                 icon: 'success',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
 
         } else if(this.status === 500) {
@@ -361,7 +365,8 @@ const modifyData = () => {
                 title: '입력실패', 
                 text: '데이터 입력에 실패되었습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
         }
     }

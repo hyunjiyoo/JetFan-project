@@ -244,7 +244,8 @@ const getData = () => {
                     title: '데이터조회실패', 
                     text: '해당년도 데이터가 없습니다.',
                     icon: 'warning',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 })
             }
         
@@ -264,7 +265,8 @@ const findJetfan = () => {
                 title: '사전점검', 
                 text: '제트팬을 먼저 선택해주세요.',
                 icon: 'info',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
             reject();
         } else {
@@ -765,14 +767,16 @@ const inputData = () => {
                     title: '입력성공', 
                     text: '데이터가 정상적으로 입력되었습니다.',
                     icon: 'success',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
             } else {
                 Swal.fire({
                     title: '입력실패', 
                     text: '데이터 입력에 실패하였습니다.',
                     icon: 'warning',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
             }
         }

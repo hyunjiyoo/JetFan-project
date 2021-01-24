@@ -43,8 +43,6 @@ const initData = () => {
 }
 
 
-
-
 const getData = () => {
     initData();
 
@@ -140,7 +138,8 @@ const getData = () => {
                     title: '데이터 없음!', 
                     text: '해당년도 데이터가 없습니다.',
                     icon: 'info',
-                    confirmButtonText: '확인'
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
                 location.reload();
                 
@@ -151,7 +150,8 @@ const getData = () => {
                 title: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
         }
     }
@@ -221,7 +221,8 @@ const addContent = () => {
             title: '사전점검', 
             text: '데이터조회버튼을 먼저 눌러주세요.',
             icon: 'info',
-            confirmButtonText: '확인'
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
         });
         
     } else {
@@ -405,7 +406,8 @@ const modifyData = () => {
                 title: '입력성공', 
                 text: '데이터가 정상적으로 입력되었습니다.',
                 icon: 'success',
-                confirmButtonText: '확인'
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
             });
 
         }
