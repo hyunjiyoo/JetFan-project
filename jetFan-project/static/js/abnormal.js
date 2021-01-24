@@ -66,7 +66,7 @@ const getData = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
 
-            if(data[0].length > 1 && data[1].length > 1 && data[2].length > 1) {
+            if(data[0].length > 0 && data[1].length > 0 && data[2].length > 0) {
                 // 이상소견 내용추가
                 for(let i = 0; i < data[0].length; i++) {
                     let textarea = document.createElement('textarea');

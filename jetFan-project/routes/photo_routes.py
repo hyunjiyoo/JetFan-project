@@ -62,6 +62,8 @@ class Photo(MethodView):
 				jetfanArr.append(item['jetfan_no'])
 			dataArr.append(jetfanArr)
 
+			return json.dumps(dataArr)
+
 
 		elif(v['option'] == 'getJetfan'):
 			r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + v['way'])
@@ -69,9 +71,23 @@ class Photo(MethodView):
 
 			for item in items:
 				dataArr.append(item['jetfan_no'])
-		
-		return json.dumps(dataArr)
 
+			return json.dumps(dataArr)
+
+		elif(v['option'] == 'addContent'):
+			url = base_url + 'photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
+			r = requests.post(url, data=json.dumps(v['data']))
+			result = json.loads(r.text)
+		
+			return json.dumps(result)
+
+	def put(self):
+		v = request.get_json()
+		url = base_url + 'photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
+		r = requests.put(url, data=json.dumps(v['data']))
+		result = json.loads(r.text)
+
+		return json.dumps(result)
 	
 	def delete(self):
 		v = request.get_json()
