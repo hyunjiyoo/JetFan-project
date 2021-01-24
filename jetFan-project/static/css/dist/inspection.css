@@ -19,6 +19,7 @@
 #contents #info table th {
   width: 13%;
   padding: 5px 3px;
+  background-color: #f0f0f0;
 }
 #contents #info table td {
   width: 60%;
@@ -30,6 +31,12 @@
 #contents #chk table th,
 #contents #chk table td {
   padding: 5px 3px;
+}
+#contents #chk table th {
+  background-color: lightgrey;
+}
+#contents #chk table tr:nth-child(2n+1) td {
+  background-color: #f0f0f0;
 }
 #contents #chk table td {
   text-align: center;
@@ -49,7 +56,14 @@
 #contents #chk table td input[type='text'] {
   width: 100%;
 }
-#contents #etc input[type='text'] {
+#contents #etc table th,
+#contents #etc table td {
+  padding: 5px 3px;
+}
+#contents #etc table th {
+  background-color: lightgrey;
+}
+#contents #etc table input[type='text'] {
   width: 100%;
 }
 #contents button#submitBtn {
@@ -62,7 +76,7 @@
 }
 .accordion {
   font-weight: bold;
-  background-color: lightgray;
+  background-color: #f5f4ed;
   cursor: pointer;
   border-left: 1px solid #000;
   border-right: 1px solid #000;
@@ -83,8 +97,4 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-}
-#etc table th,
-#etc table td {
-  padding: 5px 3px;
 }

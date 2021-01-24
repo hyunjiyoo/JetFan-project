@@ -46,7 +46,7 @@ app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
 # 평가표
 app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), methods=['GET', 'POST', 'PUT'])
 # 안전점검
-app.add_url_rule('/inspection', view_func=Inspection.as_view('inspection_view'), methods=['GET', 'POST'])
+app.add_url_rule('/inspection', view_func=Inspection.as_view('inspection_view'), methods=['GET', 'POST', 'PUT'])
 # 추적도면
 app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST', 'PUT'])
 # 이상발생보고서

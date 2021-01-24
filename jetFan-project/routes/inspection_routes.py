@@ -51,3 +51,15 @@ class Inspection(MethodView):
 		inspect_items[0]['way2_jetfan'] = jetfan2
 
 		return json.dumps(inspect_items[0])
+
+	def put(self):
+		v = request.get_json()
+		tunn_code = str(v['data'][0]['ins_tunn_code'])
+		year = v['data'][0]['ins_year']
+		year_no =  v['data'][0]['ins_year_no']
+		
+		url = base_url + 'inspection/' + tunn_code + '/' + year + '/' + year_no
+		r = requests.put(url, data=json.dumps(v['data']))
+		result = json.loads(r.text)
+
+		return json.dumps(result)

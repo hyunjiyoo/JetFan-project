@@ -317,11 +317,15 @@ const clickWay = () => {
 
 // 업데이트 횟수조회 데이터 가져와서 circle 색상 채우기
 const changeCircleColor = (eval_update) => {
+    
     if(eval_update === 0) {
-        document.querySelector('#greenCircle').innerText = '○';
-        document.querySelector('#redCircle').innerText = '●';
-    } else {
         document.querySelector('#greenCircle').innerText = '●';
         document.querySelector('#redCircle').innerText = '○';
+    } else {
+        document.querySelector('#greenCircle').innerText = '○';
+        document.querySelector('#redCircle').innerText = '●';
     }
+
+    document.querySelector('#greenCircle').dataset.update = eval_update;
+    document.querySelector('#redCircle').dataset.update = eval_update;
 }

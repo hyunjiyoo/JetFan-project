@@ -24,6 +24,7 @@
             th {
                 width: 13%;
                 padding: @table-padding;
+                background-color: #f0f0f0;
             }
             td {
                 width: 60%;
@@ -37,6 +38,16 @@
         table {
             th, td {
                 padding: @table-padding;
+            }
+
+            th {
+                background-color: lightgrey;
+            }
+
+            tr:nth-child(2n+1) {
+                td {
+                    background-color: #f0f0f0;
+                }
             }
 
             td {
@@ -55,7 +66,7 @@
                         text-align: left;
                     }
                 }
-    
+
                 input[type='text'] {
                     width: 100%;
                 }
@@ -63,7 +74,15 @@
         }
     } 
 
-    #etc {
+        
+    #etc table {
+        th, td {
+            padding: @table-padding;
+        }
+        th {
+            background-color: lightgrey;
+        }
+
         input[type='text'] {
             width: 100%;
         }
@@ -81,7 +100,7 @@
 
 .accordion {
     font-weight: bold;
-    background-color: lightgray;
+    background-color: #f5f4ed;
     cursor: pointer;
     border-left: 1px solid #000;
     border-right: 1px solid #000;
@@ -105,10 +124,4 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-}
-
-#etc table {
-    th, td {
-        padding: @table-padding;
-    }
 }
