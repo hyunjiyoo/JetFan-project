@@ -138,7 +138,7 @@ const getData = () => {
             } else {
                 Swal.fire({
                     title: '데이터 없음!', 
-                    text: '데이터가 존재하지 않습니다.',
+                    text: '해당년도 데이터가 없습니다.',
                     icon: 'info',
                     confirmButtonText: '확인'
                 });

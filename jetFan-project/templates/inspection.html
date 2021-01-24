@@ -1,67 +1,44 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/inspection.css') }}">
+<script src="{{ url_for('static', filename='js/inspection.js') }}"></script>
 
 {% include 'header.html' %}
 
 <div class='content-body'>
     <h3>안전점검 관리</h3>
+
+    {% include 'combo.html' %}
     
-    <div id='body-header'>
-        <select name="" id="">
-            <option value="">수도권본부</option>
-            <option value="">수도권본부</option>
-            <option value="">수도권본부</option>
-        </select>
-        
-        <select name="" id="">
-            <option value="">군포</option>
-            <option value="">군포</option>
-            <option value="">군포</option>
-        </select>
-
-        <select name="" id="">
-            <option value="">수암</option>
-            <option value="">수암</option>
-            <option value="">수암</option>
-        </select>
-
-        <select name="" id="">
-            <option value="">2020</option>
-            <option value="">2019</option>
-        </select>
-    </div>
-
-
     <div id='contents'>
         <div id="info">
             <table>
                 <tr>
                     <th colspan='2'>터널명</th>
-                    <th>장성3터널</th>
+                    <th id='tunn_name'>장성3터널</th>
                 </tr>
                 <tr>
                     <th rowspan='2'>관리<br>번호</th>
-                    <th>고창</th>
-                    <td>101,102,103..</td>
+                    <th id='way1'></th>
+                    <td id='way1_jetfan'></td>
                 </tr>
                 <tr>
-                    <th>담양</th>
-                    <td>201,202,203...</td>
+                    <th id='way2'></th>
+                    <td id='way2_jetfan'></td>
                 </tr>
                 <tr>
                     <th colspan='2'>규격</th>
-                    <td>1250..</td>
+                    <td id='tunn_spec'></td>
                 </tr>
                 <tr>
                     <th colspan='2'>업체</th>
-                    <td>프라임방재(주)</td>
+                    <td id='ins_company'>프라임방재(주)</td>
                 </tr>
                 <tr>
                     <th colspan='2'>점검일</th>
-                    <td>2019.06.21, 2019.06.24</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <th colspan='2'>현장대리인</th>
-                    <td>김대건</td>
+                    <td id='ins_emp'></td>
                 </tr>
             </table>
         </div>
@@ -84,57 +61,57 @@
                         <td colspan='2'>Anchor Bolt 조임토크 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_11a'></td>
+                        <td><input type="text" id='ins_11b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Anchor Bolt 부위 Con'c 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_12a'></td>
+                        <td><input type="text" id='ins_12b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Anchor Bracket 상태 (용접. 부식 등)</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_13a'></td>
+                        <td><input type="text" id='ins_13b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Turnbuckle 및 Anchor Bolt Tension 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_14a'></td>
+                        <td><input type="text" id='ins_14b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Turnbuckle 용접부 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_15a'></td>
+                        <td><input type="text" id='ins_15b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Jet - Fan 조립 및 설치 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_16a'></td>
+                        <td><input type="text" id='ins_16b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Casing 전 부위 Bolt & Nut 풀림 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_17a'></td>
+                        <td><input type="text" id='ins_17b'></td>
                     </tr>
                     <tr>
                         <td colspan='2'>Turnbuckle / Chain 연결지점 이상 여부 및 풀림 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_18a'></td>
+                        <td><input type="text" id='ins_18b'></td>
                     </tr>
                 </table>
             </div>
@@ -143,39 +120,60 @@
             <div class="panel">
                 <table>
                     <tr>
-                        <td colspan='2'>Anchor Bolt 조임토크 상태</td>
+                        <td colspan='2'>Fan 내,외부 이물질 (쇳조각, 나뭇가지 등)상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_19a'></td>
+                        <td><input type="text" id='ins_19b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Anchor Bolt 부위 Con'c 상태</td>
+                        <td colspan='2'>Fan 내,외부 과도한 부식 여부</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_20a'></td>
+                        <td><input type="text" id='ins_20b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Anchor Bracket 상태 (용접. 부식 등)</td>
+                        <td colspan='2'>싸이렌서 내부 흡음제 및 용접부 이상상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_21a'></td>
+                        <td><input type="text" id='ins_21b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Turnbuckle 및 Anchor Bolt Tension 상태</td>
+                        <td colspan='2'>Blade와 Casing의 간섭 여부</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_22a'></td>
+                        <td><input type="text" id='ins_22b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Turnbuckle 용접부 상태</td>
+                        <td colspan='2'>Fan 내부 Motor 고정용 지지판 변형 여부 및 Nut 상태</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_23a'></td>
+                        <td><input type="text" id='ins_23b'></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>Blade & Hub 상태(고정상태, 변형, 부식, 마모 등)</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id='ins_24a'></td>
+                        <td><input type="text" id='ins_24b'></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>Motor외관 및 베어링 부위 누유 및 이상상태</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id='ins_25a'></td>
+                        <td><input type="text" id='ins_25b'></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>Fan 명판 등 부착물 부착 상태</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id='ins_26a'></td>
+                        <td><input type="text" id='ins_26b'></td>
                     </tr>
                 </table>
             </div>
@@ -184,25 +182,32 @@
             <div class="panel">
                 <table>
                     <tr>
-                        <td colspan='2'>Anchor Bolt 조임토크 상태</td>
+                        <td colspan='2'>기동 판넬에서 수동 동작시 이상 유무</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_27a'></td>
+                        <td><input type="text" id='ins_27b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Anchor Bolt 부위 Con'c 상태</td>
+                        <td colspan='2'>운전시 진동 Check</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_28a'></td>
+                        <td><input type="text" id='ins_28b'></td>
                     </tr>
                     <tr>
-                        <td colspan='2'>Anchor Bracket 상태 (용접. 부식 등)</td>
+                        <td colspan='2'>기동시 이상소음 여부</td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="" id=""></td>
-                        <td><input type="text" name="" id=""></td>
+                        <td><input type="text" id='ins_29a'></td>
+                        <td><input type="text" id='ins_29b'></td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>기동시 전류, 전압측정 및 기록</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id='ins_30a'></td>
+                        <td><input type="text" id='ins_30b'></td>
                     </tr>
                 </table>
             </div>
@@ -211,31 +216,16 @@
         <div id="etc">
             <table>
                 <tr><th>기타</th></tr>
-                <tr><td>-</td></tr>
-                <tr><td>-</td></tr>
-                <tr><td>-</td></tr>
-                <tr><td>-</td></tr>
-                <tr><td>-</td></tr>
+                <tr><td><input type="text" id='ins_etc1'></td></tr>
+                <tr><td><input type="text" id='ins_etc2'></td></tr>
+                <tr><td><input type="text" id='ins_etc3'></td></tr>
+                <tr><td><input type="text" id='ins_etc4'></td></tr>
+                <tr><td><input type="text" id='ins_etc5'></td></tr>
             </table>
         </div>
+
+        <button id='submitBtn' type='button'>입력</button>
     </div>
 </div>
 
 {% include 'footer.html' %}
-    
-
-<script>
-
-const accs = document.querySelectorAll(".accordion");
-accs.forEach( acc => {
-    acc.addEventListener("click", function() {
-        const panel = this.nextElementSibling;
-        if (panel.style.maxHeight) {
-            panel.style.maxHeight = null;
-        } else {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-        } 
-    });
-});
-
-</script>

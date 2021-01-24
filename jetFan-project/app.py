@@ -19,7 +19,7 @@ from routes.eval_routes import Eval
 # 추적도면 Trace
 from routes.trace_routes import Trace
 # 안전점검 Safety 
-from routes.safety_routes import Safety
+from routes.inspection_routes import Inspection
 # 이상발생보고서 Abnormal
 from routes.abnormal_routes import Abnormal
 # 사진첩 Photo
@@ -46,7 +46,7 @@ app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
 # 평가표
 app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), methods=['GET', 'POST', 'PUT'])
 # 안전점검
-app.add_url_rule('/inspection', view_func=Safety.as_view('inspection_view'), methods=['GET', 'POST'])
+app.add_url_rule('/inspection', view_func=Inspection.as_view('inspection_view'), methods=['GET', 'POST'])
 # 추적도면
 app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST', 'PUT'])
 # 이상발생보고서

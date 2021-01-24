@@ -5,19 +5,6 @@
     font-size: @basic-font;
 }
 
-#body-header {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8%;
-
-    select {
-        margin: 0 1%;
-        width: 25%;
-        &:first-child {
-            width: 40%;    
-        }
-    }
-}
 
 #contents {
     margin-bottom: 20%;
@@ -59,7 +46,6 @@
                     width: 27%;
                     input[type='text'] {
                         text-align: center;
-                        padding: @table-padding;
                     }
                 }
                 
@@ -67,18 +53,30 @@
                     width: 67%;
                     input[type='text'] {
                         text-align: left;
-                        padding: @table-padding;
                     }
                 }
     
                 input[type='text'] {
-                    border: none;
-                    width: 97%;
-                    padding: @table-padding;
+                    width: 100%;
                 }
             }
         }
     } 
+
+    #etc {
+        input[type='text'] {
+            width: 100%;
+        }
+    }
+
+    button#submitBtn {
+        display: flex;
+        font-size: @basic-font;
+        padding: @table-padding;
+        justify-content: center;
+        margin: 20px auto 20% auto;
+        width: 35%;
+    }
 }
 
 .accordion {
