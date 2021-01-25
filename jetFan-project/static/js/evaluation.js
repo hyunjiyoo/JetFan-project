@@ -246,9 +246,18 @@ const getData = () => {
                     icon: 'warning',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
-                })
+                });
             }
         
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            window.location.reload();
         }
     }
 
@@ -683,12 +692,8 @@ const getGrade = () => {
 
 
 const inputData = () => {
-    const jetfan_no = document.querySelector('#jetfan_no').value;
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
 
-    let dataArr = Array();
-    dataArr.push({
+    let contents = [{
         "eval_jetfan_code": document.querySelector('#jetfan_no').value,
         "eval_year": document.querySelector('#year').value,
         "eval_year_no": document.querySelector('#update').value,
@@ -748,14 +753,10 @@ const inputData = () => {
         "eval_score_sum":document.querySelector('#eval_score_sum').textContent,
         "eval_twenty":document.querySelector('#eval_twenty').textContent,
         "eval_grade":document.querySelector('#eval_grade').textContent
-
-    });
+    }];
 
     const data = {
-        'jetfan_no': jetfan_no, 
-        'year': year , 
-        'year_no': year_no,
-        'data': dataArr
+        'data': contents
     };
 
     const xhttp = new XMLHttpRequest();
@@ -763,6 +764,9 @@ const inputData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             if(data.status.status_code === 200) {
+                const eval_update = document.querySelector('#greenCircle').dataset.update;
+                changeCircleColor(eval_update);
+
                 Swal.fire({
                     title: '입력성공', 
                     text: '데이터가 정상적으로 입력되었습니다.',

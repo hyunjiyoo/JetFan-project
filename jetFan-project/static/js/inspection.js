@@ -1,11 +1,4 @@
-// window.onbeforeunload = function () {
-//     window.scrollTo(0, 0);
-// }
-
 window.onload = () => {
-    // document.body.scrollTop(0);
-    window.scrollTo(0, 0);
-    // document.documentElement.scrollTop = 0;
 
     document.querySelector('#submitBtn').addEventListener('click', modifyData);
 
