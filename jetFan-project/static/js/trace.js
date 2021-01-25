@@ -174,7 +174,7 @@ const inputData = () => {
         if(checkReport.value) {
             tc_contents.push({ 'tc_seq': String(i+1), 'tc_content': checkReport.value });
         } else {
-            tc_contents = [{'tc_seq': '', 'tc_content': ''}];
+            tc_contents.push({'tc_seq': String(i+1), 'tc_content': ""});
         }
     });
 
@@ -182,10 +182,9 @@ const inputData = () => {
         if(noteCurYear.value) {
             tn_contents.push({ 'tn_seq': String(i+1), 'tn_content': noteCurYear.value });
         } else {
-            tn_contents = [{'tn_seq': '', 'tn_content': ''}];
+            tn_contents.push({'tn_seq': String(i+1), 'tn_content': ""});
         }
     });
-    console.log('tn_contents :>> ', tn_contents);
 
     const data = {
         'jetfan_no': jetfan_no, 

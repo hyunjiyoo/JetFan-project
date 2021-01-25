@@ -9,7 +9,6 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-# import log
 
 # 추적도면 GET
 # 추적도면 POST : 시설이력, 운전점검
@@ -44,7 +43,6 @@ class Trace(MethodView):
 		trace_status_r = requests.get(url_status)
 		evaluation = json.loads(trace_status_r.text)
 
-		# log.log("trace_routes : eval_jetfan_code-->", evaluation[0]['eval_jetfan_code']) 
 		dataArr = evaluation
 
 		# 현상태 점검현황
@@ -54,7 +52,6 @@ class Trace(MethodView):
 
 		checkArr = []
 		for item in trace_check:
-			# log.log("trace_routes3 : tc_jetfan_code-->", item['tc_jetfan_code']) 
 			checkArr.append(item['tc_seq'])
 			checkArr.append(item['tc_content'])
 
@@ -70,8 +67,6 @@ class Trace(MethodView):
 		noteOneYearAgo = []
 		noteTowYearAgo = []
 		for item in trace_note:
-			# log.log("trace_routes3 : tn_jetfan_code-->", item['tn_jetfan_code']) 
-			# log.log("trace_routes3 : tn_year-->", item['tn_year']) 
 			if(int(item['tn_year']) == int(value['year'])):
 				noteCurYear.append(item['tn_seq'])
 				noteCurYear.append(item['tn_content'])
