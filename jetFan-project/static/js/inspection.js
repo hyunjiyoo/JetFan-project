@@ -26,6 +26,7 @@ const initData = () => {
     document.querySelector('#tunn_spec').innerText = '';
     document.querySelector('#ins_company').innerText = '';
     document.querySelector('#ins_emp').innerText = '';
+    document.querySelector('#ins_ymd').innerText = '';
 
     for(let i = 11; i <=30; i++) {
         document.querySelector(`#ins_${i}a`).value = '';
@@ -66,6 +67,7 @@ const getData = () => {
             document.querySelector('#tunn_spec').innerText = data['tunn_spec'] ?? '';
             document.querySelector('#ins_company').innerText = data['ins_company'] ?? '';
             document.querySelector('#ins_emp').innerText = data['ins_emp'] ?? '';
+            document.querySelector('#ins_ymd').innerText = data['ymd_jetfan'] ?? '';
             
             // 점검내용
             for(let i = 11; i <=30; i++) {

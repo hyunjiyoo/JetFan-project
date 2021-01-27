@@ -33,24 +33,19 @@ class Eval(MethodView):
 												  years= years)
 	
 	def post(self):
-		dataArr = []
 		value = request.get_json()
 
 		# 전년도 평가표데이터 가져오기
 		r = requests.get(base_url + 'evaluation/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no'])
 		basic_info = json.loads(r.text)
-		if(basic_info != []):
-			dataArr = basic_info[0]
-		else:
-			dataArr = basic_info
 
-		return json.dumps(dataArr)
+		return json.dumps(basic_info[0])
 
 	
 	def put(self):
 		v = request.get_json()
 
-		jetfan_no = str(v['data'][0]['eval_jetfan_code'])
+		jetfan_no = v['data'][0]['eval_jetfan_code']
 		year = v['data'][0]['eval_year']
 		year_no =  v['data'][0]['eval_year_no']
 		
@@ -58,5 +53,5 @@ class Eval(MethodView):
 		url = base_url + 'evaluation/' + jetfan_no + '/' + year + '/' + year_no
 		r = requests.put(url, data=json.dumps(v['data']))
 		result = json.loads(r.text)
-
+		
 		return json.dumps(result)

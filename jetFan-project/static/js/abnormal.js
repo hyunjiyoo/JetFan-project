@@ -211,6 +211,36 @@ const showImg = (input) => {
     }
 }
 
+// const fileUpload = (img, file) => {
+//     const reader = new FileReader();
+//     this.ctrl = createThrobber(img);
+//     const xhr = new XMLHttpRequest();
+//     this.xhr = xhr;
+  
+//     const self = this;
+//     this.xhr.upload.addEventListener("progress", function(e) {
+//           if (e.lengthComputable) {
+//             const percentage = Math.round((e.loaded * 100) / e.total);
+//             self.ctrl.update(percentage);
+//           }
+//         }, false);
+  
+//     xhr.upload.addEventListener("load", function(e){
+//             self.ctrl.update(100);
+//             const canvas = self.ctrl.ctx.canvas;
+//             canvas.parentNode.removeChild(canvas);
+//         }, false);
+
+//     xhr.open("POST", "http://demos.hacks.mozilla.org/paul/demos/resources/webservices/devnull.php");
+//     xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+
+//     reader.onload = function(evt) {
+//       xhr.send(evt.target.result);
+//     };
+
+//     reader.readAsBinaryString(file);
+// }
+
 
 // 사진추가
 const addContent = () => {
@@ -261,6 +291,9 @@ const addContent = () => {
                         confirmButtonText: '확인'
                     });
 
+
+                    
+                    
                     // 참고사진에 추가
                     const photo = document.querySelector('#photo');
                     const delBtn = document.querySelectorAll('.delBtn');
@@ -270,6 +303,9 @@ const addContent = () => {
                     let button = document.createElement('button');
                     let img = document.createElement('img');
                     let hr = document.createElement('hr');
+                    
+                    fileUpload(img);
+
                     
                     photo.appendChild(div);
                     photo.appendChild(input);

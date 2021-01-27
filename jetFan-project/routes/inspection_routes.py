@@ -42,13 +42,22 @@ class Inspection(MethodView):
 		
 		jetfan1 = []
 		jetfan2 = []
+		jetfan_ymd = []
 		for data in jetfan1_items:
 			jetfan1.append(data['jetfan_no'])
+			ymd1_r = requests.get(base_url + 'evaluation/' + str(data['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+			ymd1_items = json.loads(ymd1_r.text)
+			jetfan_ymd.append(ymd1_items[0]['eval_ymd'][0:10])
+
 		for data in jetfan2_items:
 			jetfan2.append(data['jetfan_no'])
+			ymd2_r = requests.get(base_url + 'evaluation/' + str(data['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+			ymd2_items = json.loads(ymd2_r.text)
+			jetfan_ymd.append(ymd2_items[0]['eval_ymd'][0:10])
 
 		inspect_items[0]['way1_jetfan'] = jetfan1
 		inspect_items[0]['way2_jetfan'] = jetfan2
+		inspect_items[0]['ymd_jetfan'] = list(set(jetfan_ymd))
 
 		return json.dumps(inspect_items[0])
 

@@ -90,6 +90,7 @@ class Abnormal(MethodView):
 			return json.dumps(jetfan)
 		
 		elif(v['option'] == 'addContent'):
+			# db insert 쿼리만 날렸고, 파일도 업로드되어야함 
 			url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 			r = requests.post(url, data=json.dumps(v['data']))
 			result = json.loads(r.text)

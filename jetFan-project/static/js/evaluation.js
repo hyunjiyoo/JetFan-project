@@ -111,7 +111,7 @@ const getData = () => {
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
     const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
-    console.log('data :>> ', data);
+
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -125,6 +125,7 @@ const getData = () => {
             document.querySelector('#way').innerText = data.jetfan_way ?? '';
             document.querySelector('#lane').innerText = data.jetfan_lane ?? '';
             document.querySelector('#jetfan_name').innerText = data.jetfan_no ?? '';
+            document.querySelector('#eval_ymd').innerText = data.eval_ymd.split('T')[0] ?? '';
             document.querySelector('#jetfan_name').dataset.update = data.eval_update ?? '';
             document.querySelector('#jetfan_name').dataset.ymd = data.eval_ymd ?? '';
             document.querySelector('#jetfan_name').dataset.emp = data.eval_emp ?? '';
@@ -692,77 +693,79 @@ const getGrade = () => {
 
 
 const inputData = () => {
-
-    let contents = [{
-        "eval_jetfan_code": document.querySelector('#jetfan_no').value,
-        "eval_year": document.querySelector('#year').value,
-        "eval_year_no": document.querySelector('#update').value,
-        "eval_update":document.querySelector('#jetfan_name').dataset.update,
-        "eval_ymd": document.querySelector('#jetfan_name').dataset.ymd,
-        "eval_emp": document.querySelector('#jetfan_name').dataset.emp,
-        "eval_company": document.querySelector('#jetfan_name').dataset.company,
-        "eval_vibrate_y_1":document.querySelector('#eval_vibrate_y_1').value,
-        "eval_vibrate_x_1":document.querySelector('#eval_vibrate_x_1').value,
-        "eval_vibrate_z_1":document.querySelector('#eval_vibrate_z_1').value,
-        "eval_vibrate_y_2":document.querySelector('#eval_vibrate_y_2').value,
-        "eval_vibrate_x_2":document.querySelector('#eval_vibrate_x_2').value,
-        "eval_vibrate_z_2":document.querySelector('#eval_vibrate_z_2').value,
-        "eval_vibrate":document.querySelector('#eval_vibrate').textContent,
-        "eval_vibrate_score":document.querySelector('#eval_vibrate_score').textContent,
-        "eval_amp_r":document.querySelector('#eval_amp_r').value,
-        "eval_amp_s":document.querySelector('#eval_amp_s').value,
-        "eval_amp_t":document.querySelector('#eval_amp_t').value,
-        "eval_temp":document.querySelector('#eval_temp').value,
-        "eval_amp":document.querySelector('#eval_amp').textContent,
-        "eval_amp_score":document.querySelector('#eval_amp_score').textContent,
-        "eval_beartemp":document.querySelector('#eval_beartemp').value,
-        "eval_beartemp_score":document.querySelector('#eval_beartemp_score').textContent,
-        "eval_motortemp":document.querySelector('#eval_motortemp').value,
-        "eval_motortemp_score":document.querySelector('#eval_motortemp_score').textContent,
-        "eval_motorinsul":document.querySelector('#eval_motorinsul').value,
-        "eval_motorinsul_score":document.querySelector('#eval_motorinsul_score').textContent,
-        "eval_volt":document.querySelector('#eval_volt').value,
-        "eval_operate_sum":document.querySelector('#eval_operate_sum').textContent,
-        "eval_braidnoise":document.querySelector('#eval_braidnoise').value,
-        "eval_braidnoise_score":document.querySelector('#eval_braidnoise_score').textContent,
-        "eval_braidbroken":document.querySelector('#eval_braidbroken').value,
-        "eval_braidbroken_score":document.querySelector('#eval_braidbroken_score').textContent,
-        "eval_bearnoise":document.querySelector('#eval_bearnoise').value,
-        "eval_bearnoise_score":document.querySelector('#eval_bearnoise_score').textContent,
-        "eval_casing":document.querySelector('#eval_casing').value,
-        "eval_casing_score":document.querySelector('#eval_casing_score').textContent,
-        "eval_exterior":document.querySelector('#eval_exterior').value,
-        "eval_exterior_score":document.querySelector('#eval_exterior_score').textContent,
-        "eval_buckle":document.querySelector('#eval_buckle').value,
-        "eval_buckle_score":document.querySelector('#eval_buckle_score').textContent,
-        "eval_eyebolt":document.querySelector('#eval_eyebolt').value,
-        "eval_eyebolt_score":document.querySelector('#eval_eyebolt_score').textContent,
-        "eval_bracket":document.querySelector('#eval_bracket').value,
-        "eval_bracket_score":document.querySelector('#eval_bracket_score').textContent,
-        "eval_anchor":document.querySelector('#eval_anchor').value,
-        "eval_anchor_score":document.querySelector('#eval_anchor_score').textContent,
-        "eval_chain":document.querySelector('#eval_chain').value,
-        "eval_chain_score":document.querySelector('#eval_chain_score').textContent,
-        "eval_exterior_sum":document.querySelector('#eval_exterior_sum').textContent,
-        "eval_useyear":document.querySelector('#eval_useyear').value,
-        "eval_useyear_score":document.querySelector('#eval_useyear_score').textContent,
-        "eval_useyear_sum":document.querySelector('#eval_useyear_sum').textContent,
-        "eval_snow":document.querySelector('#eval_snow').value,
-        "eval_snow_score":document.querySelector('#eval_snow_score').textContent,
-        "eval_env_sum":document.querySelector('#eval_env_sum').textContent,
-        "eval_score_sum":document.querySelector('#eval_score_sum').textContent,
-        "eval_twenty":document.querySelector('#eval_twenty').textContent,
-        "eval_grade":document.querySelector('#eval_grade').textContent
-    }];
+    console.log(document.querySelector('#jetfan_name').dataset.update);
+    console.log(typeof(document.querySelector('#jetfan_name').dataset.update));
 
     const data = {
-        'data': contents
+        'data': [{
+            "eval_jetfan_code": document.querySelector('#jetfan_no').value,
+            "eval_year": document.querySelector('#year').value,
+            "eval_year_no": document.querySelector('#update').value,
+            "eval_update":document.querySelector('#jetfan_name').dataset.update,
+            "eval_ymd": document.querySelector('#jetfan_name').dataset.ymd,
+            "eval_emp": document.querySelector('#jetfan_name').dataset.emp,
+            "eval_company": document.querySelector('#jetfan_name').dataset.company,
+            "eval_vibrate_y_1":document.querySelector('#eval_vibrate_y_1').value,
+            "eval_vibrate_x_1":document.querySelector('#eval_vibrate_x_1').value,
+            "eval_vibrate_z_1":document.querySelector('#eval_vibrate_z_1').value,
+            "eval_vibrate_y_2":document.querySelector('#eval_vibrate_y_2').value,
+            "eval_vibrate_x_2":document.querySelector('#eval_vibrate_x_2').value,
+            "eval_vibrate_z_2":document.querySelector('#eval_vibrate_z_2').value,
+            "eval_vibrate":document.querySelector('#eval_vibrate').textContent,
+            "eval_vibrate_score":document.querySelector('#eval_vibrate_score').textContent,
+            "eval_amp_r":document.querySelector('#eval_amp_r').value,
+            "eval_amp_s":document.querySelector('#eval_amp_s').value,
+            "eval_amp_t":document.querySelector('#eval_amp_t').value,
+            "eval_temp":document.querySelector('#eval_temp').value,
+            "eval_amp":document.querySelector('#eval_amp').textContent,
+            "eval_amp_score":document.querySelector('#eval_amp_score').textContent,
+            "eval_beartemp":document.querySelector('#eval_beartemp').value,
+            "eval_beartemp_score":document.querySelector('#eval_beartemp_score').textContent,
+            "eval_motortemp":document.querySelector('#eval_motortemp').value,
+            "eval_motortemp_score":document.querySelector('#eval_motortemp_score').textContent,
+            "eval_motorinsul":document.querySelector('#eval_motorinsul').value,
+            "eval_motorinsul_score":document.querySelector('#eval_motorinsul_score').textContent,
+            "eval_volt":document.querySelector('#eval_volt').value,
+            "eval_operate_sum":document.querySelector('#eval_operate_sum').textContent,
+            "eval_braidnoise":document.querySelector('#eval_braidnoise').value,
+            "eval_braidnoise_score":document.querySelector('#eval_braidnoise_score').textContent,
+            "eval_braidbroken":document.querySelector('#eval_braidbroken').value,
+            "eval_braidbroken_score":document.querySelector('#eval_braidbroken_score').textContent,
+            "eval_bearnoise":document.querySelector('#eval_bearnoise').value,
+            "eval_bearnoise_score":document.querySelector('#eval_bearnoise_score').textContent,
+            "eval_casing":document.querySelector('#eval_casing').value,
+            "eval_casing_score":document.querySelector('#eval_casing_score').textContent,
+            "eval_exterior":document.querySelector('#eval_exterior').value,
+            "eval_exterior_score":document.querySelector('#eval_exterior_score').textContent,
+            "eval_buckle":document.querySelector('#eval_buckle').value,
+            "eval_buckle_score":document.querySelector('#eval_buckle_score').textContent,
+            "eval_eyebolt":document.querySelector('#eval_eyebolt').value,
+            "eval_eyebolt_score":document.querySelector('#eval_eyebolt_score').textContent,
+            "eval_bracket":document.querySelector('#eval_bracket').value,
+            "eval_bracket_score":document.querySelector('#eval_bracket_score').textContent,
+            "eval_anchor":document.querySelector('#eval_anchor').value,
+            "eval_anchor_score":document.querySelector('#eval_anchor_score').textContent,
+            "eval_chain":document.querySelector('#eval_chain').value,
+            "eval_chain_score":document.querySelector('#eval_chain_score').textContent,
+            "eval_exterior_sum":document.querySelector('#eval_exterior_sum').textContent,
+            "eval_useyear":document.querySelector('#eval_useyear').value,
+            "eval_useyear_score":document.querySelector('#eval_useyear_score').textContent,
+            "eval_useyear_sum":document.querySelector('#eval_useyear_sum').textContent,
+            "eval_snow":document.querySelector('#eval_snow').value,
+            "eval_snow_score":document.querySelector('#eval_snow_score').textContent,
+            "eval_env_sum":document.querySelector('#eval_env_sum').textContent,
+            "eval_score_sum":document.querySelector('#eval_score_sum').textContent,
+            "eval_twenty":document.querySelector('#eval_twenty').textContent,
+            "eval_grade":document.querySelector('#eval_grade').textContent
+        }]
     };
 
+    console.log('data :>> ', data);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
             if(data.status.status_code === 200) {
                 const eval_update = document.querySelector('#greenCircle').dataset.update;
                 changeCircleColor(eval_update);
