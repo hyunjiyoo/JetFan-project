@@ -63,9 +63,6 @@
 #contents #etc table th {
   background-color: lightgrey;
 }
-#contents #etc table input[type='text'] {
-  width: 100%;
-}
 #contents button#submitBtn {
   display: flex;
   font-size: 13pt;
