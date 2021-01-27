@@ -33,7 +33,8 @@ class Abnormal(MethodView):
 		v = request.get_json()
 		
 		if(v['option'] == 'getContent'):
-			dataArr = []
+			data = {}
+			# dickVar = {}
 			
 			# 이상소견, 현장점검 소견
 			ar_r = requests.get(base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
@@ -45,39 +46,43 @@ class Abnormal(MethodView):
 					errorContent.append(item['ar_content'])
 				elif(item['ar_type'] == 2):
 					chkContent.append(item['ar_content'])
-			dataArr.append(errorContent)
-			dataArr.append(chkContent)
+			data['error'] = errorContent;
+			data['chk'] = chkContent
 
 			# 참고사진
 			ap_r = requests.get(base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
 			ap_items = json.loads(ap_r.text)
-			photoContent = []
+			data['photo'] = {'ap_seq': [], 'ap_way': [], 'ap_jetfan_no': [], 'ap_comment': [], 'ap_photo': []}
 			for item in ap_items:
-				photoContent.append(item['ap_seq'])
-				photoContent.append(item['ap_way'])
-				photoContent.append(item['ap_jetfan_no'])
-				photoContent.append(item['ap_comment'])
-				photoContent.append(item['ap_photo'])
-			dataArr.append(photoContent)
+				data['photo']['ap_seq'].append(item['ap_seq'])
+				data['photo']['ap_way'].append(item['ap_way'])
+				data['photo']['ap_jetfan_no'].append(item['ap_jetfan_no'])
+				data['photo']['ap_comment'].append(item['ap_comment'])
+				data['photo']['ap_photo'].append(item['ap_photo'])
 
 
 			# 하단 터널방향
 			way_r = requests.get(base_url + 'tunnel/tunn_code/' + v['tunn_code'])
 			way_items = json.loads(way_r.text)
-			wayArr = []
-			wayArr.append(way_items[0]['tunn_way1'])
-			wayArr.append(way_items[0]['tunn_way2'])
-			dataArr.append(wayArr)
+			data['way1'] = way_items[0]['tunn_way1']
+			data['way2'] = way_items[0]['tunn_way2']
 
 			# 하단 제트팬가져오기
 			jetfan_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way1'])
 			jetfan_items = json.loads(jetfan_r.text)
 			jetfanArr = []
+			jetfanYmd = []
 			for item in jetfan_items:
 				jetfanArr.append(item['jetfan_no'])
-			dataArr.append(jetfanArr)
+				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+				ymd_items = json.loads(ymd_r.text)
+				for ymd in ymd_items:
+					jetfanYmd.append(ymd['eval_ymd'][:10])
+			data['jetfan'] = jetfanArr
+			data['ymd'] = list(set(jetfanYmd))
 
-			return json.dumps(dataArr)
+			return json.dumps(data)
+
 
 		elif(v['option'] == 'getJetfan'):
 			r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + v['way'])
