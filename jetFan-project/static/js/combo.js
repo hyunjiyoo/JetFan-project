@@ -233,9 +233,11 @@ const setTunnel = () => {
 
 // 터널선택시 제트팬세팅
 const setJetfan = () => {
-    searchInit(); init('jetfan_no'); init('jetfan_way');
+    searchInit(); init('branch'); init('jetfan_no'); init('jetfan_way');
 
-    const data = { 'div_code': document.querySelector(`#tunnel`).value, 'div': 'jetfan_no'};
+    const data = { 'div': 'jetfan_no',
+                   'tunn_code': document.querySelector(`#tunnel`).value
+                };
     
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -244,27 +246,31 @@ const setJetfan = () => {
             console.log('data :>> ', data);
 
             // 터널명 검색시 해당 터널에 맞는 본부, 지사 가져오기
-            if(document.querySelector('#dept option') === null) {
-                let dept_opt = document.createElement('option');
-                document.querySelector('#dept').appendChild(dept_opt);
-                dept_opt.innerText = data[1][0];
-                dept_opt.value = data[1][1];
-            }
+            const depts =  Object.values(document.querySelectorAll('#dept option'));
+            const selectedDept = depts.find((dept) => dept.value === String(data[1][1]));
+            selectedDept.setAttribute('selected', true);
 
-            if(document.querySelector('#branch option') === null) {
-                let bran_opt = document.createElement('option');
-                document.querySelector('#branch').appendChild(bran_opt);
-                bran_opt.innerText = data[2][0];
-                bran_opt.value = data[2][1];
+            // 해당 본부에 맞는 지사 가져와서 선택하기
+            const bran_name = data[2].filter((elem, i) =>  i%2===0 );
+            const bran_code = data[2].filter((elem, i) =>  i%2===1 );
+            for(let i = 0; i < data[2].length/2; i++) {
+                let opt = document.createElement('option');
+                document.querySelector(`#branch`).appendChild(opt);
+                opt.innerText = bran_name[i];
+                opt.value = bran_code[i];
             }
+            const branches = Object.values(document.querySelectorAll('#branch option'));
+            const selectedBr = branches.find((br) => br.value === String(data[3]));
+            selectedBr.setAttribute('selected', true);
+
             
             const path = window.location.pathname;
             if(path === '/evaluation' || path === '/trace') {
                 // 방향
-                for(let i = 0; i < data[3].length; i++) {
+                for(let i = 0; i < data[4].length; i++) {
                     let opt = document.createElement('option');
                     document.querySelector(`#jetfan_way`).appendChild(opt);
-                    opt.innerText = data[3][i];
+                    opt.innerText = data[4][i];
                 }
 
                 // 제트팬

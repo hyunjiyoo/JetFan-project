@@ -139,8 +139,8 @@ class Combo(MethodView):
 
 		# 터널 클릭
 		elif(value['div'] == 'jetfan_no'):
-			way_r = requests.get(base_url + 'tunnel/tunn_code/' + value['div_code'])
-			jetfan_r = requests.get(base_url + 'jetfan/tunn_code/' + value['div_code'])
+			way_r = requests.get(base_url + 'tunnel/tunn_code/' + value['tunn_code'])
+			jetfan_r = requests.get(base_url + 'jetfan/tunn_code/' + value['tunn_code'])
 			way = json.loads(way_r.text)
 			jetfan = json.loads(jetfan_r.text)
 
@@ -158,10 +158,14 @@ class Combo(MethodView):
 			dataArr.append(divArr)
 
 			# 지사
+			branch_r = requests.get(base_url + 'branch/bran_div_code/' + str(jetfan[0]['div_code']))
+			branch = json.loads(branch_r.text)
 			branArr = []
-			branArr.append(jetfan[0]['bran_name'])
-			branArr.append(jetfan[0]['bran_code'])
+			for item in branch:
+				branArr.append(item['bran_name'])
+				branArr.append(item['bran_code'])
 			dataArr.append(branArr)
+			dataArr.append(jetfan[0]['bran_code'])
 			
 			# 방향
 			wayArr = []
