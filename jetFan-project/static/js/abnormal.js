@@ -1,6 +1,8 @@
 window.onload = () => {
-    document.querySelector('#addBtn').addEventListener('click', addContent);
+    document.querySelector('#addBtn').addEventListener('click', uploadFile);
     document.querySelector('#submitBtn').addEventListener('click', modifyData);
+    document.querySelector('#myFile').addEventListener('change', showImg);
+
 }
 
 
@@ -114,6 +116,7 @@ const getData = () => {
                     img.setAttribute('id', 'img'+data['photo']['ap_seq'][i]);
                     input.value = data['photo']['ap_comment'][i];
                     button.innerText = '삭제';
+                    console.log('./data/abnormal/' + year + '/' + year_no + '/' + data['photo']['ap_photo'][i]);
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + data['photo']['ap_photo'][i]);
                     img.setAttribute('alt', data['photo']['ap_photo'][i]);
                     hr.setAttribute('id', 'hr'+data['photo']['ap_seq'][i]);
@@ -204,50 +207,87 @@ const getJetfan = () => {
 
 
 // 이미지 미리보기
-const showImg = (input) => {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            previewImg.setAttribute('src', e.target.result);
-        }
+// const showImg = (input) => {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
+//         reader.onload = function(e) {
+//             previewImg.setAttribute('src', e.target.result);
+//         }
         
-        reader.readAsDataURL(input.files[0]);
+//         reader.readAsDataURL(input.files[0]);
+//     }
+// }
+const showImg = () => {
+    const fileElem = document.querySelector('#myFile'),
+          comment = document.querySelector('#comment'),
+          previewImg = document.querySelector("#previewImg");
+
+    if (!fileElem.files.length) {
+        previewImg.src = 'http://via.placeholder.com/300x100';
+    } else {
+        previewImg.src = URL.createObjectURL(fileElem.files[0]);
+        previewImg.height = 200;
+        previewImg.onload = function() {
+            URL.revokeObjectURL(fileElem.src);
+        }
+        comment.appendChild(previewImg);
     }
 }
 
-// const fileUpload = (img, file) => {
-//     const reader = new FileReader();
-//     this.ctrl = createThrobber(img);
-//     const xhr = new XMLHttpRequest();
-//     this.xhr = xhr;
-  
-//     const self = this;
-//     this.xhr.upload.addEventListener("progress", function(e) {
-//           if (e.lengthComputable) {
-//             const percentage = Math.round((e.loaded * 100) / e.total);
-//             self.ctrl.update(percentage);
-//           }
-//         }, false);
-  
-//     xhr.upload.addEventListener("load", function(e){
-//             self.ctrl.update(100);
-//             const canvas = self.ctrl.ctx.canvas;
-//             canvas.parentNode.removeChild(canvas);
-//         }, false);
 
-//     xhr.open("POST", "http://demos.hacks.mozilla.org/paul/demos/resources/webservices/devnull.php");
-//     xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+// 사진파일 업로드
+const uploadFile = function() {
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#update').value;
+    const tunn_code = document.querySelector('#tunnel').value;
+    const delBtn = document.querySelectorAll('.delBtn');
+    const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
+    const fileElem = document.querySelector('#myFile');
 
-//     reader.onload = function(evt) {
-//       xhr.send(evt.target.result);
-//     };
+    const fd = new FormData(); 
+    fd.append('file', fileElem.files[0]);
+    fd.append('year', year);
+    fd.append('year_no', year_no);
+    fd.append('tunn_code', tunn_code);
+    fd.append('seq', seq);
 
-//     reader.readAsBinaryString(file);
-// }
+    if (!fileElem.value) return; 
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            let result = this.responseText;
+            if(result === 'succ') {
+                addContent(`a_${tunn_code}_${seq}.jpg`);
+
+            } else {
+                Swal.fire({
+                    title: '사진추가실패', 
+                    text: '사진 추가에 실패하였습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+            }
+
+        } else {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+        }
+    };
+
+    xhr.open('POST', '/abupload');
+    xhr.send(fd);
+};
 
 
 // 사진추가
-const addContent = () => {
+const addContent = (filename) => {
 
     const opts = document.querySelector('#comment option');
     if(opts === null) {
@@ -266,7 +306,7 @@ const addContent = () => {
         const ap_way = document.querySelector('#way').selectedOptions[0].textContent;
         const ap_jetfan_no = document.querySelector('#jetfan').selectedOptions[0].textContent;
         const ap_comment = document.querySelector('#commentText').value ?? '';
-        const ap_photo = document.querySelector('#myFile').files[0]?.name ?? 'sample.jpg';
+        const ap_photo = filename ?? 'sample.jpg';
 
         const content = [{
             'ap_way': ap_way,
@@ -280,14 +320,17 @@ const addContent = () => {
                       'year_no': year_no,
                       'data': content,
                       'option': 'addContent'
-                    };
+                     };
 
+       
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let data = JSON.parse(this.responseText);
                 console.log('data22222 :>> ', data);
+
                 if(data.status.status_code === 200) {
+                    
                     Swal.fire({
                         title: '성공', 
                         text: '사진이 정상적으로 추가되었습니다.',
@@ -296,20 +339,17 @@ const addContent = () => {
                     });
 
 
-                    
-                    
                     // 참고사진에 추가
                     const photo = document.querySelector('#photo');
                     const delBtn = document.querySelectorAll('.delBtn');
                     const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
-                    let div = document.createElement('div');
-                    let input = document.createElement('input');
-                    let button = document.createElement('button');
-                    let img = document.createElement('img');
-                    let hr = document.createElement('hr');
-                    
-                    fileUpload(img);
-
+                    const div = document.createElement('div');
+                    const input = document.createElement('input');
+                    const button = document.createElement('button');
+                    const img = document.createElement('img');
+                    const hr = document.createElement('hr');
+                    const img_path = './data/abnormal/' + year + '/' + year_no + '/';
+                    const file_name = 'a_' + tunn_code + '_' + seq + '.jpg';
                     
                     photo.appendChild(div);
                     photo.appendChild(input);
@@ -324,8 +364,8 @@ const addContent = () => {
                     button.onclick = deleteContent;
                     button.innerText = '삭제';
                     img.classList.add('refImg');
-                    img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + ap_photo);
-                    img.setAttribute('alt', ap_photo);
+                    img.setAttribute('src', img_path + file_name);
+                    img.setAttribute('alt', file_name);
 
                     div.setAttribute('id', 'div'+seq);
                     input.setAttribute('id', 'input'+seq);
@@ -444,6 +484,8 @@ const modifyData = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+            console.log('data :>> ', data);
+
             Swal.fire({
                 title: '입력성공', 
                 text: '데이터가 정상적으로 입력되었습니다.',

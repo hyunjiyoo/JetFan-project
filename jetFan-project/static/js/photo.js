@@ -82,6 +82,7 @@ const getData = () => {
                     button.innerText = '삭제';
                     img.setAttribute('src', './data/photo/' + year + '/' + year_no + '/' + photo[i]);
                     img.setAttribute('alt', photo[i]);
+                    hr.setAttribute('id', 'hr'+seq[i]);
                 }
 
                 // 추가버튼 왼쪽 콤보박스 - 방향
@@ -244,6 +245,7 @@ const addContent = () => {
                 input.setAttribute('id', 'input'+seq);
                 button.setAttribute('id', 'btn'+seq);
                 img.setAttribute('id', 'img'+seq);
+                hr.setAttribute('id', 'hr'+seq);
                 
 
                 // 추가부분 초기화
@@ -300,6 +302,7 @@ const deleteContent = (e) => {
                     document.querySelector(`#input${seq}`).remove();
                     document.querySelector(`#btn${seq}`).remove();
                     document.querySelector(`#img${seq}`).remove();
+                    document.querySelector(`#hr${seq}`).remove();
 
                 } else {
                     Swal.fire({

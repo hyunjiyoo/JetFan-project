@@ -7,8 +7,7 @@ from routes.apitest_routes import TestDept
 from routes.apitest_routes import TestJetfan
 from routes.apitest_routes import TestTunnel
 
-from routes.test2_routes import Test2, Test3
-# from routes.test2_routes import Test2
+from routes.test2_routes import Test2, Test3, Test4
 
 
 ## Import routes
@@ -21,7 +20,7 @@ from routes.trace_routes import Trace
 # 안전점검 Safety 
 from routes.inspection_routes import Inspection
 # 이상발생보고서 Abnormal
-from routes.abnormal_routes import Abnormal
+from routes.abnormal_routes import Abnormal, Abupload
 # 사진첩 Photo
 from routes.photo_routes import Photo
 # 데이터생성 Data
@@ -43,23 +42,30 @@ app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods
 
 # 콤보박스
 app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
+
 # 평가표
 app.add_url_rule('/evaluation', view_func=Eval.as_view('evaluation_view'), methods=['GET', 'POST', 'PUT'])
+
 # 안전점검
 app.add_url_rule('/inspection', view_func=Inspection.as_view('inspection_view'), methods=['GET', 'POST', 'PUT'])
+
 # 추적도면
 app.add_url_rule('/trace', view_func=Trace.as_view('trace_view'), methods=['GET', 'POST', 'PUT'])
+
 # 이상발생보고서
 app.add_url_rule('/abnormal', view_func=Abnormal.as_view('abnormal_view'), methods=['GET', 'POST', 'PUT', 'DELETE'])
+app.add_url_rule('/abupload', view_func=Abupload.as_view('abupload_view'), methods=['POST'])
+
 # 사진첩
 app.add_url_rule('/photo', view_func=Photo.as_view('photo_view'), methods=['GET', 'POST', 'PUT', 'DELETE'])
+
 # 데이터생성
 app.add_url_rule('/basic', view_func=Data.as_view('basic_view'), methods=['GET', 'POST'])
 
 
 app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET', 'POST'])
-# app.add_url_rule('/test2', view_func=Test2.as_view('test3_view'), methods=['GET', 'POST'])
 app.add_url_rule('/test3', view_func=Test3.as_view('test3_view'), methods=['POST'])
+app.add_url_rule('/test4', view_func=Test4.as_view('test4_view'), methods=['POST'])
 
 
 

@@ -1,9 +1,11 @@
 from flask.views import MethodView
 from flask import render_template, request
+from werkzeug.utils import secure_filename
 
 import datetime
 import requests
 import json
+import os
 
 from . import Base_url
 global base_url
@@ -34,7 +36,6 @@ class Abnormal(MethodView):
 		
 		if(v['option'] == 'getContent'):
 			data = {}
-			# dickVar = {}
 			
 			# 이상소견, 현장점검 소견
 			ar_r = requests.get(base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
@@ -95,7 +96,6 @@ class Abnormal(MethodView):
 			return json.dumps(jetfan)
 		
 		elif(v['option'] == 'addContent'):
-			# db insert 쿼리만 날렸고, 파일도 업로드되어야함 
 			url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 			r = requests.post(url, data=json.dumps(v['data']))
 			result = json.loads(r.text)
@@ -116,4 +116,29 @@ class Abnormal(MethodView):
 		r = requests.delete(url)
 		result = json.loads(r.text)
 
+		# 서버에 있는 파일 삭제
+		dir_path = './static/data/abnormal/' + v['year'] + '/' + v['year_no'] + '/'
+		file_name = 'a_' + v['tunn_code'] + '_' + v['seq'] + '.jpg'
+		os.remove(dir_path + secure_filename(file_name))
+
 		return json.dumps(result)
+
+
+class Abupload(MethodView):
+	def post(self):
+		if 'file' not in request.files:
+			return 'fail'
+		
+		else:
+			f = request.files['file']
+			year = request.form['year']
+			year_no = request.form['year_no']
+			tunn_code = request.form['tunn_code']
+			seq = request.form['seq']
+			
+			dir_path = './static/data/abnormal/' + year + '/' + year_no + '/'
+			file_name = 'a_' + tunn_code + '_' + seq + '.jpg'
+
+			f.save(dir_path + secure_filename(file_name))
+
+			return 'succ'
