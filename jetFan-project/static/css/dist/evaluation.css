@@ -26,16 +26,18 @@ input::-webkit-inner-spin-button {
 }
 #contents #info table th {
   width: 2%;
+  color: #1c5180;
+  background-color: #f0f0f0;
 }
 #contents #info table td {
   width: 3%;
   text-align: center;
+  background-color: #fffef9;
 }
 #contents h3 {
-  background-color: lightyellow;
   margin-top: 40px;
   margin-bottom: 10px;
-  color: #000;
+  color: #1c5180;
   text-align: left;
 }
 #contents #operation table th,
@@ -43,6 +45,13 @@ input::-webkit-inner-spin-button {
   border: 1px solid #000;
   width: 1%;
   height: 34px;
+}
+#contents #operation table th {
+  color: #1c5180;
+  background-color: #f0f0f0;
+}
+#contents #operation table td {
+  background-color: #fffef9;
 }
 #contents #operation table tr th:first-child {
   width: 1.2%;
@@ -57,10 +66,12 @@ input::-webkit-inner-spin-button {
   width: 100%;
   text-align: center;
   font-size: 13pt;
+  background-color: #fffef9;
 }
 #contents #chkAppearance table th {
   width: 2.2%;
   text-align: left;
+  color: #1c5180;
 }
 #contents #chkAppearance table td {
   width: 1%;
@@ -78,9 +89,16 @@ input::-webkit-inner-spin-button {
   text-align: center;
   border: 1px solid #000;
 }
+#contents #chkAppearance table tr:last-child th {
+  background-color: #f0f0f0;
+}
+#contents #chkAppearance table tr:last-child td {
+  background-color: #fffef9;
+}
 #contents #useYear table th {
   width: 2.2%;
   text-align: left;
+  color: #1c5180;
 }
 #contents #useYear table td {
   width: 1%;
@@ -100,9 +118,16 @@ input::-webkit-inner-spin-button {
   border: 1px solid #000;
   text-align: center;
 }
+#contents #useYear table tr:last-child th {
+  background-color: #f0f0f0;
+}
+#contents #useYear table tr:last-child td {
+  background-color: #fffef9;
+}
 #contents #useEnv table th {
   width: 2.2%;
   text-align: left;
+  color: #1c5180;
 }
 #contents #useEnv table td {
   width: 1%;
@@ -121,6 +146,12 @@ input::-webkit-inner-spin-button {
   border: 1px solid #000;
   text-align: center;
 }
+#contents #useEnv table tr:last-child th {
+  background-color: #f0f0f0;
+}
+#contents #useEnv table tr:last-child td {
+  background-color: #fffef9;
+}
 #body-footer {
   display: flex;
   flex-direction: column;
@@ -135,9 +166,12 @@ input::-webkit-inner-spin-button {
 }
 #body-footer table th {
   width: 6%;
+  color: #1c5180;
+  background-color: #f0f0f0;
 }
 #body-footer table td {
   width: 1%;
+  background-color: #fffef9;
 }
 #body-footer button {
   margin: 0 auto;

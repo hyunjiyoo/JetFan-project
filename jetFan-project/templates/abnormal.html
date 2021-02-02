@@ -4,7 +4,10 @@
 {% include 'header.html' %}
 
 <div class='content-body'>
-    <h3>이상발생 보고서</h3>
+    <div id='title-text'>
+        <img src="./img/title-ic.png" alt="">
+        <span>제트팬 이상발생 보고서</span>
+    </div>
 
     {% include 'combo.html' %}
     
@@ -14,11 +17,11 @@
                 <td colspan='2' class='center'>JET FAN 이상발생 보고서 관리</td>
             </tr>
             <tr>
-                <td class='center'>터널명</td>
+                <th class='center'>터널명</th>
                 <td id='tunnel_name'></td>
             </tr>
             <tr>
-                <td class='center'>점검일자</td>
+                <th class='center'>점검일자</th>
                 <td id='tunn_ymd'></td>
             </tr>
 

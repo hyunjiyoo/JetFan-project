@@ -11,12 +11,18 @@
             padding: @table-padding;
         }
         th {
-            background-color:  rgb(240, 240, 240);
+            color: #1c5180;
+            background-color: #f0f0f0;
         }
 
         tr:first-child td {
             font-weight: bold;
-            background-color: lightgrey;
+            color: #1c5180;
+            background-color: #e0e0e0;
+        }
+
+        td {
+            background-color: #fffef9;
         }
 
         #tunnel_name {
@@ -43,6 +49,8 @@
             font-size: @basic-font;
             padding: @table-padding;
             font-family: initial;
+            background-color: #fffef9;
+
             & + button#delBtn {
                 float: right;
                 width: 13%;
@@ -88,6 +96,7 @@
                 width: 87%;
                 display: inline;
                 margin-bottom: 5px;
+                background-color: #fffef9;
             }
 
             #myFile {

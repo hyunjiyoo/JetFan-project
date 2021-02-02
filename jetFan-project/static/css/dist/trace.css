@@ -9,18 +9,24 @@ table td {
   font-size: 13pt;
   padding: 5px 3px;
 }
+table td {
+  background-color: #fffef9;
+}
 select {
   font-size: 13pt;
 }
 .table-header {
   text-align: center;
-  background-color: lightgrey;
   letter-spacing: 8px;
   font-weight: bold;
+  color: #1c5180;
+  background-color: #e0e0e0;
 }
 .table-title {
   text-align: center;
+  color: #1c5180;
   background-color: #f0f0f0;
+  font-weight: bold;
 }
 #planImg {
   border: 1px solid #000;

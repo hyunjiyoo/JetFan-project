@@ -1,13 +1,9 @@
 @basic-font: 13pt;
 @table-padding: 5px 3px;
 
-* {
-    font-size: @basic-font;
-}
-
-
 #contents {
     margin-bottom: 20%;
+    font-size: @basic-font;
     
     table {
         border-collapse: collapse;
@@ -24,11 +20,13 @@
             th {
                 width: 13%;
                 padding: @table-padding;
+                color: #1c5180;
                 background-color: #f0f0f0;
             }
             td {
                 width: 60%;
                 padding: @table-padding;
+                background-color: #fffef9;
             }
         }
     } 
@@ -41,22 +39,25 @@
             }
 
             th {
-                background-color: lightgrey;
+                color: #1c5180;
+                background-color: #f0f0f0;
             }
 
             tr:nth-child(2n+1) {
                 td {
-                    background-color: #f0f0f0;
+                    background-color: #f7f6f0;
                 }
             }
 
             td {
                 text-align: center;
+                background-color: #fffef9;
                 
                 &:first-child {
                     width: 27%;
                     input[type='text'] {
                         text-align: center;
+                        background-color: #fffef9;
                     }
                 }
                 
@@ -64,11 +65,13 @@
                     width: 67%;
                     input[type='text'] {
                         text-align: left;
+                        background-color: #fffef9;
                     }
                 }
 
                 input[type='text'] {
                     width: 100%;
+                    background-color: #fffef9;
                 }
             }
         }
@@ -80,17 +83,12 @@
             padding: @table-padding;
         }
         th {
-            background-color: lightgrey;
+            color: #1c5180;
+            background-color: #f0f0f0;
         }
-
-        // textarea {
-        //     width: 100%;
-        //     font-family: initial;
-        //     resize: none;
-        //     overflow: hidden;
-        //     min-height: 50px;
-        //     max-height: 200px;
-        // }
+        td {
+            background-color: #fffef9;
+        }
     }
 
     button#submitBtn {
@@ -105,7 +103,8 @@
 
 .accordion {
     font-weight: bold;
-    background-color: #f5f4ed;
+    background-color: #f0efe9;
+    color: #5e5e5e;
     cursor: pointer;
     border-left: 1px solid #000;
     border-right: 1px solid #000;
@@ -114,13 +113,15 @@
     transition: 0.4s;
     padding: @table-padding;
 
-    span {
+    img {
+        width: 4%;
         float: right;
+        margin-top: 2%;
         padding-right: 2%;
     }
 
     &:active {
-        background-color: lightsteelblue;
+        background-color: #e0dfda;
     }
 }
   

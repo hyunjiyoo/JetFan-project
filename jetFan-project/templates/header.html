@@ -6,15 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dist/main.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dist/index.css') }}" />
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/logo-img-w.png') }}" />
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/menu.png') }}" />
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/title-ic.png') }}">
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/exit.png') }}">
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/home.png') }}">
+    <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/user.png') }}">
     <script async type='text/javascript' src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src='https://cdn.jsdelivr.net/npm/sweetalert2@9'></script>
-    <!-- <script src='https://cdn.jsdelivr.net/npm/promise-polyfill'></script> -->
     <title>제트팬관리시스템</title>
 </head>
 <body>
     <header>
-        <h3>프라임 | <small>Jetfan Management System</small></h3>
-        <span id='menu-ic'>&#9776;</span>
+        <div id='title'>
+            <img id='logo' src="./img/logo-img-w.png" alt="">
+            <h4 id='header-text'>PRIME | <small><i>JETFAN MANAGEMENT SYSTEM</i></small></h4>
+            <img id='menu-ic' src="./img/menu.png" onclick='nav_menu()'>
+        </div>
 
         <div id="mySidenav" class="sidenav">
             <a href="/">메인화면</a>

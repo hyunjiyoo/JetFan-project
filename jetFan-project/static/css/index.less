@@ -2,6 +2,17 @@
 @btn-margin: 2%;
 @basic-font: 13pt;
 
+#bg-box {
+  background-image: url('../../img/bg.png');
+  z-index: -1;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
 .body {
   margin: 5rem 8% 0 8%;
   overflow: hidden;
@@ -9,20 +20,40 @@
   h1 {
     margin-top: 5%;
     text-align: center;
+    color: #1c5180;
   }
   
   h4 {
-    margin: 10px 0 8% 0;
+    margin: 10px 0 55px 0;
     text-align: center;
+    color: #464646;
   }
   
-  div {
-    display: flex;
+  #btn {
     button {
-      margin: @btn-margin;
-      width: @btn-width;
-      height: 100px;
+      margin: 5px @btn-margin;
+      width: 97%;
+      height: 40px;
       font-size: @basic-font;
+      border: 2px outset;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:first-child {
+        background: #fffef9;
+      }
+      &:nth-child(2), &:nth-child(3) {
+        background: #f7f6f0;
+      }
+      &:nth-child(4), &:nth-child(5) {
+        background: #EEEAE3;
+      }
+      &:last-child {
+        background: #e6e1da;
+      }
+    }
+    button:hover {
+      background-color: #fff;
     }
   }
 }

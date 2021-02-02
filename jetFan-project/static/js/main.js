@@ -1,6 +1,6 @@
 let opened = false;
-const sideNav = function() {
-    document.getElementById("menu-ic").addEventListener('click', () => {
+const nav_menu = function() {
+    // document.getElementById("menu-ic").addEventListener('click', () => {
         if(!opened) {
           document.getElementById("mySidenav").style.width = "45%";
           opened = true;
@@ -8,8 +8,8 @@ const sideNav = function() {
           document.getElementById("mySidenav").style.width = "0";    
           opened = false;
         }
-      });
-}();
+      // });
+};
 
 function auto_grow(element) {
   element.style.height = (element.scrollHeight)+"px";

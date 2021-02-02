@@ -49,6 +49,9 @@ class Abnormal(MethodView):
 					chkContent.append(item['ar_content'])
 			data['error'] = errorContent;
 			data['chk'] = chkContent
+			data['update'] = 0
+			if ar_items:
+				data['update'] = ar_items[0]['ar_update']
 
 			# 참고사진
 			ap_r = requests.get(base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])

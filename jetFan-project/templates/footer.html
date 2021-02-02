@@ -1,8 +1,17 @@
     <footer>
         <div>
-            <button type='button'>암호변경</button>
-            <button type='button' onclick='location.href="./"'>홈</button>
-            <button type='button' value='종료 하시겠습니까?' onclick='Android.androidAlert(this.value);'>로그아웃</button>
+            <button type='button'>
+                <img style='width: 12%;' src="./img/user.png">
+                <span>USER</span>
+            </button>
+            <button type='button' onclick='location.href="./"'>
+                <img src="./img/home.png">
+                <span>HOME</span>
+            </button>
+            <button id='exit' type='button' value='종료 하시겠습니까?' onclick='Android.androidAlert(this.value);'>
+                <img src="./img/exit.png">
+                <span>EXIT</span>
+            </button>
         </div>
     </footer>
 </body>

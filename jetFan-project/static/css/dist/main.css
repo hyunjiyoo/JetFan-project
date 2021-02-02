@@ -11,18 +11,28 @@ header {
   position: fixed;
   width: 100%;
 }
-header h3 {
-  color: #fff;
-  padding: 10px 4%;
+header #title {
+  position: relative;
+}
+header #title #logo {
+  width: 8%;
+  margin-top: 2%;
+  margin-left: 7px;
+  position: absolute;
+  z-index: 2;
+}
+header #title h4 {
+  padding: 3% 13%;
   margin-top: 0;
   margin-bottom: 5px;
   background-color: #2d669d;
+  color: #fff;
   position: relative;
-  z-index: 2;
 }
-header #menu-ic {
+header #title #menu-ic {
   position: absolute;
-  top: 7px;
+  width: 16px;
+  top: 36%;
   right: 4%;
   color: #fff;
   cursor: pointer;
@@ -54,12 +64,17 @@ header .sidenav a:hover {
 .content-body {
   margin: 12% 4% 0 4%;
 }
-.content-body h3 {
-  margin-top: 5px;
-  text-align: center;
+.content-body #title-text {
+  margin-top: 4%;
+}
+.content-body #title-text img {
+  width: 5%;
+}
+.content-body #title-text span {
   padding: 5px;
-  background-color: grey;
-  color: #fff;
+  color: #1c5180;
+  font-size: 19pt;
+  font-weight: bold;
 }
 footer {
   position: fixed;
@@ -76,7 +91,11 @@ footer div {
 footer button {
   margin: 2%;
   width: 24%;
-  font-size: 13pt;
+  font-size: 12pt;
+  color: #2d669d;
+}
+footer button img {
+  width: 17%;
 }
 .center {
   text-align: center;
@@ -86,4 +105,5 @@ textarea {
   font-family: initial;
   resize: none;
   font-size: 13pt;
+  background-color: #fffef9;
 }

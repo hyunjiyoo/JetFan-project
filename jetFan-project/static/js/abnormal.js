@@ -64,7 +64,9 @@ const getData = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
 
-            if(data['error'].length > 0 && data['chk'].length > 0 && data['photo']['ap_seq'].length > 0) {
+            changeCircleColor(data.update);
+
+            if(data['error'].length > 0 && data['chk'].length > 0) {
                 // 터널명, 점검일자
                 const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
                 document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
@@ -116,40 +118,61 @@ const getData = () => {
                     img.setAttribute('id', 'img'+data['photo']['ap_seq'][i]);
                     input.value = data['photo']['ap_comment'][i];
                     button.innerText = '삭제';
-                    console.log('./data/abnormal/' + year + '/' + year_no + '/' + data['photo']['ap_photo'][i]);
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + data['photo']['ap_photo'][i]);
                     img.setAttribute('alt', data['photo']['ap_photo'][i]);
                     hr.setAttribute('id', 'hr'+data['photo']['ap_seq'][i]);
                 }
 
-
-                // 추가버튼 왼쪽 콤보박스 - 방향
-                const comment = document.querySelector('#comment');
-                let opt1 = document.createElement('option');
-                let opt2 = document.createElement('option');
-                comment.querySelector('#way').appendChild(opt1);
-                comment.querySelector('#way').appendChild(opt2);
-                opt1.innerText = data['way1'];
-                opt2.innerText = data['way2'];
-                
-                
-                // 추가버튼 왼쪽 콤보박스 - 제트팬
-                for(let i = 0; i < data['jetfan'].length+1; i++) {
-                    let opt = document.createElement('option');
-                    comment.querySelector('#jetfan').appendChild(opt);
-                    opt.innerText = (i === 0) ? '공통' : data['jetfan'][i-1];
-                }
-
             } else {
-                Swal.fire({
-                    title: '데이터 없음!', 
-                    text: '해당년도 데이터가 없습니다.',
-                    icon: 'info',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-                location.reload();
+
+                const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
+                document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
+                document.querySelector('#tunn_ymd').innerText = data['ymd'] ?? '';
+
+                let err_textarea = document.createElement('textarea');
+                document.querySelector('#error').appendChild(err_textarea);
+                err_textarea.classList.add('content');
                 
+                let chk_textarea = document.createElement('textarea');
+                document.querySelector('#chk').appendChild(chk_textarea);
+                chk_textarea.classList.add('content');
+
+                const photo = document.querySelector('#photo');
+                let div = document.createElement('div');
+                let input = document.createElement('input');
+                let button = document.createElement('button');
+                let img = document.createElement('img');
+                let hr = document.createElement('hr');
+                photo.appendChild(div);
+                photo.appendChild(input);
+                photo.appendChild(button);
+                photo.appendChild(img);
+                photo.appendChild(hr);
+                input.classList.add('refInput');
+                button.classList.add('delBtn');
+                button.dataset.seq = 0;
+                button.onclick = deleteContent;
+                img.classList.add('refImg');
+                img.src = 'http://via.placeholder.com/300x100';
+                button.innerText = '삭제';
+
+            }
+
+            // 추가버튼 왼쪽 콤보박스 - 방향
+            const comment = document.querySelector('#comment');
+            let opt1 = document.createElement('option');
+            let opt2 = document.createElement('option');
+            comment.querySelector('#way').appendChild(opt1);
+            comment.querySelector('#way').appendChild(opt2);
+            opt1.innerText = data['way1'];
+            opt2.innerText = data['way2'];
+            
+            
+            // 추가버튼 왼쪽 콤보박스 - 제트팬
+            for(let i = 0; i < data['jetfan'].length+1; i++) {
+                let opt = document.createElement('option');
+                comment.querySelector('#jetfan').appendChild(opt);
+                opt.innerText = (i === 0) ? '공통' : data['jetfan'][i-1];
             }
             
         } else if(this.status === 500) {
@@ -207,16 +230,6 @@ const getJetfan = () => {
 
 
 // 이미지 미리보기
-// const showImg = (input) => {
-//     if (input.files && input.files[0]) {
-//         var reader = new FileReader();
-//         reader.onload = function(e) {
-//             previewImg.setAttribute('src', e.target.result);
-//         }
-        
-//         reader.readAsDataURL(input.files[0]);
-//     }
-// }
 const showImg = () => {
     const fileElem = document.querySelector('#myFile'),
           comment = document.querySelector('#comment'),
@@ -226,7 +239,7 @@ const showImg = () => {
         previewImg.src = 'http://via.placeholder.com/300x100';
     } else {
         previewImg.src = URL.createObjectURL(fileElem.files[0]);
-        previewImg.height = 200;
+        previewImg.style.height = 200;
         previewImg.onload = function() {
             URL.revokeObjectURL(fileElem.src);
         }
@@ -241,7 +254,7 @@ const uploadFile = function() {
     const year_no = document.querySelector('#update').value;
     const tunn_code = document.querySelector('#tunnel').value;
     const delBtn = document.querySelectorAll('.delBtn');
-    const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
+    const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1 ?? 1;
     const fileElem = document.querySelector('#myFile');
 
     const fd = new FormData(); 
@@ -378,6 +391,14 @@ const addContent = (filename) => {
                     document.querySelector('#myFile').value = '';
                     document.querySelector('#commentText').value = '';
                     document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
+                    if(seq === 0) {
+
+                        // if(photo.length) {
+                        //     for(let i = photo.length-1; i >= 0; i--) {
+                        //         photo[i].remove();
+                        //     }
+                        // }
+                    }
 
 
                 }

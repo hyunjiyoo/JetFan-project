@@ -1,3 +1,13 @@
+#bg-box {
+  background-image: url('../../img/bg.png');
+  z-index: -1;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 .body {
   margin: 5rem 8% 0 8%;
   overflow: hidden;
@@ -5,17 +15,36 @@
 .body h1 {
   margin-top: 5%;
   text-align: center;
+  color: #1c5180;
 }
 .body h4 {
-  margin: 10px 0 8% 0;
+  margin: 10px 0 55px 0;
   text-align: center;
+  color: #464646;
 }
-.body div {
-  display: flex;
-}
-.body div button {
-  margin: 2%;
-  width: 37%;
-  height: 100px;
+.body #btn button {
+  margin: 5px 2%;
+  width: 97%;
+  height: 40px;
   font-size: 13pt;
+  border: 2px outset;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.body #btn button:first-child {
+  background: #fffef9;
+}
+.body #btn button:nth-child(2),
+.body #btn button:nth-child(3) {
+  background: #f7f6f0;
+}
+.body #btn button:nth-child(4),
+.body #btn button:nth-child(5) {
+  background: #EEEAE3;
+}
+.body #btn button:last-child {
+  background: #e6e1da;
+}
+.body #btn button:hover {
+  background-color: #fff;
 }

@@ -13,24 +13,38 @@ header {
   display: block;
   position: fixed;
   width: 100%;
-  h3 {
-    color: #fff;
-    padding: 10px 4%;
-    margin-top: 0;
-    margin-bottom: 5px;
-    background-color: #2d669d;
+
+  #title {
     position: relative;
-    z-index: 2;
+
+    #logo {
+      width: 8%;
+      margin-top: 2%;
+      margin-left: 7px;
+      position: absolute;
+      z-index: 2;
+    }
+  
+    h4 {
+      padding: 3% 13%;
+      margin-top: 0;
+      margin-bottom: 5px;
+      background-color: #2d669d;
+      color: #fff;
+      position: relative;
+    }
+  
+    #menu-ic {
+      position: absolute;
+      width: 16px;
+      top: 36%;
+      right: 4%;
+      color: #fff;
+      cursor: pointer;
+      z-index: 3;
+    }
   }
 
-  #menu-ic {
-    position: absolute;
-    top: 7px;
-    right: 4%;
-    color: #fff;
-    cursor: pointer;
-    z-index: 3;
-  }
 
   .sidenav {
     height: 100%;
@@ -62,12 +76,17 @@ header {
 
 .content-body {
   margin: 12% 4% 0 4%;
-  h3 {
-    margin-top: 5px;
-    text-align: center;
-    padding: 5px;
-    background-color: grey;
-    color: #fff;
+  #title-text {
+    margin-top: 4%;
+    img {
+      width: 5%;
+    }
+    span {
+      padding: 5px;
+      color: #1c5180;
+      font-size: 19pt;
+      font-weight: bold;
+    }
   }
 }
 
@@ -76,16 +95,23 @@ footer {
   display: block;
   width: 100%;
   bottom: 0;
+
   div {
     display: flex;
     justify-content: center;
     padding: 1% 0;
     background-color: #2d669d;
   }
+
   button {
     margin: 2%;
     width: 24%;
-    font-size: @basic-font;
+    font-size: 12pt;
+    color: #2d669d;
+
+    img {
+      width: 17%;
+    }
   }
 }
 
@@ -99,4 +125,5 @@ textarea {
   font-family: initial;
   resize: none;
   font-size: @basic-font;
+  background-color: #fffef9;
 }
