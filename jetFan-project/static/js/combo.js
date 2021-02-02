@@ -233,11 +233,12 @@ const setTunnel = () => {
 
 // 터널선택시 제트팬세팅
 const setJetfan = () => {
+    document.querySelector('#dept').selectedOptions[0].removeAttribute('selected');
     searchInit(); init('branch'); init('jetfan_no'); init('jetfan_way');
 
     const data = { 'div': 'jetfan_no',
                    'tunn_code': document.querySelector(`#tunnel`).value
-                };
+                 };
     
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -247,8 +248,8 @@ const setJetfan = () => {
 
             // 터널명 검색시 해당 터널에 맞는 본부, 지사 가져오기
             const depts =  Object.values(document.querySelectorAll('#dept option'));
-            const selectedDept = depts.find((dept) => dept.value === String(data[1][1]));
-            selectedDept.setAttribute('selected', true);
+            const selectedDept = depts.find((dept) => dept.value === String(data[1]));
+            selectedDept.selected = true;
 
             // 해당 본부에 맞는 지사 가져와서 선택하기
             const bran_name = data[2].filter((elem, i) =>  i%2===0 );
@@ -261,7 +262,7 @@ const setJetfan = () => {
             }
             const branches = Object.values(document.querySelectorAll('#branch option'));
             const selectedBr = branches.find((br) => br.value === String(data[3]));
-            selectedBr.setAttribute('selected', true);
+            selectedBr.selected = true;
 
             
             const path = window.location.pathname;

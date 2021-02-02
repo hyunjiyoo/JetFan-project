@@ -153,10 +153,7 @@ class Combo(MethodView):
 				dataArr.append(jetfanArr)
 
 			# 본부
-			divArr = []
-			divArr.append(tunn[0]['div_name'])
-			divArr.append(tunn[0]['div_code'])
-			dataArr.append(divArr)
+			dataArr.append(tunn[0]['div_code'])
 
 			# 지사
 			branch_r = requests.get(base_url + 'branch/bran_div_code/' + str(tunn[0]['div_code']))
