@@ -27,7 +27,7 @@ input::-webkit-inner-spin-button {
 #contents #info table th {
   width: 2%;
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #info table td {
   width: 3%;
@@ -48,7 +48,7 @@ input::-webkit-inner-spin-button {
 }
 #contents #operation table th {
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #operation table td {
   background-color: #fffef9;
@@ -90,7 +90,7 @@ input::-webkit-inner-spin-button {
   border: 1px solid #000;
 }
 #contents #chkAppearance table tr:last-child th {
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #chkAppearance table tr:last-child td {
   background-color: #fffef9;
@@ -119,7 +119,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
 }
 #contents #useYear table tr:last-child th {
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #useYear table tr:last-child td {
   background-color: #fffef9;
@@ -147,7 +147,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
 }
 #contents #useEnv table tr:last-child th {
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #useEnv table tr:last-child td {
   background-color: #fffef9;
@@ -167,7 +167,7 @@ input::-webkit-inner-spin-button {
 #body-footer table th {
   width: 6%;
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #body-footer table td {
   width: 1%;

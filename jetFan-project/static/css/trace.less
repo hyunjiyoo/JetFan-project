@@ -1,5 +1,8 @@
 @basic-font: 13pt;
 @table-padding: 5px 3px;
+@title-color: #1c5180;
+@title-bg: #f7ece6;
+@sub-bg: #fffef9;
 
 table {
     margin: 20px auto;
@@ -12,7 +15,7 @@ table {
         padding: @table-padding;
     }
     td {
-        background-color: #fffef9;
+        background-color: @sub-bg;
     }
 }
 
@@ -24,14 +27,14 @@ select {
     text-align: center;
     letter-spacing: 8px;
     font-weight: bold;
-    color: #1c5180;
-    background-color: #e0e0e0;
+    color: @title-color;
+    background-color: #e6ddd8;
 }
 
 .table-title {
     text-align: center;
-    color: #1c5180;
-    background-color: #f0f0f0;
+    color: @title-color;
+    background-color: @title-bg;
     font-weight: bold;
 }
 

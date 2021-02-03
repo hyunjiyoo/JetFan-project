@@ -18,7 +18,7 @@
   width: 13%;
   padding: 5px 3px;
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #info table td {
   width: 60%;
@@ -34,7 +34,7 @@
 }
 #contents #chk table th {
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #chk table tr:nth-child(2n+1) td {
   background-color: #f7f6f0;
@@ -67,7 +67,7 @@
 }
 #contents #etc table th {
   color: #1c5180;
-  background-color: #f0f0f0;
+  background-color: #f7ece6;
 }
 #contents #etc table td {
   background-color: #fffef9;
@@ -82,8 +82,8 @@
 }
 .accordion {
   font-weight: bold;
-  background-color: #f0efe9;
-  color: #5e5e5e;
+  background-color: #d4d0cd;
+  color: #474747;
   cursor: pointer;
   border-left: 1px solid #000;
   border-right: 1px solid #000;

@@ -1,5 +1,8 @@
 @basic-font: 13pt;
 @table-padding: 5px 3px;
+@title-color: #1c5180;
+@title-bg: #f7ece6;
+@sub-bg: #fffef9;
 
 table {
     border-collapse: collapse;
@@ -32,21 +35,21 @@ input::-webkit-inner-spin-button {
 
         th {
             width: 2%;
-            color: #1c5180;
-            background-color: #f0f0f0;
+            color: @title-color;
+            background-color: @title-bg;
         }
 
         td {
             width: 3%;
             text-align: center;
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 
     h3 {
         margin-top: 40px;
         margin-bottom: 10px;
-        color: #1c5180;
+        color: @title-color;
         text-align: left;
     }
 
@@ -59,12 +62,12 @@ input::-webkit-inner-spin-button {
         }
 
         th {
-            color: #1c5180;
-            background-color: #f0f0f0;
+            color: @title-color;
+            background-color: @title-bg;
         }
 
         td {
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
 
         tr {
@@ -85,7 +88,7 @@ input::-webkit-inner-spin-button {
             width: 100%;
             text-align: center;
             font-size: @basic-font;
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 
@@ -95,7 +98,7 @@ input::-webkit-inner-spin-button {
         th {
             width: 2.2%;
             text-align: left;
-            color: #1c5180;
+            color: @title-color;
         }
 
         td {
@@ -118,11 +121,11 @@ input::-webkit-inner-spin-button {
         }
 
         tr:last-child th {
-            background-color: #f0f0f0;
+            background-color: @title-bg;
         }
 
         tr:last-child td {
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 
@@ -132,7 +135,7 @@ input::-webkit-inner-spin-button {
         th {
             width: 2.2%;
             text-align: left;
-            color: #1c5180;
+            color: @title-color;
         }
         
         td {
@@ -157,11 +160,11 @@ input::-webkit-inner-spin-button {
         }
 
         tr:last-child th {
-            background-color: #f0f0f0;
+            background-color: @title-bg;
         }
 
         tr:last-child td {
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 
@@ -171,7 +174,7 @@ input::-webkit-inner-spin-button {
         th {
             width: 2.2%;
             text-align: left;
-            color: #1c5180;
+            color: @title-color;
         }
         
         td {
@@ -195,11 +198,11 @@ input::-webkit-inner-spin-button {
         }
 
         tr:last-child th {
-            background-color: #f0f0f0;
+            background-color: @title-bg;
         }
 
         tr:last-child td {
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 } 
@@ -218,12 +221,12 @@ input::-webkit-inner-spin-button {
 
         th {
             width: 6%;
-            color: #1c5180;
-            background-color: #f0f0f0;
+            color: @title-color;
+            background-color: @title-bg;
         }
         td {
             width: 1%;
-            background-color: #fffef9;
+            background-color: @sub-bg;
         }
     }
 
