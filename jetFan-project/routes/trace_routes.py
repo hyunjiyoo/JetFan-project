@@ -43,7 +43,8 @@ class Trace(MethodView):
 		trace_status_r = requests.get(url_status)
 		evaluation = json.loads(trace_status_r.text)
 
-		dataArr = evaluation
+		data = {}
+		data['eval'] = evaluation[0]
 
 		# 현상태 점검현황
 		url_name_chk = base_url + 'trace-check/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
@@ -52,10 +53,9 @@ class Trace(MethodView):
 
 		checkArr = []
 		for item in trace_check:
-			checkArr.append(item['tc_seq'])
 			checkArr.append(item['tc_content'])
-
-		dataArr.append(checkArr)
+		data['tc_content'] = checkArr
+		data['update'] = trace_check[0]['tc_update']
 
 
 		# 비고 (기능상태 등)
@@ -68,20 +68,17 @@ class Trace(MethodView):
 		noteTowYearAgo = []
 		for item in trace_note:
 			if(int(item['tn_year']) == int(value['year'])):
-				noteCurYear.append(item['tn_seq'])
 				noteCurYear.append(item['tn_content'])
 			elif(int(item['tn_year']) == int(value['year'])-1):
-				noteOneYearAgo.append(item['tn_seq'])
 				noteOneYearAgo.append(item['tn_content'])
 			elif(int(item['tn_year']) == int(value['year'])-2):
-				noteTowYearAgo.append(item['tn_seq'])
 				noteTowYearAgo.append(item['tn_content'])
 
-		dataArr.append(noteCurYear)
-		dataArr.append(noteOneYearAgo)
-		dataArr.append(noteTowYearAgo)
+		data['noteCurYear'] = noteCurYear
+		data['noteOneYearAgo'] = noteOneYearAgo
+		data['noteTowYearAgo'] = noteTowYearAgo
 
-		return json.dumps(dataArr)
+		return json.dumps(data)
 
 	
 	# 현상태 점검현황 및 비고 데이터 입력/수정

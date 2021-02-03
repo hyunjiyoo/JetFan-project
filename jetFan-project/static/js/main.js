@@ -1,14 +1,12 @@
 let opened = false;
 const nav_menu = function() {
-    // document.getElementById("menu-ic").addEventListener('click', () => {
-        if(!opened) {
-          document.getElementById("mySidenav").style.width = "45%";
-          opened = true;
-        } else {
-          document.getElementById("mySidenav").style.width = "0";    
-          opened = false;
-        }
-      // });
+  if(!opened) {
+    document.getElementById("mySidenav").style.width = "45%";
+    opened = true;
+  } else {
+    document.getElementById("mySidenav").style.width = "0";    
+    opened = false;
+  }
 };
 
 function auto_grow(element) {
