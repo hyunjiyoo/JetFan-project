@@ -1,6 +1,7 @@
 window.onload = () => {
-    document.querySelector('#addBtn').addEventListener('click', addContent);
+    document.querySelector('#addBtn').addEventListener('click', uploadFile);
     document.querySelector('#submitBtn').addEventListener('click', modifyData);
+    document.querySelector('#myFile').addEventListener('change', showImg);
 }
 
 const initData = () => {
@@ -48,16 +49,12 @@ const getData = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+            changeCircleColor(data.update);
 
-            if(data[0].length > 0) {
+            if(data.ph_seq.length > 0) {
 
-                const seq = data[0].filter((elem, i) => i%4===0);
-                const jetfan_no = data[0].filter((elem, i) => i%4===1);
-                const photo_comment = data[0].filter((elem, i) => i%4===2);
-                const photo = data[0].filter((elem, i) => i%4===3);
-                
                 const photoElem = document.querySelector('#photo')
-                for(let i = 0; i < data.length/4; i++) {
+                for(let i = 0; i < data['ph_seq'].length; i++) {
                     let div = document.createElement('div');
                     let input = document.createElement('input');
                     let button = document.createElement('button');
@@ -68,36 +65,38 @@ const getData = () => {
                     photoElem.appendChild(button);
                     photoElem.appendChild(img);
                     photoElem.appendChild(hr);
-                    div.innerText = '⊙ ' + jetfan_no[i] ?? '';
-                    div.setAttribute('id', 'div'+seq[i]);
+                    div.innerText = '⊙ ' + data['ph_jetfan'][i] ?? '';
+                    div.setAttribute('id', 'div'+data['ph_seq'][i]);
                     input.classList.add('refInput');
-                    input.setAttribute('id', 'input'+seq[i]);
+                    input.setAttribute('id', 'input'+data['ph_seq'][i]);
                     button.classList.add('delBtn');
-                    button.setAttribute('id', 'btn'+seq[i]);
-                    button.dataset.seq = seq[i];
+                    button.setAttribute('id', 'btn'+data['ph_seq'][i]);
+                    button.dataset.seq = data['ph_seq'][i];
                     button.onclick = deleteContent;
                     img.classList.add('refImg');
-                    img.setAttribute('id', 'img'+seq[i]);
-                    input.value = photo_comment[i];
+                    img.setAttribute('id', 'img'+data['ph_seq'][i]);
+                    input.value = data['ph_comment'][i];
                     button.innerText = '삭제';
-                    img.setAttribute('src', './data/photo/' + year + '/' + year_no + '/' + photo[i]);
-                    img.setAttribute('alt', photo[i]);
-                    hr.setAttribute('id', 'hr'+seq[i]);
+                    img.setAttribute('src', './data/photo/' + year + '/' + year_no + '/' + data['ph_photo'][i]);
+                    img.setAttribute('alt', data['ph_photo'][i]);
+                    hr.setAttribute('id', 'hr'+data['ph_seq'][i]);
                 }
 
                 // 추가버튼 왼쪽 콤보박스 - 방향
                 const comment = document.querySelector('#comment');
-                for(let i =0; i < data[1].length; i++) {
-                    let opt = document.createElement('option');
-                    comment.querySelector('#way').appendChild(opt);
-                    opt.innerText = data[1][i];
-                }
+                let opt1 = document.createElement('option');
+                let opt2 = document.createElement('option');
+                comment.querySelector('#way').appendChild(opt1);
+                comment.querySelector('#way').appendChild(opt2);
+                opt1.innerText = data['way1'];
+                opt2.innerText = data['way2'];
+
 
                 // 추가버튼 왼쪽 콤보박스 - 제트팬
-                for(let i = 0; i < data[2].length+1; i++) {
+                for(let i = 0; i < data['jetfan_no'].length+1; i++) {
                     let opt = document.createElement('option');
                     comment.querySelector('#jetfan').appendChild(opt);
-                    opt.innerText = (i === 0) ? '공통' : data[2][i-1];
+                    opt.innerText = (i === 0) ? '공통' : data['jetfan_no'][i-1];
                 }
             } else {
                 Swal.fire({
@@ -166,26 +165,85 @@ const getJetfan = () => {
 
 
 // 이미지 미리보기
-const showImg = (input) => {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            previewImg.setAttribute('src', e.target.result);
+const showImg = () => {
+    const fileElem = document.querySelector('#myFile'),
+          comment = document.querySelector('#comment'),
+          previewImg = document.querySelector("#previewImg");
+
+    if (!fileElem.files.length) {
+        previewImg.src = 'http://via.placeholder.com/300x100';
+    } else {
+        previewImg.src = URL.createObjectURL(fileElem.files[0]);
+        previewImg.style.height = 200;
+        previewImg.onload = function() {
+            URL.revokeObjectURL(fileElem.src);
         }
-        
-        reader.readAsDataURL(input.files[0]);
+        comment.appendChild(previewImg);
     }
 }
 
+
+// 사진파일 업로드
+const uploadFile = function() {
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#update').value;
+    const tunn_code = document.querySelector('#tunnel').value;
+    const delBtn = document.querySelectorAll('.delBtn');
+    const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1 ?? 1;
+    const fileElem = document.querySelector('#myFile');
+
+    const fd = new FormData(); 
+    fd.append('file', fileElem.files[0]);
+    fd.append('year', year);
+    fd.append('year_no', year_no);
+    fd.append('tunn_code', tunn_code);
+    fd.append('seq', seq);
+
+    if (!fileElem.value) return; 
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            let result = this.responseText;
+            if(result === 'succ') {
+                addContent(`p_${tunn_code}_${seq}.jpg`);
+
+            } else {
+                Swal.fire({
+                    title: '사진추가실패', 
+                    text: '사진 추가에 실패하였습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+            }
+
+        } else {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+        }
+    };
+
+    xhr.open('POST', '/ptupload');
+    xhr.send(fd);
+};
+
+
+
 // 사진 추가하기
-const addContent = () => { 
+const addContent = (filename) => { 
     const tunn_code = document.querySelector('#tunnel').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
     const photo_way = document.querySelector('#way').selectedOptions[0].textContent;
     const photo_jetfan_no = document.querySelector('#jetfan').selectedOptions[0].textContent;
     const photo_comment = document.querySelector('#commentText').value ?? '';
-    const photo_photo = document.querySelector('#myFile').files[0]?.name ?? 'sample.jpg';
+    const photo_photo = filename ?? 'sample.jpg';
 
     const content = [{
         'photo_way': photo_way,
@@ -219,6 +277,8 @@ const addContent = () => {
                 const photo = document.querySelector('#photo');
                 const delBtn = document.querySelectorAll('.delBtn');
                 const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
+                const img_path = './data/photo/' + year + '/' + year_no + '/';
+                const file_name = 'p_' + tunn_code + '_' + seq + '.jpg';
                 let div = document.createElement('div');
                 let input = document.createElement('input');
                 let button = document.createElement('button');
@@ -238,7 +298,7 @@ const addContent = () => {
                 button.onclick = deleteContent;
                 button.innerText = '삭제';
                 img.classList.add('refImg');
-                img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + photo_photo);
+                img.setAttribute('src', img_path + file_name);
                 img.setAttribute('alt', photo_photo);
 
                 div.setAttribute('id', 'div'+seq);
@@ -328,28 +388,23 @@ const deleteContent = (e) => {
 // 전체 데이터 반영 (PUT api 요청)
 const modifyData = () => {
 
-    // const tunn_code = document.querySelector('#tunnel').value;
-    // const year = document.querySelector('#year').value;
-    // const year_no = document.querySelector('#update').value;
+    const tunn_code = document.querySelector('#tunnel').value;
+    const year = document.querySelector('#year').value;
+    const year_no = document.querySelector('#update').value;
 
-    // const contents = [];
-    // const errorContents = document.querySelectorAll('#photo textarea');
+    const contents = [];
+    const comment = document.querySelectorAll('#photo .refInput');
 
-    // errorContents.forEach((content, i) => {
-    //     contents.push({'photo_tunn_code': tunn_code,
-    //                    'photo_year': year,
-    //                    'photo_year_no': year_no,
-    //                    'photo_type': 1,
-    //                    'photo_seq': i+1,
-    //                    'photo_content': content.textContent});
-    // });
+    comment.forEach((elem, i) => {
+        contents.push({'photo_seq': i+1,
+                       'photo_comment': elem.value });
+    });
 
-    // console.log('contents :>> ', contents);
 
-    // const data = {'tunn_code': tunn_code,
-    //               'year': year,
-    //               'year_no': year_no,
-    //               'data': contents};
+    const data = {'tunn_code': tunn_code,
+                  'year': year,
+                  'year_no': year_no,
+                  'data': contents};
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

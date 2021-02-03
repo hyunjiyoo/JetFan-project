@@ -22,7 +22,7 @@ from routes.inspection_routes import Inspection
 # 이상발생보고서 Abnormal
 from routes.abnormal_routes import Abnormal, Abupload
 # 사진첩 Photo
-from routes.photo_routes import Photo
+from routes.photo_routes import Photo, Ptupload
 # 데이터생성 Data
 from routes.data_routes import Data
 
@@ -58,6 +58,7 @@ app.add_url_rule('/abupload', view_func=Abupload.as_view('abupload_view'), metho
 
 # 사진첩
 app.add_url_rule('/photo', view_func=Photo.as_view('photo_view'), methods=['GET', 'POST', 'PUT', 'DELETE'])
+app.add_url_rule('/ptupload', view_func=Ptupload.as_view('ptupload_view'), methods=['POST'])
 
 # 데이터생성
 app.add_url_rule('/basic', view_func=Data.as_view('basic_view'), methods=['GET', 'POST'])

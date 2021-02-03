@@ -16,7 +16,7 @@ header #title {
 }
 header #title #logo {
   width: 8%;
-  margin-top: 2%;
+  top: 26%;
   margin-left: 7px;
   position: absolute;
   z-index: 2;
