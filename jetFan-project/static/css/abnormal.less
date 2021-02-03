@@ -16,6 +16,15 @@
         th {
             color: @title-color;
             background-color: @title-bg;
+            
+            #errPlusBtn, #chkPlusBtn {
+                width: 7%;
+                float: right;
+                cursor: pointer;
+            }
+            #errPlusBtn:hover, #chkPlusBtn:hover {
+                opacity: 0.8;
+            }
         }
 
         tr:first-child td {
@@ -48,7 +57,7 @@
         }
 
         .refInput {
-            width: 87%;
+            width: 92%;
             font-size: @basic-font;
             padding: @table-padding;
             font-family: initial;
@@ -68,18 +77,13 @@
             width: 97%;
         }
 
-        button.delBtn {
-            font-size: @basic-font;
-            background-color: #458eb0;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
+        .delBtn {
             float: right;
-
-            height: 37px;
+            width: 7%;
+            margin-top: 1%;
             cursor: pointer;
             &:hover {
-                background-color: #3c72a6;
+                opacity: 0.8;
             }
         }
 
@@ -96,7 +100,7 @@
             }
 
             input {
-                width: 87%;
+                width: 92%;
                 display: inline;
                 margin-bottom: 5px;
                 background-color: @sub-bg;
@@ -108,16 +112,12 @@
             }
 
             #addBtn {
-                font-size: @basic-font;
-                background-color: #458eb0;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                height: 35px;
+                width: 7%;
+                margin-top: 1%;
                 float: right;
                 cursor: pointer;
                 &:hover {
-                    background-color: #3c72a6;
+                    opacity: 0.8;
                 }
             }
         }

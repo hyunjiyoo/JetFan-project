@@ -98,7 +98,7 @@ const getData = () => {
                 for(let i = 0; i < data['photo']['ap_seq'].length; i++) {
                     let div = document.createElement('div');
                     let input = document.createElement('input');
-                    let button = document.createElement('button');
+                    let button = document.createElement('img');
                     let img = document.createElement('img');
                     let hr = document.createElement('hr');
                     photo.appendChild(div);
@@ -117,7 +117,7 @@ const getData = () => {
                     img.classList.add('refImg');
                     img.setAttribute('id', 'img'+data['photo']['ap_seq'][i]);
                     input.value = data['photo']['ap_comment'][i];
-                    button.innerText = '삭제';
+                    button.src = './img/minus.png';
                     img.setAttribute('src', './data/abnormal/' + year + '/' + year_no + '/' + data['photo']['ap_photo'][i]);
                     img.setAttribute('alt', data['photo']['ap_photo'][i]);
                     hr.setAttribute('id', 'hr'+data['photo']['ap_seq'][i]);
@@ -140,7 +140,7 @@ const getData = () => {
                 const photo = document.querySelector('#photo');
                 let div = document.createElement('div');
                 let input = document.createElement('input');
-                let button = document.createElement('button');
+                let button = document.createElement('img');
                 let img = document.createElement('img');
                 let hr = document.createElement('hr');
                 photo.appendChild(div);
@@ -149,12 +149,12 @@ const getData = () => {
                 photo.appendChild(img);
                 photo.appendChild(hr);
                 input.classList.add('refInput');
+                button.src = './img/minus.png';
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
                 button.onclick = deleteContent;
                 img.classList.add('refImg');
                 img.src = 'http://via.placeholder.com/300x100';
-                button.innerText = '삭제';
 
             }
 
@@ -358,7 +358,7 @@ const addContent = (filename) => {
                     const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
                     const div = document.createElement('div');
                     const input = document.createElement('input');
-                    const button = document.createElement('button');
+                    const button = document.createElement('img');
                     const img = document.createElement('img');
                     const hr = document.createElement('hr');
                     const img_path = './data/abnormal/' + year + '/' + year_no + '/';
@@ -375,7 +375,7 @@ const addContent = (filename) => {
                     button.classList.add('delBtn');
                     button.dataset.seq = seq;
                     button.onclick = deleteContent;
-                    button.innerText = '삭제';
+                    button.src = './img/minus.png';
                     img.classList.add('refImg');
                     img.setAttribute('src', img_path + file_name);
                     img.setAttribute('alt', file_name);

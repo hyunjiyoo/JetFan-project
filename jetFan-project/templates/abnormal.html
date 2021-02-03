@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/abnormal.css') }}">
+<link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/plus.png') }}">
+<link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/minus.png') }}">
 <script src="{{ url_for('static', filename='js/abnormal.js') }}"></script>
 
 {% include 'header.html' %}
@@ -25,11 +27,21 @@
                 <td id='tunn_ymd'></td>
             </tr>
 
-            <tr><th colspan=2 class='center'>이상소견 내용</th></tr>
+            <tr>
+                <th colspan=2 class='center'>
+                <span>이상소견 내용</span>
+                <img id='errPlusBtn' src="./img/plus.png">
+                </th>
+            </tr>
             <tr><td colspan=2 id='error'><textarea class="content"></textarea></td></tr>
             
 
-            <tr><th colspan=2 class='center'>현장 점검에 따른 소견</th></tr>
+            <tr>
+                <th colspan=2 class='center'>
+                    현장 점검에 따른 소견
+                    <img id='chkPlusBtn' src="./img/plus.png">
+                </th>
+            </tr>
             <tr><td colspan=2 id='chk'><textarea class="content"></textarea></td></tr>
 
 
@@ -37,7 +49,7 @@
             <tr>
                 <td colspan=2 id='photo'>
                     <input class='refInput'>
-                    <button class='delBtn' type='button'>삭제</button>
+                    <img class='delBtn' src='./img/minus.png'>
                     <img class='refImg' src="http://via.placeholder.com/300x100" alt="reference_image">
                     <hr>
                 </td>
@@ -50,7 +62,8 @@
                     <!-- <input type="file" id="myFile" name="filename" onchange='showImg(this);'> -->
                     <input type="file" id="myFile" name="filename">
                     <input type="text" id='commentText' class='refImg' placeholder="사진에 들어갈 코멘트">
-                    <button type='submit' id='addBtn'>추가</button>
+                    <img id='addBtn' src='./img/plus.png'>
+                    <!-- <button type='submit' id='addBtn'>추가</button> -->
                     <img id='previewImg' class='refImg' src="http://via.placeholder.com/300x100" alt="reference_image">
                 </td>
             </tr>

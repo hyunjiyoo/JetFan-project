@@ -65,12 +65,28 @@ class Photo(MethodView):
 			data['way2'] = way_items[0]['tunn_way2']
 
 			# 하단 제트팬가져오기
-			jetfan_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way1'])
-			jetfan_items = json.loads(jetfan_r.text)
+			jetfan1_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way1'])
+			jetfan1_items = json.loads(jetfan1_r.text)
 			jetfanArr = []
-			for item in jetfan_items:
+			jetfanYmd = []
+			for item in jetfan1_items:
 				jetfanArr.append(item['jetfan_no'])
-			data['jetfan_no'] = jetfanArr
+				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+				ymd_items = json.loads(ymd_r.text)
+				for ymd in ymd_items:
+					jetfanYmd.append(ymd['eval_ymd'][:10])
+
+			jetfan2_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way2'])
+			jetfan2_items = json.loads(jetfan2_r.text)
+			jetfanYmd = []
+			for item in jetfan2_items:
+				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+				ymd_items = json.loads(ymd_r.text)
+				for ymd in ymd_items:
+					jetfanYmd.append(ymd['eval_ymd'][:10])
+			
+			data['jetfan'] = jetfanArr
+			data['ymd'] = list(set(jetfanYmd))
 
 			return json.dumps(data)
 

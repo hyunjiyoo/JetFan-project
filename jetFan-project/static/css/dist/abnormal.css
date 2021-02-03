@@ -12,6 +12,16 @@
   color: #1c5180;
   background-color: #f7ece6;
 }
+#contents table th #errPlusBtn,
+#contents table th #chkPlusBtn {
+  width: 7%;
+  float: right;
+  cursor: pointer;
+}
+#contents table th #errPlusBtn:hover,
+#contents table th #chkPlusBtn:hover {
+  opacity: 0.8;
+}
 #contents table tr:first-child td {
   font-weight: bold;
   color: #1c5180;
@@ -34,7 +44,7 @@
   margin-bottom: 3px;
 }
 #contents table .refInput {
-  width: 87%;
+  width: 92%;
   font-size: 13pt;
   padding: 5px 3px;
   font-family: initial;
@@ -51,18 +61,14 @@
   padding: 1.5%;
   width: 97%;
 }
-#contents table button.delBtn {
-  font-size: 13pt;
-  background-color: #458eb0;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+#contents table .delBtn {
   float: right;
-  height: 37px;
+  width: 7%;
+  margin-top: 1%;
   cursor: pointer;
 }
-#contents table button.delBtn:hover {
-  background-color: #3c72a6;
+#contents table .delBtn:hover {
+  opacity: 0.8;
 }
 #contents table #comment {
   border-top: none;
@@ -74,7 +80,7 @@
   font-size: 13pt;
 }
 #contents table #comment input {
-  width: 87%;
+  width: 92%;
   display: inline;
   margin-bottom: 5px;
   background-color: #fffef9;
@@ -84,17 +90,13 @@
   height: 35px;
 }
 #contents table #comment #addBtn {
-  font-size: 13pt;
-  background-color: #458eb0;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  height: 35px;
+  width: 7%;
+  margin-top: 1%;
   float: right;
   cursor: pointer;
 }
 #contents table #comment #addBtn:hover {
-  background-color: #3c72a6;
+  opacity: 0.8;
 }
 #contents button#submitBtn {
   display: flex;

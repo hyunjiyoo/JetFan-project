@@ -6,6 +6,7 @@ window.onload = () => {
 
 const initData = () => {
     document.querySelector('#tunnel_name').innerText = '';
+    document.querySelector('#tunn_ymd').innerText = '';
 
     const photo = document.querySelector('#photo').childNodes;
     if(photo.length) {
@@ -32,9 +33,6 @@ const initData = () => {
 
 const getData = () => {
     initData();
-
-    const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
-    document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
     
     const tunn_code = document.querySelector('#tunnel').value;
     const year = document.querySelector('#year').value;
@@ -53,7 +51,11 @@ const getData = () => {
 
             if(data.ph_seq.length > 0) {
 
-                const photoElem = document.querySelector('#photo')
+                const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
+                document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
+                document.querySelector('#tunn_ymd').innerText = data['ymd'] ?? '';
+
+                const photoElem = document.querySelector('#photo');
                 for(let i = 0; i < data['ph_seq'].length; i++) {
                     let div = document.createElement('div');
                     let input = document.createElement('input');
@@ -82,31 +84,47 @@ const getData = () => {
                     hr.setAttribute('id', 'hr'+data['ph_seq'][i]);
                 }
 
-                // 추가버튼 왼쪽 콤보박스 - 방향
-                const comment = document.querySelector('#comment');
-                let opt1 = document.createElement('option');
-                let opt2 = document.createElement('option');
-                comment.querySelector('#way').appendChild(opt1);
-                comment.querySelector('#way').appendChild(opt2);
-                opt1.innerText = data['way1'];
-                opt2.innerText = data['way2'];
-
-
-                // 추가버튼 왼쪽 콤보박스 - 제트팬
-                for(let i = 0; i < data['jetfan_no'].length+1; i++) {
-                    let opt = document.createElement('option');
-                    comment.querySelector('#jetfan').appendChild(opt);
-                    opt.innerText = (i === 0) ? '공통' : data['jetfan_no'][i-1];
-                }
             } else {
-                Swal.fire({
-                    title: '데이터 없음!', 
-                    text: '해당년도 데이터가 없습니다.',
-                    icon: 'info',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-                location.reload();
+                const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
+                document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
+                document.querySelector('#tunn_ymd').innerText = data['ymd'] ?? '';
+
+                const photoElem = document.querySelector('#photo');
+                let div = document.createElement('div');
+                let input = document.createElement('input');
+                let button = document.createElement('button');
+                let img = document.createElement('img');
+                let hr = document.createElement('hr');
+                photoElem.appendChild(div);
+                photoElem.appendChild(input);
+                photoElem.appendChild(button);
+                photoElem.appendChild(img);
+                photoElem.appendChild(hr);
+                input.classList.add('refInput');
+                button.classList.add('delBtn');
+                button.dataset.seq = 0;
+                button.onclick = deleteContent;
+                img.classList.add('refImg');
+                img.src = 'http://via.placeholder.com/300x100';
+                button.innerText = '삭제';
+            }
+
+            
+            // 추가버튼 왼쪽 콤보박스 - 방향
+            const comment = document.querySelector('#comment');
+            let opt1 = document.createElement('option');
+            let opt2 = document.createElement('option');
+            comment.querySelector('#way').appendChild(opt1);
+            comment.querySelector('#way').appendChild(opt2);
+            opt1.innerText = data['way1'];
+            opt2.innerText = data['way2'];
+
+
+            // 추가버튼 왼쪽 콤보박스 - 제트팬
+            for(let i = 0; i < data['jetfan'].length+1; i++) {
+                let opt = document.createElement('option');
+                comment.querySelector('#jetfan').appendChild(opt);
+                opt.innerText = (i === 0) ? '공통' : data['jetfan'][i-1];
             }
 
         } else if(this.status === 500) {
