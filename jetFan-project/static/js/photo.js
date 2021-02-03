@@ -59,7 +59,7 @@ const getData = () => {
                 for(let i = 0; i < data['ph_seq'].length; i++) {
                     let div = document.createElement('div');
                     let input = document.createElement('input');
-                    let button = document.createElement('button');
+                    let button = document.createElement('img');
                     let img = document.createElement('img');
                     let hr = document.createElement('hr');
                     photoElem.appendChild(div);
@@ -75,11 +75,11 @@ const getData = () => {
                     button.setAttribute('id', 'btn'+data['ph_seq'][i]);
                     button.dataset.seq = data['ph_seq'][i];
                     button.onclick = deleteContent;
+                    button.src = './img/minus.png';
                     img.classList.add('refImg');
                     img.setAttribute('id', 'img'+data['ph_seq'][i]);
                     input.value = data['ph_comment'][i];
-                    button.innerText = '삭제';
-                    img.setAttribute('src', './data/photo/' + year + '/' + year_no + '/' + data['ph_photo'][i]);
+                    img.src = './data/photo/' + year + '/' + year_no + '/' + data['ph_photo'][i];
                     img.setAttribute('alt', data['ph_photo'][i]);
                     hr.setAttribute('id', 'hr'+data['ph_seq'][i]);
                 }
@@ -92,7 +92,7 @@ const getData = () => {
                 const photoElem = document.querySelector('#photo');
                 let div = document.createElement('div');
                 let input = document.createElement('input');
-                let button = document.createElement('button');
+                let button = document.createElement('img');
                 let img = document.createElement('img');
                 let hr = document.createElement('hr');
                 photoElem.appendChild(div);
@@ -103,10 +103,14 @@ const getData = () => {
                 input.classList.add('refInput');
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
+                button.src = './img/minus.png';
                 button.onclick = deleteContent;
                 img.classList.add('refImg');
                 img.src = 'http://via.placeholder.com/300x100';
-                button.innerText = '삭제';
+                input.setAttribute('id', 'input0');
+                button.setAttribute('id', 'btn0');
+                img.setAttribute('id', 'img0');
+                hr.setAttribute('id', 'hr0');
             }
 
             
@@ -217,7 +221,15 @@ const uploadFile = function() {
     fd.append('tunn_code', tunn_code);
     fd.append('seq', seq);
 
-    if (!fileElem.value) return; 
+    if (!fileElem.value) {
+        Swal.fire({
+            title: '사전점검', 
+            text: '파일을 먼저 선택해주세요.',
+            icon: 'info',
+            confirmButtonText: '확인'
+        });
+        return;
+    }
     
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -291,15 +303,24 @@ const addContent = (filename) => {
                     confirmButtonText: '확인'
                 });
 
+                // 비어있는 참고사진 객체 삭제
+                document.querySelector('#input0').remove();
+                document.querySelector('#btn0').remove();
+                document.querySelector('#img0').remove();
+                document.querySelector('#hr0').remove();
+
                 // 참고사진에 추가
+                let seq = 1;
+                if(document.querySelectorAll('.delBtn').length) {
+                    const delBtn = document.querySelectorAll('.delBtn');
+                    seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
+                }
                 const photo = document.querySelector('#photo');
-                const delBtn = document.querySelectorAll('.delBtn');
-                const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
                 const img_path = './data/photo/' + year + '/' + year_no + '/';
                 const file_name = 'p_' + tunn_code + '_' + seq + '.jpg';
                 let div = document.createElement('div');
                 let input = document.createElement('input');
-                let button = document.createElement('button');
+                let button = document.createElement('img');
                 let img = document.createElement('img');
                 let hr = document.createElement('hr');
                 
@@ -314,7 +335,7 @@ const addContent = (filename) => {
                 button.classList.add('delBtn');
                 button.dataset.seq = seq;
                 button.onclick = deleteContent;
-                button.innerText = '삭제';
+                button.src = './img/minus.png';
                 img.classList.add('refImg');
                 img.setAttribute('src', img_path + file_name);
                 img.setAttribute('alt', photo_photo);
@@ -382,6 +403,31 @@ const deleteContent = (e) => {
                     document.querySelector(`#img${seq}`).remove();
                     document.querySelector(`#hr${seq}`).remove();
 
+                    if(seq === '1') {
+                        const photo = document.querySelector('#photo');
+                        let input = document.createElement('input');
+                        let button = document.createElement('img');
+                        let img = document.createElement('img');
+                        let hr = document.createElement('hr');
+                        
+                        photo.appendChild(input);
+                        photo.appendChild(button);
+                        photo.appendChild(img);
+                        photo.appendChild(hr);
+                        input.classList.add('refInput');
+                        button.classList.add('delBtn');
+                        button.dataset.seq = 0;
+                        button.onclick = deleteContent;
+                        button.src = './img/minus.png';
+                        img.classList.add('refImg');
+                        img.src = 'http://via.placeholder.com/300x100';
+
+                        input.setAttribute('id', 'input0');
+                        button.setAttribute('id', 'btn0');
+                        img.setAttribute('id', 'img0');
+                        hr.setAttribute('id', 'hr0');
+                    }
+
                 } else {
                     Swal.fire({
                         title: '사진삭제', 
@@ -418,6 +464,7 @@ const modifyData = () => {
                        'photo_comment': elem.value });
     });
 
+    console.log('contents :>> ', contents);
 
     const data = {'tunn_code': tunn_code,
                   'year': year,
@@ -428,6 +475,9 @@ const modifyData = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+
+            changeCircleColor(1);
+
             Swal.fire({
                 title: '입력성공', 
                 text: '데이터가 정상적으로 입력되었습니다.',
