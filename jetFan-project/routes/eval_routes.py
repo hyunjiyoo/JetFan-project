@@ -44,14 +44,10 @@ class Eval(MethodView):
 	
 	def put(self):
 		v = request.get_json()
-
-		jetfan_no = v['data'][0]['eval_jetfan_code']
-		year = v['data'][0]['eval_year']
-		year_no =  v['data'][0]['eval_year_no']
 		
 		# 평가표 데이터 입력/수정
-		url = base_url + 'evaluation/' + jetfan_no + '/' + year + '/' + year_no
-		r = requests.put(url, data=json.dumps(v['data']))
+		url = base_url + 'evaluation/' + v['jetfan_no'] + '/' + v['year'] + '/' + v['year_no']
+		r = requests.put(url, data=json.dumps(v['contents']))
 		result = json.loads(r.text)
 		
 		return json.dumps(result)
