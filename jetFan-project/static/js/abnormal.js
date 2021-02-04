@@ -79,8 +79,8 @@ const getData = () => {
                     document.querySelector('#error').appendChild(textarea);
                     textarea.classList.add('content');
                     textarea.innerText = data['error'][i] ?? '';
-                    textarea.setAttribute('onclick', auto_grow(textarea));
-                    textarea.setAttribute('oninput', auto_grow(textarea));
+                    textarea.setAttribute('oninput', "auto_grow(this)");
+                    textarea.style.height = textarea.scrollHeight;
                 }
                 
                 // 현장점검 소견 추가
@@ -89,8 +89,8 @@ const getData = () => {
                     document.querySelector('#chk').appendChild(textarea);
                     textarea.classList.add('content');
                     textarea.innerText = data['chk'][i] ?? '';
-                    textarea.setAttribute('onclick', auto_grow(textarea));
-                    textarea.setAttribute('oninput', auto_grow(textarea));
+                    textarea.setAttribute('oninput', "auto_grow(this)");
+                    textarea.style.height = textarea.scrollHeight;
                 }
 
 
@@ -132,14 +132,14 @@ const getData = () => {
                 let err_textarea = document.createElement('textarea');
                 document.querySelector('#error').appendChild(err_textarea);
                 err_textarea.classList.add('content');
-                err_textarea.setAttribute('onclick', auto_grow(err_textarea));
-                err_textarea.setAttribute('oninput', auto_grow(err_textarea));
+                err_textarea.setAttribute('oninput', "auto_grow(this)");
+                err_textarea.style.height = textarea.scrollHeight;
                 
                 let chk_textarea = document.createElement('textarea');
                 document.querySelector('#chk').appendChild(chk_textarea);
                 chk_textarea.classList.add('content');
-                chk_textarea.setAttribute('onclick', auto_grow(chk_textarea));
-                chk_textarea.setAttribute('oninput', auto_grow(chk_textarea));
+                chk_textarea.setAttribute('oninput', "auto_grow(this)");
+                chk_textarea.style.height = textarea.scrollHeight;
 
                 const photo = document.querySelector('#photo');
                 let div = document.createElement('div');
@@ -572,14 +572,14 @@ const errAddContent = () => {
     let textarea = document.createElement('textarea');
     document.querySelector('#error').appendChild(textarea);
     textarea.classList.add('content');
-    textarea.setAttribute('onclick', auto_grow(textarea));
-    textarea.setAttribute('oninput', auto_grow(textarea));
+    textarea.setAttribute('oninput', "auto_grow(this)");
+    textarea.style.height = textarea.scrollHeight;
 }
 
 const chkAddContent = () => {
     let textarea = document.createElement('textarea');
     document.querySelector('#chk').appendChild(textarea);
     textarea.classList.add('content');
-    textarea.setAttribute('onclick', auto_grow(textarea));
-    textarea.setAttribute('oninput', auto_grow(textarea));
+    textarea.setAttribute('oninput', "auto_grow(this)");
+    textarea.style.height = textarea.scrollHeight;
 }

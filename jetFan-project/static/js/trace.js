@@ -76,8 +76,7 @@ const getData = () => {
             document.querySelector('#eval_amp_t').innerText = data.eval.eval_amp_t ?? '';
             document.querySelector('#eval_volt').innerText = data.eval.eval_volt ?? '';
 
-            
-            if(!data.eval.length) {
+            if(data.eval === {}) {
                 Swal.fire({
                     title: '데이터 없음!', 
                     text: '평가표 데이터가 존재하지 않습니다.',
