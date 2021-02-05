@@ -34,6 +34,12 @@ input::-webkit-inner-spin-button {
   text-align: center;
   background-color: #fffef9;
 }
+#contents #info table input[type='text'] {
+  width: 100%;
+  text-align: center;
+  font-size: 13pt;
+  background-color: #fffef9;
+}
 #contents h3 {
   margin-top: 40px;
   margin-bottom: 10px;

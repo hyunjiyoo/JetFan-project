@@ -122,9 +122,8 @@ const getData = () => {
             document.querySelector('#way').innerText = data.jetfan_way ?? '';
             document.querySelector('#lane').innerText = data.jetfan_lane ?? '';
             document.querySelector('#jetfan_name').innerText = data.jetfan_no ?? '';
-            document.querySelector('#eval_ymd').innerText = data.eval_ymd.split('T')[0] ?? '';
+            document.querySelector('#eval_ymd').value = data.eval_ymd.split('T')[0] ?? '';
             document.querySelector('#jetfan_name').dataset.update = data.eval_update ?? '';
-            document.querySelector('#jetfan_name').dataset.ymd = data.eval_ymd ?? '';
             document.querySelector('#jetfan_name').dataset.emp = data.eval_emp ?? '';
             document.querySelector('#jetfan_name').dataset.company = data.eval_company ?? '';
 
@@ -700,7 +699,7 @@ const inputData = () => {
         "eval_year": document.querySelector('#year').value,
         "eval_year_no": document.querySelector('#update').value,
         "eval_update":document.querySelector('#jetfan_name').dataset.update,
-        "eval_ymd": document.querySelector('#jetfan_name').dataset.ymd,
+        "eval_ymd": document.querySelector('#eval_ymd').value,
         "eval_emp": document.querySelector('#jetfan_name').dataset.emp,
         "eval_company": document.querySelector('#jetfan_name').dataset.company,
         "eval_vibrate_y_1":document.querySelector('#eval_vibrate_y_1').value,
