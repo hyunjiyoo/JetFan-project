@@ -133,13 +133,13 @@ const getData = () => {
                 document.querySelector('#error').appendChild(err_textarea);
                 err_textarea.classList.add('content');
                 err_textarea.setAttribute('oninput', "auto_grow(this)");
-                err_textarea.style.height = textarea.scrollHeight;
+                err_textarea.style.height = err_textarea.scrollHeight;
                 
                 let chk_textarea = document.createElement('textarea');
                 document.querySelector('#chk').appendChild(chk_textarea);
                 chk_textarea.classList.add('content');
                 chk_textarea.setAttribute('oninput', "auto_grow(this)");
-                chk_textarea.style.height = textarea.scrollHeight;
+                chk_textarea.style.height = chk_textarea.scrollHeight;
 
                 const photo = document.querySelector('#photo');
                 let div = document.createElement('div');
@@ -368,11 +368,12 @@ const addContent = (filename) => {
                     });
 
                     // 비어있는 참고사진 객체 삭제
-                    document.querySelector('#input0').remove();
-                    document.querySelector('#btn0').remove();
-                    document.querySelector('#img0').remove();
-                    document.querySelector('#hr0').remove();
-
+                    if(document.querySelector('#input0')) {
+                        document.querySelector('#input0').remove();
+                        document.querySelector('#btn0').remove();
+                        document.querySelector('#img0').remove();
+                        document.querySelector('#hr0').remove();
+                    }
 
                     // 참고사진에 추가
                     const photo = document.querySelector('#photo');

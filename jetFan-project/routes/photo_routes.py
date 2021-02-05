@@ -43,8 +43,10 @@ class Photo(MethodView):
 			ph_jetfan = []
 			ph_comment = []
 			ph_photo = []
+			ph_way = []
 			for item in photo_items:
 				ph_seq.append(item['photo_seq'])
+				ph_way.append(item['photo_way'])
 				ph_jetfan.append(item['photo_jetfan_no'])
 				ph_comment.append(item['photo_comment'])
 				ph_photo.append(item['photo_photo'])
@@ -53,6 +55,7 @@ class Photo(MethodView):
 			data['ph_jetfan'] = ph_jetfan
 			data['ph_comment'] = ph_comment
 			data['ph_photo'] = ph_photo
+			data['ph_way'] = ph_way
 			
 			data['update'] = 0
 			if photo_items:

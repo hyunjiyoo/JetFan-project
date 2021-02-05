@@ -67,7 +67,7 @@ const getData = () => {
                     photoElem.appendChild(button);
                     photoElem.appendChild(img);
                     photoElem.appendChild(hr);
-                    div.innerText = '⊙ ' + data['ph_jetfan'][i] ?? '';
+                    div.innerText = `⊙  ${data['ph_way'][i]} - ${data['ph_jetfan'][i]}` ?? '';
                     div.setAttribute('id', 'div'+data['ph_seq'][i]);
                     input.classList.add('refInput');
                     input.setAttribute('id', 'input'+data['ph_seq'][i]);
@@ -304,10 +304,12 @@ const addContent = (filename) => {
                 });
 
                 // 비어있는 참고사진 객체 삭제
-                document.querySelector('#input0').remove();
-                document.querySelector('#btn0').remove();
-                document.querySelector('#img0').remove();
-                document.querySelector('#hr0').remove();
+                if(document.querySelector('#input0')) {
+                    document.querySelector('#input0').remove();
+                    document.querySelector('#btn0').remove();
+                    document.querySelector('#img0').remove();
+                    document.querySelector('#hr0').remove();
+                }
 
                 // 참고사진에 추가
                 let seq = 1;
@@ -329,7 +331,8 @@ const addContent = (filename) => {
                 photo.appendChild(button);
                 photo.appendChild(img);
                 photo.appendChild(hr);
-                div.innerText = '⊙ ' + photo_way + ' - ' + photo_jetfan_no ?? '';
+                
+                div.innerText = `⊙ ${photo_way} - ${photo_jetfan_no}` ?? '';
                 input.value = photo_comment;
                 input.classList.add('refInput');
                 button.classList.add('delBtn');
