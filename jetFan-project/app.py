@@ -24,7 +24,7 @@ from routes.abnormal_routes import Abnormal, Abupload
 # 사진첩 Photo
 from routes.photo_routes import Photo, Ptupload
 # 데이터생성 Data
-from routes.data_routes import Data
+from routes.basic_routes import Basic
 
 app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
@@ -61,7 +61,7 @@ app.add_url_rule('/photo', view_func=Photo.as_view('photo_view'), methods=['GET'
 app.add_url_rule('/ptupload', view_func=Ptupload.as_view('ptupload_view'), methods=['POST'])
 
 # 데이터생성
-app.add_url_rule('/basic', view_func=Data.as_view('basic_view'), methods=['GET', 'POST'])
+app.add_url_rule('/basic', view_func=Basic.as_view('basic_view'), methods=['GET', 'POST'])
 
 
 app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET', 'POST'])
