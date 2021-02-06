@@ -11,25 +11,33 @@
 
     <div id='basic-data'>
         <div class="tab">
-            <button class="tablinks active" onclick="openOption(event, 'division')">본부</button>
-            <button class="tablinks" onclick="openOption(event, 'tunnel')">터널</button>
+            <button class="tablinks active" onclick="openOption(event, 'division')" data-div='division'>본부</button>
+            <button class="tablinks" onclick="openOption(event, 'tunnel')" data-div='tunnel'>터널</button>
         </div>
 
         <div id="division" class="tabcontent" style='display: block;'>
             <div>
                 <div class='item'>
+                    <div>연도</div>
+                    <select name="year" class="year" data-div='eval_year'>
+                        {% for year in years %}
+                        <option>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class='item'>
                     <div>본부</div>
-                    <select>
-                        <option>수도권본부</option>
-                        <option>대전충남본부</option>
-                        <option>부산경남본부</option>
-                        <option>광주전남본부</option>
+                    <select id='div_depts'>
+                        {% for dept in depts['data'] %}
+                        <option value="{{ dept['div_code'] }}">{{ dept['div_name'] }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
                 <div class='item'>
                     <div>점검자</div>
-                    <div>손정화</div>
+                    <div class='emp'>손정화</div>
                 </div>
             </div>
         </div>
@@ -37,32 +45,48 @@
         <div id="tunnel" class="tabcontent">
             <div>
                 <div class='item'>
+                    <div>연도</div>
+                    <select name="year" class="year" data-div='eval_year'>
+                        {% for year in years %}
+                        <option>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class='item'>
                     <div>본부</div>
-                    <select>
-                        <option>수도권본부</option>
-                        <option>대전충남본부</option>
-                        <option>부산경남본부</option>
-                        <option>광주전남본부</option>
+                    <select id='depts' onchange='setBranch()'>
+                        {% for dept in depts['data'] %}
+                        <option value="{{ dept['div_code'] }}">{{ dept['div_name'] }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 
                 <div class='item'>
                     <div>지사</div>
-                    <select>
-                        <option>지사선택</option>
+                    <select id='branch' onchange='setTunnel()'>
+                        {% for bran in brans['data'] %}
+                        <option value="{{ bran['bran_code'] }}">{{ bran['bran_name'] }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
                 <div class='item'>
                     <div>터널</div>
-                    <select>
-                        <option>터널선택</option>
+                    <select id='tunns'>
+                        {% for tunn in tunns['data'] %}
+                        {% if(tunn['tunn_name'] == '수리') %}
+                        <option value="{{ tunn['tunn_code'] }}" selected>{{ tunn['tunn_name'] }}</option>
+                        {% else %}
+                        <option value="{{ tunn['tunn_code'] }}">{{ tunn['tunn_name'] }}</option>
+                        {% endif %}
+                    {% endfor %}
                     </select>
                 </div>
 
                 <div class='item'>
                     <div>점검자</div>
-                    <div>손정화</div>
+                    <div class='emp'>손정화</div>
                 </div>
 
             </div>
