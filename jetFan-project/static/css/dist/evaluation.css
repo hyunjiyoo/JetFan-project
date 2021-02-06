@@ -25,7 +25,7 @@ input::-webkit-inner-spin-button {
   height: 34px;
 }
 #contents #info table th {
-  width: 2%;
+  width: 3.5%;
   color: #1c5180;
   background-color: #f7ece6;
 }
@@ -34,11 +34,12 @@ input::-webkit-inner-spin-button {
   text-align: center;
   background-color: #fffef9;
 }
-#contents #info table input[type='number'] {
+#contents #info table input[type='date'] {
   width: 100%;
   text-align: center;
   font-size: 13pt;
   background-color: #fffef9;
+  display: block;
 }
 #contents h3 {
   margin-top: 40px;

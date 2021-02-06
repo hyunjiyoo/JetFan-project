@@ -29,6 +29,8 @@ const tunnelEnterKeyEvent = (() => {
     });
 })();
 
+
+
 // 터널명 검색했을때 터널 가져오기
 const searchTunnel = () => {
     // 아무것도 입력안하고 검색만 클릭했을때
@@ -36,7 +38,6 @@ const searchTunnel = () => {
         location.reload();
     }
 
-    
     signalInit(); init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');
 
     const tunn_search = document.querySelector('#tunn_search').value;
@@ -48,74 +49,71 @@ const searchTunnel = () => {
             
             
             // 본부
-            const division = data[0];
-            const tunn_div_code = data[5][0];
-            const div_name = division.filter((elem, i) => i%2===0);
-            const div_code = division.filter((elem, i) => i%2===1);
             const dept = document.querySelector('#dept');
-            for(let i = 0; i < division.length/2; i++) {
+            for(let i = 0; i < data['div_code'].length; i++) {
                 let opt = document.createElement('option');
                 dept.appendChild(opt);
-                opt.innerText = div_name[i];
-                opt.value = div_code[i];
-                if(div_code[i] === tunn_div_code) {
+                opt.innerText = data['div_name'][i];
+                opt.value = data['div_code'][i];
+                if(data['div_code'][i] === data['tunn_div_code']) {
                     opt.selected = true;
                 }
             }
 
 
             // 지사
-            const branch = data[1];
-            const tunn_bran_code = data[5][1];
-            const bran_code = branch.filter((elem, i) => i%2===1);
-            const bran_name = branch.filter((elem, i) => i%2===0);
             const bran = document.querySelector('#branch');
-            for(let i = 0; i < branch.length/2; i++) {
+            for(let i = 0; i < data['bran_code'].length; i++) {
                 let opt = document.createElement('option');
                 bran.appendChild(opt);
-                opt.innerText = bran_name[i];
-                opt.value = bran_code[i];
-                if(bran_code[i] === tunn_bran_code) {
+                opt.innerText = data['bran_name'][i];
+                opt.value = data['bran_code'][i];
+                if(data['bran_code'][i] === data['tunn_bran_code']) {
                     opt.selected = true;
                 }
             }
 
 
-
             // 터널
-            const tunnel = data[2];
-            const tunn_name = tunnel.filter((elem, i) => i%2===0);
-            const tunn_code = tunnel.filter((elem, i) => i%2===1);
-            for(let i = 0; i < tunnel.length/2; i++) {
+            for(let i = 0; i < data['tunn_code'].length; i++) {
                 let opt = document.createElement('option');
                 document.querySelector('#tunnel').appendChild(opt);
-                opt.innerText = tunn_name[i];
-                opt.value = tunn_code[i];
+                opt.innerText = data['tunn_name'][i];
+                opt.value = data['tunn_code'][i];
             }
 
             const path = window.location.pathname;
             if(path === '/evaluation' || path === '/trace') {
                 // 방향
-                const way = data[3];
-                for(let i = 0; i < way.length; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_way`).appendChild(opt);
-                    opt.innerText = way[i];
-                }
-    
+                let opt1 = document.createElement('option');
+                let opt2 = document.createElement('option');
+                document.querySelector(`#jetfan_way`).appendChild(opt1);
+                document.querySelector(`#jetfan_way`).appendChild(opt2);
+                opt1.innerText = data['tunn_way1'];
+                opt2.innerText = data['tunn_way2'];
     
                 // 제트팬
-                const jetfan = data[4];
-                const jetfan_name = jetfan.filter((elem, i) => i%2===0);
-                const jetfan_code = jetfan.filter((elem, i) => i%2===1);
-                for(let i = 0; i < jetfan.length/2; i++) {
+                for(let i = 0; i < data['jetfan_code'].length; i++) {
                     let opt = document.createElement('option');
                     document.querySelector(`#jetfan_no`).appendChild(opt);
-                    opt.innerText = jetfan_name[i];
-                    opt.value = jetfan_code[i];
+                    opt.innerText = data['jetfan_no'][i];
+                    opt.value = data['jetfan_code'][i];
                 }
             }
 
+            // 터널 콤보박스 클릭이벤트 넣어줘야함.
+            // 모달창 띄워서 비슷한 효과
+            // document.querySelector('#tunnel').click();
+            
+
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '검색실패', 
+                text: '해당 데이터가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
         }
     }
 
@@ -138,47 +136,42 @@ const setBranch = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
 
-            const bran_name = data[0].filter((elem, i) => i%2===0);
-            const bran_code = data[0].filter((elem, i) => i%2===1);
-            for(let i = 0; i < data[0].length/2; i++) {
+            for(let i = 0; i < data['bran_code'].length; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#branch`).appendChild(opt);
-                opt.innerText = bran_name[i];
-                opt.value = bran_code[i];
+                opt.innerText = data['bran_name'][i];
+                opt.value = data['bran_code'][i];
             }
             
-            const tunn_name = data[1].filter((elem, i) => i%2===0);
-            const tunn_code = data[1].filter((elem, i) => i%2===1);
             if(document.querySelector(`#tunnel option`) === null) {
-                for(let i = 0; i < data[1].length/2; i++) {
+                for(let i = 0; i < data['tunn_code'].length; i++) {
                     let opt = document.createElement('option');
                     document.querySelector(`#tunnel`).appendChild(opt);
-                    opt.innerText = tunn_name[i];
-                    opt.value = tunn_code[i];
+                    opt.innerText = data['tunn_name'][i];
+                    opt.value = data['tunn_code'][i];
                 }
             }
             
             const path = window.location.pathname;
             if(path === '/evaluation' || path === '/trace') {
-                if(data.length > 2) {
+                if(data['tunn_way1'] && data['tunn_way2']) {
                     if(document.querySelector(`#jetfan_way option`) === null) {
-                        for(let i = 0; i < data[2].length; i++) {
-                            let opt = document.createElement('option');
-                            document.querySelector(`#jetfan_way`).appendChild(opt);
-                            opt.innerText = data[2][i];
-                        }
+                        let opt1 = document.createElement('option');
+                        let opt2 = document.createElement('option');
+                        document.querySelector(`#jetfan_way`).appendChild(opt1);
+                        document.querySelector(`#jetfan_way`).appendChild(opt2);
+                        opt1.innerText = data['tunn_way1'];
+                        opt2.innerText = data['tunn_way2'];
                     }
                 }
     
-                if(data.length > 3) {
-                    const jetfan_name = data[3].filter((elem, i) => i%2===0);
-                    const jetfan_code = data[3].filter((elem, i) => i%2===1);
+                if(data['jetfan_no'].length) {
                     if(document.querySelector(`#jetfan_no option`) === null) {
-                        for(let i = 0; i < data[3].length/2; i++) {
+                        for(let i = 0; i < data['jetfan_code'].length; i++) {
                             let opt = document.createElement('option');
                             document.querySelector(`#jetfan_no`).appendChild(opt);
-                            opt.innerText = jetfan_name[i];
-                            opt.value = jetfan_code[i];
+                            opt.innerText = data['jetfan_no'][i];
+                            opt.value = data['jetfan_code'][i];
                         }
                     }
                 }
@@ -198,38 +191,44 @@ const setTunnel = () => {
     signalInit(); searchInit(); init('tunnel'); init('jetfan_way'); init('jetfan_no');
 
     const data = { 'div_code': document.querySelector(`#branch`).value, 'div': 'tunnel'};
-    console.log('data :>> ', data);
+    
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
 
-            const tunn_name = data[0].filter((elem, i) => i%2===0);
-            const tunn_code = data[0].filter((elem, i) => i%2===1);
-            for(let i = 0; i < data[0].length/2; i++) {
+            for(let i = 0; i < data['tunn_code'].length; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#tunnel`).appendChild(opt);
-                opt.innerText = tunn_name[i];
-                opt.value = tunn_code[i];
+                opt.innerText = data['tunn_name'][i];
+                opt.value = data['tunn_code'][i];
             }
 
             const path = window.location.pathname;
             if(path === '/evaluation' || path === '/trace') {
-                for(let i = 0; i < data[1].length; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_way`).appendChild(opt);
-                    opt.innerText = data[1][i];
+                if(data['tunn_way1'] && data['tunn_way2']) {
+                    if(document.querySelector(`#jetfan_way option`) === null) {
+                        let opt1 = document.createElement('option');
+                        let opt2 = document.createElement('option');
+                        document.querySelector(`#jetfan_way`).appendChild(opt1);
+                        document.querySelector(`#jetfan_way`).appendChild(opt2);
+                        opt1.innerText = data['tunn_way1'];
+                        opt2.innerText = data['tunn_way2'];
+                    }
                 }
-
-                const jetfan_name = data[2].filter((elem, i) => i%2===0);
-                const jetfan_code = data[2].filter((elem, i) => i%2===1);
-                for(let i = 0; i < data[2].length/2; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_no`).appendChild(opt);
-                    opt.innerText = jetfan_name[i];
-                    opt.value = jetfan_code[i];
+    
+                if(data['jetfan_no'].length) {
+                    if(document.querySelector(`#jetfan_no option`) === null) {
+                        for(let i = 0; i < data['jetfan_code'].length; i++) {
+                            let opt = document.createElement('option');
+                            document.querySelector(`#jetfan_no`).appendChild(opt);
+                            opt.innerText = data['jetfan_no'][i];
+                            opt.value = data['jetfan_code'][i];
+                        }
+                    }
                 }
             }
+
         }
     }
 
@@ -256,40 +255,43 @@ const setJetfan = () => {
 
             // 터널명 검색시 해당 터널에 맞는 본부, 지사 가져오기
             const depts =  Object.values(document.querySelectorAll('#dept option'));
-            const selectedDept = depts.find((dept) => dept.value === String(data[1]));
+            const selectedDept = depts.find((dept) => dept.value === String(data['div_code']));
             selectedDept.selected = true;
 
             // 해당 본부에 맞는 지사 가져와서 선택하기
-            const bran_name = data[2].filter((elem, i) =>  i%2===0 );
-            const bran_code = data[2].filter((elem, i) =>  i%2===1 );
-            for(let i = 0; i < data[2].length/2; i++) {
+            for(let i = 0; i < data['bran_code'].length; i++) {
                 let opt = document.createElement('option');
                 document.querySelector(`#branch`).appendChild(opt);
-                opt.innerText = bran_name[i];
-                opt.value = bran_code[i];
+                opt.innerText = data['bran_name'][i];
+                opt.value = data['bran_code'][i];
             }
             const branches = Object.values(document.querySelectorAll('#branch option'));
-            const selectedBr = branches.find((br) => br.value === String(data[3]));
+            const selectedBr = branches.find((br) => br.value === String(data['select_bran_code']));
             selectedBr.selected = true;
 
             
             const path = window.location.pathname;
             if(path === '/evaluation' || path === '/trace') {
-                // 방향
-                for(let i = 0; i < data[4].length; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_way`).appendChild(opt);
-                    opt.innerText = data[4][i];
+                if(data['tunn_way1'] && data['tunn_way2']) {
+                    if(document.querySelector(`#jetfan_way option`) === null) {
+                        let opt1 = document.createElement('option');
+                        let opt2 = document.createElement('option');
+                        document.querySelector(`#jetfan_way`).appendChild(opt1);
+                        document.querySelector(`#jetfan_way`).appendChild(opt2);
+                        opt1.innerText = data['tunn_way1'];
+                        opt2.innerText = data['tunn_way2'];
+                    }
                 }
-
-                // 제트팬
-                const jetfan_no = data[0].filter((elem, i) =>  i%2===0 );
-                const jetfan_code = data[0].filter((elem, i) =>  i%2===1 );
-                for(let i = 0; i < data[0].length/2; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector(`#jetfan_no`).appendChild(opt);
-                    opt.innerText = jetfan_no[i];
-                    opt.value = jetfan_code[i];
+    
+                if(data['jetfan_no'].length) {
+                    if(document.querySelector(`#jetfan_no option`) === null) {
+                        for(let i = 0; i < data['jetfan_code'].length; i++) {
+                            let opt = document.createElement('option');
+                            document.querySelector(`#jetfan_no`).appendChild(opt);
+                            opt.innerText = data['jetfan_no'][i];
+                            opt.value = data['jetfan_code'][i];
+                        }
+                    }
                 }
             }
         }
@@ -313,13 +315,13 @@ const clickWay = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
 
-            const jetfan_no = data.filter((elem, i) =>  i%2===0 );
-            const jetfan_code = data.filter((elem, i) =>  i%2===1 );
-            for(let i = 0; i < data.length/2; i++) {
-                let opt = document.createElement('option');
-                document.querySelector(`#jetfan_no`).appendChild(opt);
-                opt.innerText = jetfan_no[i];
-                opt.value = jetfan_code[i];
+            if(document.querySelector(`#jetfan_no option`) === null) {
+                for(let i = 0; i < data['jetfan_code'].length; i++) {
+                    let opt = document.createElement('option');
+                    document.querySelector(`#jetfan_no`).appendChild(opt);
+                    opt.innerText = data['jetfan_no'][i];
+                    opt.value = data['jetfan_code'][i];
+                }
             }
 
         }
