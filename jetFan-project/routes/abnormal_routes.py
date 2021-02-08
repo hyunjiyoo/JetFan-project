@@ -11,6 +11,8 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
+base_url = 'http://api.jetfan.ga:5005/'
+
 
 class Abnormal(MethodView):
 	def get(self):
@@ -22,9 +24,9 @@ class Abnormal(MethodView):
 		tunns = json.loads(tunn_r.text)
 
 		years = []
-		year = datetime.date.today().year
-		for i in range(year+1-2020):
-			years.append(year-i)
+		year = datetime.date.today().year + 2
+		for i in range(year-2020):
+			years.append(year-i-1)
 
 		return render_template('abnormal.html', depts=depts,
 												brans=brans,
@@ -33,114 +35,180 @@ class Abnormal(MethodView):
 
 	def post(self):
 		v = request.get_json()
+		data = {}
 		
 		if(v['option'] == 'getContent'):
-			data = {}
+			for prop_name in ['tunn_code', 'year', 'year_no']:
+				if(v[prop_name] == ''):
+					return '데이터누락', 406
 			
 			# 이상소견, 현장점검 소견
 			ar_r = requests.get(base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
-			ar_items = json.loads(ar_r.text)
-			errorContent = []
-			chkContent = []
-			for item in ar_items:
-				if(item['ar_type'] == 1):
-					errorContent.append(item['ar_content'])
-				elif(item['ar_type'] == 2):
-					chkContent.append(item['ar_content'])
-			data['error'] = errorContent;
-			data['chk'] = chkContent
-			data['update'] = 0
-			if ar_items:
-				data['update'] = ar_items[0]['ar_update']
+			ar_result = json.loads(ar_r.text)
+
+			if(ar_result['status']['status_code'] == 200):
+				errorContent = []
+				chkContent = []
+				for item in ar_result['data']:
+					if(item['ar_type'] == 1):
+						errorContent.append(item['ar_content'])
+					elif(item['ar_type'] == 2):
+						chkContent.append(item['ar_content'])
+				data['error'] = errorContent;
+				data['chk'] = chkContent
+				data['update'] = 0
+				if ar_result['data']:
+					data['update'] = ar_result['data'][0]['ar_update']
+			else:
+				data['err_msg'] = ar_result['status']['error_msg']
+				return json.dumps(data)
 
 			# 참고사진
 			ap_r = requests.get(base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
-			ap_items = json.loads(ap_r.text)
-			data['photo'] = {'ap_seq': [], 'ap_way': [], 'ap_jetfan_no': [], 'ap_comment': [], 'ap_photo': []}
-			for item in ap_items:
-				data['photo']['ap_seq'].append(item['ap_seq'])
-				data['photo']['ap_way'].append(item['ap_way'])
-				data['photo']['ap_jetfan_no'].append(item['ap_jetfan_no'])
-				data['photo']['ap_comment'].append(item['ap_comment'])
-				data['photo']['ap_photo'].append(item['ap_photo'])
+			ap_result = json.loads(ap_r.text)
+			if(ap_result['status']['status_code'] == 200):
+				data['photo'] = {'ap_seq': [], 'ap_way': [], 'ap_jetfan_no': [], 'ap_comment': [], 'ap_photo': []}
+				for item in ap_result['data']:
+					data['photo']['ap_seq'].append(item['ap_seq'])
+					data['photo']['ap_way'].append(item['ap_way'])
+					data['photo']['ap_jetfan_no'].append(item['ap_jetfan_no'])
+					data['photo']['ap_comment'].append(item['ap_comment'])
+					data['photo']['ap_photo'].append(item['ap_photo'])
+			else:
+				data['err_msg'] = ap_result['status']['error_msg']
+				return json.dumps(data)
 
 
 			# 하단 터널방향
 			way_r = requests.get(base_url + 'tunnel/tunn_code/' + v['tunn_code'])
-			way_items = json.loads(way_r.text)
-			data['way1'] = way_items[0]['tunn_way1']
-			data['way2'] = way_items[0]['tunn_way2']
+			way_result = json.loads(way_r.text)
+			if(way_result['status']['status_code'] == 200):
+				data['way1'] = way_result['data'][0]['tunn_way1']
+				data['way2'] = way_result['data'][0]['tunn_way2']
+			else:
+				data['err_msg'] = way_result['status']['error_msg']
+				return json.dumps(data)
+
 
 			# 하단 제트팬가져오기
-			jetfan1_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way1'])
-			jetfan1_items = json.loads(jetfan1_r.text)
-			jetfanArr = []
-			jetfanYmd = []
-			for item in jetfan1_items:
-				jetfanArr.append(item['jetfan_no'])
-				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
-				ymd_items = json.loads(ymd_r.text)
-				if(ymd_items is not None):
-					for ymd in ymd_items:
-						jetfanYmd.append(ymd['eval_ymd'][:10])
-				else:
-						jetfanYmd.append('')
-
-			jetfan2_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way2'])
-			jetfan2_items = json.loads(jetfan2_r.text)
-			jetfanYmd = []
-			for item in jetfan2_items:
-				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
-				ymd_items = json.loads(ymd_r.text)
-				if(ymd_items is not None):
-					for ymd in ymd_items:
-						jetfanYmd.append(ymd['eval_ymd'][:10])
-				else:
-					jetfanYmd.append('')
+			jetfan1_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + data['way1'])
+			jetfan1_result = json.loads(jetfan1_r.text)
+			jetfanArr = []; jetfanYmd = []
+			if(jetfan1_result['status']['status_code'] == 200):
+				for item in jetfan1_result['data']:
+					jetfanArr.append(item['jetfan_no'])
+					ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+					ymd_items = json.loads(ymd_r.text)
+					if(ymd_items['status']['status_code'] == 200):
+						try:
+							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
+						except:
+							jetfanYmd.append('')
+					else:
+						data['err_msg'] = ymd_items['status']['error_msg']
+						return json.dumps(data)
+			else:
+				data['err_msg'] = jetfan1_result['status']['error_msg']
+				return json.dumps(data)
 			
-			data['jetfan'] = jetfanArr
-			data['ymd'] = list(set(jetfanYmd))
+
+			jetfan2_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + data['way2'])
+			jetfan2_result = json.loads(jetfan2_r.text)
+			if(jetfan2_result['status']['status_code'] == 200):
+				for item in jetfan2_result['data']:
+					ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
+					ymd_items = json.loads(ymd_r.text)
+					if(ymd_items['status']['status_code'] == 200):
+						try:
+							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
+						except:
+							jetfanYmd.append('')
+					else:
+						data['err_msg'] = ymd_items['status']['error_msg']
+						return json.dumps(data)
+			
+				data['jetfan'] = jetfanArr
+				data['ymd'] = list(filter(None,set(jetfanYmd)))
+
+			else:
+				data['err_msg'] = jetfan2_result['status']['error_msg']
+				return json.dumps(data)
 
 			return json.dumps(data)
 
 
 		elif(v['option'] == 'getJetfan'):
+			
+			for prop_name in ['tunn_code', 'way']:
+				if(v[prop_name] == ''):
+					return '데이터누락', 406
+			
 			r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + v['way'])
 			items = json.loads(r.text)
+			if(items['status']['status_code'] == 200):
+				jetfan = []
+				for item in items['data']:
+					jetfan.append(item['jetfan_no'])
+				data['jetfan'] = jetfan
+			else:
+				data['err_msg'] = items['status']['error_msg']
 
-			jetfan = []
-			for item in items:
-				jetfan.append(item['jetfan_no'])
-
-			return json.dumps(jetfan)
+			return json.dumps(data)
 		
 		elif(v['option'] == 'addContent'):
+			for prop_name in ['tunn_code', 'year', 'year_no']:
+				if(v[prop_name] == ''):
+					return '데이터누락', 406
+
 			url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 			r = requests.post(url, data=json.dumps(v['data']))
 			result = json.loads(r.text)
-
-			return json.dumps(result)
+			if(result['status']['status_code'] == 200):
+				data['succ'] = 200
+			else:
+				data['err_msg'] = result['status']['error_msg']
+			return json.dumps(data)
 
 	def put(self):
+		data = {}
 		v = request.get_json()
+
+		for prop_name in ['tunn_code', 'year', 'year_no']:
+				if(v[prop_name] == ''):
+					return '데이터누락', 406
+		
 		url = base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 		r = requests.put(url, data=json.dumps(v['data']))
 		result = json.loads(r.text)
 
+		if(result['status']['status_code'] == 200):
+			data['succ'] = 200
+		else:
+			data['err_msg'] = result['status']['error_msg']
+
 		return json.dumps(result)
 
 	def delete(self):
+		data = {}
 		v = request.get_json()
+
+		for prop_name in ['tunn_code', 'year', 'year_no']:
+			if(v[prop_name] == ''):
+				return '데이터누락', 406
+
 		url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'] + '/' + v['seq']
 		r = requests.delete(url)
 		result = json.loads(r.text)
-
-		# 서버에 있는 파일 삭제
-		dir_path = './static/data/abnormal/' + v['year'] + '/' + v['year_no'] + '/'
-		file_name = 'a_' + v['tunn_code'] + '_' + v['seq'] + '.jpg'
-		os.remove(dir_path + secure_filename(file_name))
-
-		return json.dumps(result)
+		if(result['status']['status_code'] == 200):
+			# 서버에 있는 파일 삭제
+			dir_path = './static/data/abnormal/' + v['year'] + '/' + v['year_no'] + '/'
+			file_name = 'a_' + v['tunn_code'] + '_' + v['seq'] + '.jpg'
+			os.remove(dir_path + secure_filename(file_name))
+			data['succ'] = 200
+		else:
+			data['err_msg'] = result['status']['error_msg']
+			
+		return json.dumps(data)
 
 
 class Abupload(MethodView):

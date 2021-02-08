@@ -58,10 +58,10 @@ class Inspection(MethodView):
 					ymd1_items = json.loads(ymd1_r.text)
 
 					if(ymd1_items['status']['status_code'] == 200):
-						# if(ymd1_items['data'] is not None):
-						# 	jetfan_ymd.append(ymd1_items['data'][0]['eval_ymd'].split('T')[0])
-						# else:
-						jetfan_ymd.append('')
+						try:
+							jetfan_ymd.append(ymd1_items['data'][0]['eval_ymd'].split('T')[0])
+						except:	
+							jetfan_ymd.append('')
 					else:
 						data['err_msg'] = ymd1_items['status']['error_msg']
 						return json.dumps(data)
@@ -75,10 +75,10 @@ class Inspection(MethodView):
 					ymd2_r = requests.get(base_url + 'evaluation/' + str(data['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 					ymd2_items = json.loads(ymd2_r.text)
 					if(ymd2_items['status']['status_code'] == 200):
-						# if(ymd2_items['data'] is not None):
-						# 	jetfan_ymd.append(ymd2_items['data'][0]['eval_ymd'].split('T')[0])
-						# else:
-						jetfan_ymd.append('')
+						try:
+							jetfan_ymd.append(ymd2_items['data'][0]['eval_ymd'].split('T')[0])
+						except:	
+							jetfan_ymd.append('')
 					else:
 						data['err_msg'] = ymd2_items['status']['error_msg']
 						return json.dumps(data)
@@ -89,7 +89,7 @@ class Inspection(MethodView):
 			data['ins'] = inspect_result['data'][0]
 			data['way1_jetfan'] = jetfan1
 			data['way2_jetfan'] = jetfan2
-			data['ymd_jetfan'] = list(set(jetfan_ymd))
+			data['ymd_jetfan'] = list(filter(None, set(jetfan_ymd)))
 
 		else:
 			data['err_msg'] = inspect_result['status']['error_msg']

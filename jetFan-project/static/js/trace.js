@@ -48,6 +48,17 @@ const getData = () => {
             let data = JSON.parse(this.responseText);
             console.log('data22222 :>> ', data);
 
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             changeCircleColor(data.update);
             initData();
 
@@ -59,9 +70,8 @@ const getData = () => {
             document.querySelector('#jetfan_maker').innerText = data.eval.jetfan_maker ?? '';
             document.querySelector('#eval_emp').innerText = data.eval.eval_emp ?? '';
             document.querySelector('#user').innerText = data.eval.eval_emp ?? '';
-            document.querySelector('#eval_ymd').innerText = data.eval_ymd ? data.eval_ymd.split('T')[0] ?? '' : '';
-            document.querySelector('#planImg img').src = data.eval.jetfan_diagram ? 
-                                                        './data/jetfan/' + data.eval.eval_year + '/' + data.eval.jetfan_diagram : 
+            document.querySelector('#eval_ymd').innerText = data.eval.eval_ymd ? data.eval.eval_ymd.split('T')[0] ?? '' : '';
+            document.querySelector('#planImg img').src = './data/jetfan/' + data.eval.eval_year + '/' + data.eval.jetfan_diagram ??
                                                         'http://via.placeholder.com/100x100';
             
             // 운전 점검
@@ -75,17 +85,6 @@ const getData = () => {
             document.querySelector('#eval_amp_s').innerText = data.eval.eval_amp_s ?? '';
             document.querySelector('#eval_amp_t').innerText = data.eval.eval_amp_t ?? '';
             document.querySelector('#eval_volt').innerText = data.eval.eval_volt ?? '';
-
-            if(data.eval === {}) {
-                Swal.fire({
-                    title: '데이터 없음!', 
-                    text: '평가표 데이터가 존재하지 않습니다.',
-                    icon: 'info',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-                return false;
-            }
 
             
             // 현 상태 점검 현황
@@ -142,6 +141,26 @@ const getData = () => {
             setNoteArr(data.noteCurYear, 'noteCurYear');
             setNoteArr(data.noteOneYearAgo, 'noteOneYearAgo');
             setNoteArr(data.noteTowYearAgo, 'noteTowYearAgo');
+
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
         }
     }
 
@@ -190,33 +209,38 @@ const inputData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
-            const chk_status = data[0].status.status_code;
-            const note_status = data[1].status.status_code;
 
-
-            if(chk_status === 200 && note_status === 200) {
-
-                changeCircleColor(1);
-
+            if(data.hasOwnProperty('err_msg')) {
                 Swal.fire({
-                    title: '입력성공', 
-                    text: '정상적으로 입력되었습니다.',
-                    icon: 'success',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-
-            } else {
-                Swal.fire({
-                    title: '입력실패', 
-                    text: '입력에 실패하였습니다.',
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
                     icon: 'warning',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
                 });
-
+                return false;
             }
 
+            changeCircleColor(1);
+
+            Swal.fire({
+                title: '입력성공', 
+                text: '정상적으로 입력되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
