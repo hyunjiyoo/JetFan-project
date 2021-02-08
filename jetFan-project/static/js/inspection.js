@@ -57,6 +57,17 @@ const getData = () => {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
 
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             changeCircleColor(data['ins_update']);
 
             document.querySelector('#tunn_name').innerText = data['tunn_name'] ?? '';
@@ -65,19 +76,29 @@ const getData = () => {
             document.querySelector('#way1_jetfan').innerText = data['way1_jetfan'] ?? '';
             document.querySelector('#way2_jetfan').innerText = data['way2_jetfan'] ?? '';
             document.querySelector('#tunn_spec').innerText = data['tunn_spec'] ?? '';
-            document.querySelector('#ins_company').innerText = data['ins_company'] ?? '';
-            document.querySelector('#ins_emp').innerText = data['ins_emp'] ?? '';
+            document.querySelector('#ins_company').innerText = data['ins']['ins_company'] ?? '';
+            document.querySelector('#ins_emp').innerText = data['ins']['ins_emp'] ?? '';
             document.querySelector('#ins_ymd').innerText = data['ymd_jetfan'] ?? '';
             
             // 점검내용
             for(let i = 11; i <=30; i++) {
-                document.querySelector(`#ins_${i}a`).value = data[`ins_${i}a`] ?? '';
-                document.querySelector(`#ins_${i}b`).value = data[`ins_${i}b`] ?? '';
+                document.querySelector(`#ins_${i}a`).value = data['ins'][`ins_${i}a`] ?? '';
+                document.querySelector(`#ins_${i}b`).value = data['ins'][`ins_${i}b`] ?? '';
             }
             for(let i = 1; i < 6; i++) {
-                document.querySelector(`#ins_etc${i}`).value = data[`ins_etc${i}`] ?? '';
+                document.querySelector(`#ins_etc${i}`).value = data['ins'][`ins_etc${i}`] ?? '';
             }          
 
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
@@ -86,6 +107,7 @@ const getData = () => {
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
             });
+            return false;
         }
     }
 
@@ -158,6 +180,17 @@ const modifyData = (e) => {
         if(this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
 
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             const eval_update = document.querySelector('#greenCircle').dataset.update;
             changeCircleColor(eval_update);
             
@@ -181,6 +214,16 @@ const modifyData = (e) => {
                 });
             }
 
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 

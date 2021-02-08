@@ -80,8 +80,11 @@ class Abnormal(MethodView):
 				jetfanArr.append(item['jetfan_no'])
 				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 				ymd_items = json.loads(ymd_r.text)
-				for ymd in ymd_items:
-					jetfanYmd.append(ymd['eval_ymd'][:10])
+				if(ymd_items is not None):
+					for ymd in ymd_items:
+						jetfanYmd.append(ymd['eval_ymd'][:10])
+				else:
+						jetfanYmd.append('')
 
 			jetfan2_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + way_items[0]['tunn_way2'])
 			jetfan2_items = json.loads(jetfan2_r.text)
@@ -89,8 +92,11 @@ class Abnormal(MethodView):
 			for item in jetfan2_items:
 				ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 				ymd_items = json.loads(ymd_r.text)
-				for ymd in ymd_items:
-					jetfanYmd.append(ymd['eval_ymd'][:10])
+				if(ymd_items is not None):
+					for ymd in ymd_items:
+						jetfanYmd.append(ymd['eval_ymd'][:10])
+				else:
+					jetfanYmd.append('')
 			
 			data['jetfan'] = jetfanArr
 			data['ymd'] = list(set(jetfanYmd))

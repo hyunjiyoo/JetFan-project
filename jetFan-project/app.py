@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template
 
 # Import routes (API test)
 from routes.apitest_routes import TestUser

@@ -36,7 +36,7 @@
         <tr>
             <td>
                 <select name="dept" id="dept" onchange='setBranch()'>
-                    {% for dept in depts %}
+                    {% for dept in depts['data'] %}
                     <option value="{{ dept['div_code'] }}">
                         {{ dept['div_name'] }}
                     </option>
@@ -45,7 +45,7 @@
             </td>
             <td>
                 <select name="branch" id="branch" onchange='setTunnel()'>
-                    {% for bran in brans %}
+                    {% for bran in brans['data'] %}
                     <option value="{{ bran['bran_code'] }}">
                         {{ bran['bran_name'] }}
                     </option>
@@ -54,7 +54,7 @@
             </td>
             <td>
                 <select name="tunnel" id="tunnel" onchange='setJetfan()'>
-                    {% for tunn in tunns %}
+                    {% for tunn in tunns['data'] %}
                         {% if(tunn['tunn_name'] == '수리') %}
                         <option value="{{ tunn['tunn_code'] }}" selected>{{ tunn['tunn_name'] }}</option>
                         {% else %}
@@ -62,6 +62,7 @@
                         {% endif %}
                     {% endfor %}
                 </select>
+                <span hidden id='tunnClick'></span>
             </td>
             
         </tr>
@@ -69,14 +70,14 @@
             {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
             <td>
                 <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
-                    <option selected>{{ tunns[0]['tunn_way1'] }}</option>
-                    <option>{{ tunns[0]['tunn_way2'] }}</option>
+                    <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
+                    <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
                 </select>
             </td>
 
             <td>
                 <select name="jetfan_no" id="jetfan_no">
-                    {% for jetfan in jetfans %}
+                    {% for jetfan in jetfans['data'] %}
                     <option value="{{ jetfan['jetfan_code'] }}">
                         {{ jetfan['jetfan_no'] }}
                     </option>

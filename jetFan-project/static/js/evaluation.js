@@ -115,6 +115,18 @@ const getData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
+            
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             changeCircleColor(data.eval_update);
 
             // 선택한 제트팬에 대한 기본 데이터
@@ -122,7 +134,7 @@ const getData = () => {
             document.querySelector('#way').innerText = data.jetfan_way ?? '';
             document.querySelector('#lane').innerText = data.jetfan_lane ?? '';
             document.querySelector('#jetfan_name').innerText = data.jetfan_no ?? '';
-            document.querySelector('#eval_ymd').value = data.eval_ymd.split('T')[0] ?? '';
+            document.querySelector('#eval_ymd').value = data.eval_ymd ? data.eval_ymd.split('T')[0] ?? '' : '';
             document.querySelector('#jetfan_name').dataset.update = data.eval_update ?? '';
             document.querySelector('#jetfan_name').dataset.emp = data.eval_emp ?? '';
             document.querySelector('#jetfan_name').dataset.company = data.eval_company ?? '';
@@ -246,6 +258,16 @@ const getData = () => {
                 });
             }
         
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '제트팬 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
@@ -254,7 +276,7 @@ const getData = () => {
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
             });
-            window.location.reload();
+            return false; 
         }
     }
 
@@ -789,6 +811,25 @@ const inputData = () => {
                     onAfterClose: () => window.scrollTo(0,0)
                 });
             }
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '제트팬 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false; 
         }
     }
 

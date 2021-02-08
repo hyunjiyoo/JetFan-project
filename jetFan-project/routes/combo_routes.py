@@ -42,7 +42,8 @@ class Combo(MethodView):
 				data['div_name'] = divName
 				data['div_code'] = divCode
 			else:
-				return json.dumps(div_result['status']['err_msg'])
+				data['err_msg'] = div_result['status']['error_msg']
+				return json.dumps(data)
 
 
 			# 지사 데이터
@@ -54,7 +55,8 @@ class Combo(MethodView):
 				data['bran_name'] = branName
 				data['bran_code'] = branCode
 			else:
-				return json.dumps(div_result['status']['err_msg'])
+				data['err_msg'] = bran_result['status']['error_msg']
+				return json.dumps(data)
 				
 
 			# 터널, 방향, 제트팬 데이터
@@ -81,10 +83,12 @@ class Combo(MethodView):
 					data['jetfan_code'] = jetfanCode
 
 				else:
-					return json.dumps(div_result['status']['err_msg'])
+					data['err_msg'] = jetfan_result['status']['error_msg']
+					return json.dumps(data)
 
 			else:
-				return json.dumps(div_result['status']['err_msg'])
+				data['err_msg'] = tunn_result['status']['error_msg']
+				return json.dumps(data)
 			
 
 		# 본부 클릭
@@ -105,7 +109,8 @@ class Combo(MethodView):
 				data['bran_code'] = branCode
 
 			else:
-				return json.dumps(bran_result['status']['err_msg'])
+				data['err_msg'] = bran_result['status']['error_msg']
+				return json.dumps(data)
 			
 
 			# 터널, 방향, 제트팬
@@ -135,18 +140,18 @@ class Combo(MethodView):
 						data['jetfan_code'] = jetfanCode
 
 					else:
-						return json.dumps(jetfan_result['status']['err_msg'])
+						data['err_msg'] = jetfan_result['status']['error_msg']
+						return json.dumps(data)
 
 			else:
-				return json.dumps(tunn_result['status']['err_msg'])
+				data['err_msg'] = tunn_result['status']['error_msg']
+				return json.dumps(data)
 
 			
 		# 지사 클릭
 		elif(value['div'] == 'tunnel'):
 			r = requests.get(base_url + 'tunnel/tunn_bran_code/' + value['div_code'])
 			tunn_result = json.loads(r.text)
-
-			
 
 			if(tunn_result['status']['status_code'] == 200):
 				tunnName = []; tunnCode = []
@@ -174,10 +179,12 @@ class Combo(MethodView):
 						data['jetfan_code'] = jetfanCode
 
 					else:
-						return json.dumps(jetfan_result['status']['err_msg'])
+						data['err_msg'] = jetfan_result['status']['error_msg']
+						return json.dumps(data)
 
 			else:
-				return json.dumps(tunn_result['status']['err_msg'])
+				data['err_msg'] = tunn_result['status']['error_msg']
+				return json.dumps(data)
 
 
 
@@ -206,7 +213,8 @@ class Combo(MethodView):
 				data['tunn_way2'] = tunn_result['data'][0]['tunn_way2']
 
 			else:
-				return json.dumps(bran_result['status']['err_msg'])
+				data['err_msg'] = bran_result['status']['error_msg']
+				return json.dumps(data)
 
 			# 제트팬
 
@@ -222,9 +230,8 @@ class Combo(MethodView):
 				data['jetfan_code'] = jetfanCode
 			
 			else:
-				return json.dumps(jetfan_result['status']['err_msg'])
-			
-			# return json.dumps(data)
+				data['err_msg'] = jetfan_result['status']['error_msg']
+				return json.dumps(data)
 			
 		
 		# 방향 클릭
@@ -243,7 +250,8 @@ class Combo(MethodView):
 				data['jetfan_code'] = jetfanCode
 			
 			else:
-				return json.dumps(jetfan_result['status']['err_msg'])
+				data['err_msg'] = jetfan_result['status']['error_msg']
+				return json.dumps(data)
 				
 
 		return json.dumps(data)

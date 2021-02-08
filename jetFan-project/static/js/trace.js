@@ -59,7 +59,7 @@ const getData = () => {
             document.querySelector('#jetfan_maker').innerText = data.eval.jetfan_maker ?? '';
             document.querySelector('#eval_emp').innerText = data.eval.eval_emp ?? '';
             document.querySelector('#user').innerText = data.eval.eval_emp ?? '';
-            document.querySelector('#eval_ymd').innerText = data.eval.eval_ymd ? data.eval.eval_ymd.slice(0, 10) : '';
+            document.querySelector('#eval_ymd').innerText = data.eval_ymd ? data.eval_ymd.split('T')[0] ?? '' : '';
             document.querySelector('#planImg img').src = data.eval.jetfan_diagram ? 
                                                         './data/jetfan/' + data.eval.eval_year + '/' + data.eval.jetfan_diagram : 
                                                         'http://via.placeholder.com/100x100';
