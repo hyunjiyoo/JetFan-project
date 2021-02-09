@@ -49,13 +49,13 @@ class Inspection(MethodView):
 			jetfan2_result = json.loads(jetfan2_r.text)
 		
 			jetfan1 = []; jetfan2 = []; jetfan_ymd = []
-			if(jetfan1_result['status']['status_code'] == 200):
+			if(jetfan1_result['status']['status_code'] == 200 and jetfan1_result['status']['error_code'] == 0):
 				for data in jetfan1_result['data']:
 					jetfan1.append(data['jetfan_no'])
 					ymd1_r = requests.get(base_url + 'evaluation/' + str(data['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 					ymd1_items = json.loads(ymd1_r.text)
 
-					if(ymd1_items['status']['status_code'] == 200):
+					if(ymd1_items['status']['status_code'] == 200 and ymd1_items['status']['error_code'] == 0):
 						try:
 							jetfan_ymd.append(ymd1_items['data'][0]['eval_ymd'].split('T')[0])
 						except:	
@@ -67,12 +67,12 @@ class Inspection(MethodView):
 				data['err_msg'] = jetfan1_result['status']['error_msg']
 				return json.dumps(data)
 
-			if(jetfan2_result['status']['status_code'] == 200):
+			if(jetfan2_result['status']['status_code'] == 200 and jetfan2_result['status']['error_code'] == 0):
 				for data in jetfan2_result['data']:
 					jetfan2.append(data['jetfan_no'])
 					ymd2_r = requests.get(base_url + 'evaluation/' + str(data['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 					ymd2_items = json.loads(ymd2_r.text)
-					if(ymd2_items['status']['status_code'] == 200):
+					if(ymd2_items['status']['status_code'] == 200 and ymd2_items['status']['error_code'] == 0):
 						try:
 							jetfan_ymd.append(ymd2_items['data'][0]['eval_ymd'].split('T')[0])
 						except:	

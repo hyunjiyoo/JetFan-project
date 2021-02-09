@@ -809,6 +809,17 @@ const inputData = () => {
         return false;   
     }
 
+    if(document.querySelector('#eval_ymd').value === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '점검일자를 입력해주세요',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;
+    }
+
 
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;

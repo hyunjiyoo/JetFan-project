@@ -44,7 +44,7 @@ class Abnormal(MethodView):
 			ar_r = requests.get(base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
 			ar_result = json.loads(ar_r.text)
 
-			if(ar_result['status']['status_code'] == 200):
+			if(ar_result['status']['status_code'] == 200 and ar_result['status']['error_code'] == 0):
 				errorContent = []
 				chkContent = []
 				for item in ar_result['data']:
@@ -64,7 +64,7 @@ class Abnormal(MethodView):
 			# 참고사진
 			ap_r = requests.get(base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
 			ap_result = json.loads(ap_r.text)
-			if(ap_result['status']['status_code'] == 200):
+			if(ap_result['status']['status_code'] == 200 and ap_result['status']['error_code'] == 0):
 				data['photo'] = {'ap_seq': [], 'ap_way': [], 'ap_jetfan_no': [], 'ap_comment': [], 'ap_photo': []}
 				for item in ap_result['data']:
 					data['photo']['ap_seq'].append(item['ap_seq'])
@@ -80,7 +80,7 @@ class Abnormal(MethodView):
 			# 하단 터널방향
 			way_r = requests.get(base_url + 'tunnel/tunn_code/' + v['tunn_code'])
 			way_result = json.loads(way_r.text)
-			if(way_result['status']['status_code'] == 200):
+			if(way_result['status']['status_code'] == 200  and way_result['status']['error_code'] == 0):
 				data['way1'] = way_result['data'][0]['tunn_way1']
 				data['way2'] = way_result['data'][0]['tunn_way2']
 			else:
@@ -92,12 +92,12 @@ class Abnormal(MethodView):
 			jetfan1_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + data['way1'])
 			jetfan1_result = json.loads(jetfan1_r.text)
 			jetfanArr = []; jetfanYmd = []
-			if(jetfan1_result['status']['status_code'] == 200):
+			if(jetfan1_result['status']['status_code'] == 200  and jetfan1_result['status']['error_code'] == 0):
 				for item in jetfan1_result['data']:
 					jetfanArr.append(item['jetfan_no'])
 					ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 					ymd_items = json.loads(ymd_r.text)
-					if(ymd_items['status']['status_code'] == 200):
+					if(ymd_items['status']['status_code'] == 200  and ymd_items['status']['error_code'] == 0):
 						try:
 							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
 						except:
@@ -112,11 +112,11 @@ class Abnormal(MethodView):
 
 			jetfan2_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + data['way2'])
 			jetfan2_result = json.loads(jetfan2_r.text)
-			if(jetfan2_result['status']['status_code'] == 200):
+			if(jetfan2_result['status']['status_code'] == 200 and jetfan2_result['status']['error_code'] == 0):
 				for item in jetfan2_result['data']:
 					ymd_r = requests.get(base_url + 'evaluation/' + str(item['jetfan_code']) + '/' + v['year'] + '/' + v['year_no'])
 					ymd_items = json.loads(ymd_r.text)
-					if(ymd_items['status']['status_code'] == 200):
+					if(ymd_items['status']['status_code'] == 200 and ymd_items['status']['error_code'] == 0):
 						try:
 							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
 						except:
@@ -143,7 +143,7 @@ class Abnormal(MethodView):
 			
 			r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + v['way'])
 			items = json.loads(r.text)
-			if(items['status']['status_code'] == 200):
+			if(items['status']['status_code'] == 200 and items['status']['error_code'] == 0):
 				jetfan = []
 				for item in items['data']:
 					jetfan.append(item['jetfan_no'])
@@ -161,7 +161,7 @@ class Abnormal(MethodView):
 			url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 			r = requests.post(url, data=json.dumps(v['data']))
 			result = json.loads(r.text)
-			if(result['status']['status_code'] == 200):
+			if(result['status']['status_code'] == 200 and result['status']['error_code'] == 0):
 				data['succ'] = 200
 			else:
 				data['err_msg'] = result['status']['error_msg']
@@ -179,7 +179,7 @@ class Abnormal(MethodView):
 		r = requests.put(url, data=json.dumps(v['data']))
 		result = json.loads(r.text)
 
-		if(result['status']['status_code'] == 200):
+		if(result['status']['status_code'] == 200 and result['status']['error_code'] == 0):
 			data['succ'] = 200
 		else:
 			data['err_msg'] = result['status']['error_msg']
@@ -197,7 +197,7 @@ class Abnormal(MethodView):
 		url = base_url + 'abnormal-photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'] + '/' + v['seq']
 		r = requests.delete(url)
 		result = json.loads(r.text)
-		if(result['status']['status_code'] == 200):
+		if(result['status']['status_code'] == 200 and result['status']['error_code'] == 0):
 			# 서버에 있는 파일 삭제
 			dir_path = './static/data/abnormal/' + v['year'] + '/' + v['year_no'] + '/'
 			file_name = 'a_' + v['tunn_code'] + '_' + v['seq'] + '.jpg'

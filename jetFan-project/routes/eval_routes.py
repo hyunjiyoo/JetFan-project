@@ -44,7 +44,7 @@ class Eval(MethodView):
 		basic_info = json.loads(r.text)
 		
 		data = {}
-		if(basic_info['status']['status_code'] == 200):
+		if(basic_info['status']['status_code'] == 200 and basic_info['status']['error_code'] == 0):
 			data = basic_info['data'][0]
 		else:
 			data['err_msg'] = basic_info['status']['error_msg']

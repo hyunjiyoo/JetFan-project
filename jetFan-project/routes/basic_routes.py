@@ -32,50 +32,69 @@ class Basic(MethodView):
 		v = request.get_json()
 		data = {}
 
+		for prop_name in ['div_code']:
+			if(v[prop_name] == ''):
+				return '데이터누락', 406
+
 		if(v['div'] == 'branch'):
 			bran_r = requests.get(base_url + 'branch/bran_div_code/' + v['div_code'])
 			bran_item = json.loads(bran_r.text)
-			branName = []
-			branCode = []
-			for bran in bran_item['data']:
-				branName.append(bran['bran_name'])
-				branCode.append(bran['bran_code'])
-			
-			data['bran_name'] = branName
-			data['bran_code'] = branCode
+			if(bran_item['status']['status_code'] == 200 and bran_item['status']['error_code'] == 0):
+				branName = []; branCode = []
+				for bran in bran_item['data']:
+					branName.append(bran['bran_name'])
+					branCode.append(bran['bran_code'])
+				data['bran_name'] = branName
+				data['bran_code'] = branCode
+			else:
+				data['err_msg'] = bran_item['status']['error_msg']
+				return json.dumps(data)
 
 			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/' + str(branCode[0]))
 			tunn_item = json.loads(tunn_r.text)
-			tunnName = []
-			tunnCode = []
-			for tunn in tunn_item['data']:
-				tunnName.append(tunn['tunn_name'])
-				tunnCode.append(tunn['tunn_code'])
+			if(tunn_item['status']['status_code'] == 200 and tunn_item['status']['error_code'] == 0):
+				tunnName = []; tunnCode = []
+				for tunn in tunn_item['data']:
+					tunnName.append(tunn['tunn_name'])
+					tunnCode.append(tunn['tunn_code'])
+				data['tunn_name'] = tunnName
+				data['tunn_code'] = tunnCode
+			else:
+				data['err_msg'] = tunn_item['status']['error_msg']
 
-			data['tunn_name'] = tunnName
-			data['tunn_code'] = tunnCode
+			return json.dumps(data)	
 
 		elif(v['div'] == 'tunnel'):
 			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/' + v['div_code'])
 			tunn_item = json.loads(tunn_r.text)
-			tunnName = []
-			tunnCode = []
-			
-			for tunn in tunn_item['data']:
-				tunnName.append(tunn['tunn_name'])
-				tunnCode.append(tunn['tunn_code'])
+			if(tunn_item['status']['status_code'] == 200 and tunn_item['status']['error_code'] == 0):
+				tunnName = []; tunnCode = []
+				
+				for tunn in tunn_item['data']:
+					tunnName.append(tunn['tunn_name'])
+					tunnCode.append(tunn['tunn_code'])
 
-			data['tunn_name'] = tunnName
-			data['tunn_code'] = tunnCode
-
+				data['tunn_name'] = tunnName
+				data['tunn_code'] = tunnCode
+			else:
+				data['err_msg'] = tunn_item['status']['error_msg']
 
 		return json.dumps(data)
 
 class CreateData(MethodView):
 	def post(self):
+		data = {}
 		v = request.get_json()
+
+		for prop_name in ['div', 'code', 'year', 'emp']:
+			if(v[prop_name] == ''):
+				return '데이터누락', 406
 
 		r = requests.post(base_url + 'basic/' + v['div'] + '/' + v['code'] + '/' + v['year'] + '/' + v['emp'])
 		result = json.loads(r.text)
 
-		return json.dumps(result)
+		if(result['status']['status_code'] == 200 and result['status']['status_code'] == 200):		
+			return json.dumps('ok')
+		else:
+			data['err_msg'] = result['status']['error_msg']
+			return json.dumps(data)

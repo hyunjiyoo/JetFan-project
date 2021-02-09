@@ -47,14 +47,14 @@ class Trace(MethodView):
 		eval_result = json.loads(trace_status_r.text)
 		
 		data = {}
-		if(eval_result['status']['status_code'] == 200):
+		if(eval_result['status']['status_code'] == 200 and eval_result['status']['error_code'] == 0):
 			data['eval'] = eval_result['data'][0]
 
 			# 현상태 점검현황
 			url_name_chk = base_url + 'trace-check/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 			trace_chk_r = requests.get(url_name_chk)
 			chk_result = json.loads(trace_chk_r.text)
-			if(chk_result['status']['status_code'] == 200):
+			if(chk_result['status']['status_code'] == 200 and chk_result['status']['error_code'] == 0):
 				checkArr = []
 				for item in chk_result['data']:
 					checkArr.append(item['tc_content'])
@@ -69,7 +69,7 @@ class Trace(MethodView):
 			url_name_note = base_url + 'trace-note/' + value['jetfan_no'] + '/' + value['year'] + '/' + value['year_no']
 			trace_note_r = requests.get(url_name_note)
 			note_result = json.loads(trace_note_r.text)
-			if(note_result['status']['status_code'] == 200):
+			if(note_result['status']['status_code'] == 200 and note_result['status']['error_code'] == 0):
 				noteCurYear = []
 				noteOneYearAgo = []
 				noteTowYearAgo = []

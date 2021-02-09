@@ -33,7 +33,7 @@ class Combo(MethodView):
 			jetfan_result = json.loads(jetfan_r.text)
 
 			# 본부 데이터
-			if(div_result['status']['status_code'] == 200):
+			if(div_result['status']['status_code'] == 200 and div_result['status']['error_code'] == 0):
 				divName = []; divCode = []
 				for item in div_result['data']:
 					divName.append(item['div_name'])
@@ -46,7 +46,7 @@ class Combo(MethodView):
 
 
 			# 지사 데이터
-			if(bran_result['status']['status_code'] == 200):
+			if(bran_result['status']['status_code'] == 200 and bran_result['status']['error_code'] == 0):
 				branName = []; branCode = []
 				for item in bran_result['data']:
 					branName.append(item['bran_name'])
@@ -59,7 +59,7 @@ class Combo(MethodView):
 				
 
 			# 터널, 방향, 제트팬 데이터
-			if(tunn_result['status']['status_code'] == 200):
+			if(tunn_result['status']['status_code'] == 200 and tunn_result['status']['error_code'] == 0):
 				data['tunn_div_code'] = tunn_result['data'][0]['tunn_div_code']
 				data['tunn_bran_code'] = tunn_result['data'][0]['tunn_bran_code']
 				
@@ -73,7 +73,7 @@ class Combo(MethodView):
 				data['tunn_way1'] = tunn_result['data'][0]['tunn_way1']
 				data['tunn_way2'] = tunn_result['data'][0]['tunn_way2']
 
-				if(jetfan_result['status']['status_code'] == 200):
+				if(jetfan_result['status']['status_code'] == 200 and jetfan_result['status']['error_code'] == 0):
 					jetfanNo = []; jetfanCode = []
 					for item in jetfan_result['data']:
 						jetfanNo.append(item['jetfan_no'])
@@ -99,7 +99,7 @@ class Combo(MethodView):
 			tunn_result = json.loads(tunn_r.text)
 		
 			# 지사
-			if(bran_result['status']['status_code'] == 200):
+			if(bran_result['status']['status_code'] == 200 and bran_result['status']['error_code'] == 0):
 				branName = []; branCode = []
 				for item in bran_result['data']:
 					branName.append(item['bran_name'])
@@ -113,7 +113,7 @@ class Combo(MethodView):
 			
 
 			# 터널, 방향, 제트팬
-			if(tunn_result['status']['status_code'] == 200):
+			if(tunn_result['status']['status_code'] == 200 and tunn_result['status']['error_code'] == 0):
 				tunnName = []; tunnCode = []
 				for item in tunn_result['data']:
 					tunnName.append(item['tunn_name'])
@@ -130,7 +130,7 @@ class Combo(MethodView):
 					jetfan_r = requests.get(base_url + 'jetfan-way/' + tunn_code + '/' + tunn_way1)
 					jetfan_result = json.loads(jetfan_r.text)
 
-					if(jetfan_result['status']['status_code'] == 200):
+					if(jetfan_result['status']['status_code'] == 200 and jetfan_result['status']['error_code'] == 0):
 						jetfanNo = []; jetfanCode = []
 						for item in jetfan_result['data']:
 							jetfanNo.append(item['jetfan_no'])
@@ -152,7 +152,7 @@ class Combo(MethodView):
 			r = requests.get(base_url + 'tunnel/tunn_bran_code/' + value['div_code'])
 			tunn_result = json.loads(r.text)
 
-			if(tunn_result['status']['status_code'] == 200):
+			if(tunn_result['status']['status_code'] == 200 and tunn_result['status']['error_code'] == 0):
 				tunnName = []; tunnCode = []
 				for item in tunn_result['data']:
 					tunnName.append(item['tunn_name'])
@@ -169,7 +169,7 @@ class Combo(MethodView):
 					jetfan_r = requests.get(base_url + 'jetfan-way/' + tunn_code + '/' + tunn_way1)
 					jetfan_result = json.loads(jetfan_r.text)
 
-					if(jetfan_result['status']['status_code'] == 200):
+					if(jetfan_result['status']['status_code'] == 200 and jetfan_result['status']['error_code'] == 0):
 						jetfanNo = []; jetfanCode = []
 						for item in jetfan_result['data']:
 							jetfanNo.append(item['jetfan_no'])
@@ -199,7 +199,7 @@ class Combo(MethodView):
 			div_code = str(tunn_result['data'][0]['div_code'])
 			branch_r = requests.get(base_url + 'branch/bran_div_code/' + div_code)
 			bran_result = json.loads(branch_r.text)
-			if(bran_result['status']['status_code'] == 200):
+			if(bran_result['status']['status_code'] == 200 and bran_result['status']['error_code'] == 0):
 				branName = []; branCode = []
 				for item in bran_result['data']:
 					branName.append(item['bran_name'])
@@ -220,7 +220,7 @@ class Combo(MethodView):
 			jetfan_r = requests.get(base_url + 'jetfan-way/' + value['tunn_code'] + '/' + data['tunn_way1'])
 			jetfan_result = json.loads(jetfan_r.text)
 
-			if(jetfan_result['status']['status_code'] == 200):
+			if(jetfan_result['status']['status_code'] == 200 and jetfan_result['status']['error_code'] == 0):
 				jetfanNo = []; jetfanCode = []
 				for item in jetfan_result['data']:
 					jetfanNo.append(item['jetfan_no'])
@@ -240,7 +240,7 @@ class Combo(MethodView):
 			jetfan_result = json.loads(r.text)
 
 			# 제트팬
-			if(jetfan_result['status']['status_code'] == 200):
+			if(jetfan_result['status']['status_code'] == 200 and jetfan_result['status']['error_code'] == 0):
 				jetfanNo = []; jetfanCode = []
 				for item in jetfan_result['data']:
 					jetfanNo.append(item['jetfan_no'])
