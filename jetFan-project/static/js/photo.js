@@ -47,6 +47,18 @@ const getData = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             changeCircleColor(data.update);
 
             if(data.ph_seq.length > 0) {
@@ -131,16 +143,25 @@ const getData = () => {
                 opt.innerText = (i === 0) ? '공통' : data['jetfan'][i-1];
             }
 
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
-                ttitle: '응답실패', 
+                title: '응답실패', 
                 text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
             });
-
-            location.reload();
+            return false;
         }
     }
 
@@ -171,12 +192,43 @@ const getJetfan = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             const comment = document.querySelector('#comment');
-            for(let i = 0; i < data.length+1; i++) {
+            for(let i = 0; i < data['jetfan'].length+1; i++) {
                 let opt = document.createElement('option');
                 comment.querySelector('#jetfan').appendChild(opt);
-                opt.innerText = (i === 0) ? '공통' : data[i-1];
+                opt.innerText = (i === 0) ? '공통' : data['jetfan'][i-1];
             }
+
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
         }
     }
 
@@ -294,76 +346,95 @@ const addContent = (filename) => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
-            console.log('data :>> ', data);
-            if(data.status.status_code === 200) {
+
+            if(data.hasOwnProperty('err_msg')) {
                 Swal.fire({
-                    title: '성공', 
-                    text: '사진이 정상적으로 추가되었습니다.',
-                    icon: 'success',
-                    confirmButtonText: '확인'
-                });
-
-                // 비어있는 참고사진 객체 삭제
-                if(document.querySelector('#input0')) {
-                    document.querySelector('#input0').remove();
-                    document.querySelector('#btn0').remove();
-                    document.querySelector('#img0').remove();
-                    document.querySelector('#hr0').remove();
-                }
-
-                // 참고사진에 추가
-                let seq = 1;
-                if(document.querySelectorAll('.delBtn').length) {
-                    const delBtn = document.querySelectorAll('.delBtn');
-                    seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
-                }
-                const photo = document.querySelector('#photo');
-                const img_path = './data/photo/' + year + '/' + year_no + '/';
-                const file_name = 'p_' + tunn_code + '_' + seq + '.jpg';
-                let div = document.createElement('div');
-                let input = document.createElement('input');
-                let button = document.createElement('img');
-                let img = document.createElement('img');
-                let hr = document.createElement('hr');
-                
-                photo.appendChild(div);
-                photo.appendChild(input);
-                photo.appendChild(button);
-                photo.appendChild(img);
-                photo.appendChild(hr);
-                
-                div.innerText = `⊙ ${photo_way} - ${photo_jetfan_no}` ?? '';
-                input.value = photo_comment;
-                input.classList.add('refInput');
-                button.classList.add('delBtn');
-                button.dataset.seq = seq;
-                button.onclick = deleteContent;
-                button.src = './img/minus.png';
-                img.classList.add('refImg');
-                img.setAttribute('src', img_path + file_name);
-                img.setAttribute('alt', photo_photo);
-
-                div.setAttribute('id', 'div'+seq);
-                input.setAttribute('id', 'input'+seq);
-                button.setAttribute('id', 'btn'+seq);
-                img.setAttribute('id', 'img'+seq);
-                hr.setAttribute('id', 'hr'+seq);
-                
-
-                // 추가부분 초기화
-                document.querySelector('#myFile').value = '';
-                document.querySelector('#commentText').value = '';
-                document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
-
-            }  else if(data.status.status_code === 500) {
-                Swal.fire({
-                    title: '실패', 
-                    text: '서버 응답에 실패하였습니다.',
+                    title: '사진추가실패', 
+                    text: data.err_msg,
                     icon: 'warning',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
                 });
+                return false;
             }
+
+            Swal.fire({
+                title: '성공', 
+                text: '사진이 정상적으로 추가되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인'
+            });
+
+            // 비어있는 참고사진 객체 삭제
+            if(document.querySelector('#input0')) {
+                document.querySelector('#input0').remove();
+                document.querySelector('#btn0').remove();
+                document.querySelector('#img0').remove();
+                document.querySelector('#hr0').remove();
+            }
+
+            // 참고사진에 추가
+            let seq = 1;
+            if(document.querySelectorAll('.delBtn').length) {
+                const delBtn = document.querySelectorAll('.delBtn');
+                seq = Number(delBtn[delBtn.length-1].dataset.seq)+1;
+            }
+            const photo = document.querySelector('#photo');
+            const img_path = './data/photo/' + year + '/' + year_no + '/';
+            const file_name = 'p_' + tunn_code + '_' + seq + '.jpg';
+            let div = document.createElement('div');
+            let input = document.createElement('input');
+            let button = document.createElement('img');
+            let img = document.createElement('img');
+            let hr = document.createElement('hr');
+            
+            photo.appendChild(div);
+            photo.appendChild(input);
+            photo.appendChild(button);
+            photo.appendChild(img);
+            photo.appendChild(hr);
+            
+            div.innerText = `⊙ ${photo_way} - ${photo_jetfan_no}` ?? '';
+            input.value = photo_comment;
+            input.classList.add('refInput');
+            button.classList.add('delBtn');
+            button.dataset.seq = seq;
+            button.onclick = deleteContent;
+            button.src = './img/minus.png';
+            img.classList.add('refImg');
+            img.setAttribute('src', img_path + file_name);
+            img.setAttribute('alt', photo_photo);
+
+            div.setAttribute('id', 'div'+seq);
+            input.setAttribute('id', 'input'+seq);
+            button.setAttribute('id', 'btn'+seq);
+            img.setAttribute('id', 'img'+seq);
+            hr.setAttribute('id', 'hr'+seq);
+            
+
+            // 추가부분 초기화
+            document.querySelector('#myFile').value = '';
+            document.querySelector('#commentText').value = '';
+            document.querySelector('#previewImg').src = 'http://via.placeholder.com/300x100';
+
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
         }
     }
 
@@ -392,53 +463,73 @@ const deleteContent = (e) => {
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let data = JSON.parse(this.responseText);
-                console.log('data :>> ', data);
-                if(data.status.status_code === 200) {
+
+                if(data.hasOwnProperty('err_msg')) {
                     Swal.fire({
-                        title: '사진삭제', 
-                        text: '사진이 정상적으로 삭제되었습니다.',
-                        icon: 'success',
-                        confirmButtonText: '확인'
-                    });
-                    document.querySelector(`#div${seq}`).remove();
-                    document.querySelector(`#input${seq}`).remove();
-                    document.querySelector(`#btn${seq}`).remove();
-                    document.querySelector(`#img${seq}`).remove();
-                    document.querySelector(`#hr${seq}`).remove();
-
-                    if(seq === '1') {
-                        const photo = document.querySelector('#photo');
-                        let input = document.createElement('input');
-                        let button = document.createElement('img');
-                        let img = document.createElement('img');
-                        let hr = document.createElement('hr');
-                        
-                        photo.appendChild(input);
-                        photo.appendChild(button);
-                        photo.appendChild(img);
-                        photo.appendChild(hr);
-                        input.classList.add('refInput');
-                        button.classList.add('delBtn');
-                        button.dataset.seq = 0;
-                        button.onclick = deleteContent;
-                        button.src = './img/minus.png';
-                        img.classList.add('refImg');
-                        img.src = 'http://via.placeholder.com/300x100';
-
-                        input.setAttribute('id', 'input0');
-                        button.setAttribute('id', 'btn0');
-                        img.setAttribute('id', 'img0');
-                        hr.setAttribute('id', 'hr0');
-                    }
-
-                } else {
-                    Swal.fire({
-                        title: '사진삭제', 
-                        text: '사진을 삭제하는데 실패하였습니다.',
+                        title: '사진삭제실패', 
+                        text: data.err_msg,
                         icon: 'warning',
                         confirmButtonText: '확인'
                     });
+                    return false;
                 }
+
+                Swal.fire({
+                    title: '사진삭제성공', 
+                    text: '사진이 정상적으로 삭제되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                });
+
+                document.querySelector(`#div${seq}`).remove();
+                document.querySelector(`#input${seq}`).remove();
+                document.querySelector(`#btn${seq}`).remove();
+                document.querySelector(`#img${seq}`).remove();
+                document.querySelector(`#hr${seq}`).remove();
+
+                if(seq === '1') {
+                    const photo = document.querySelector('#photo');
+                    let input = document.createElement('input');
+                    let button = document.createElement('img');
+                    let img = document.createElement('img');
+                    let hr = document.createElement('hr');
+                    
+                    photo.appendChild(input);
+                    photo.appendChild(button);
+                    photo.appendChild(img);
+                    photo.appendChild(hr);
+                    input.classList.add('refInput');
+                    button.classList.add('delBtn');
+                    button.dataset.seq = 0;
+                    button.onclick = deleteContent;
+                    button.src = './img/minus.png';
+                    img.classList.add('refImg');
+                    img.src = 'http://via.placeholder.com/300x100';
+
+                    input.setAttribute('id', 'input0');
+                    button.setAttribute('id', 'btn0');
+                    img.setAttribute('id', 'img0');
+                    hr.setAttribute('id', 'hr0');
+                }
+
+            } else if(this.status == 406) {
+                Swal.fire({
+                    title: '데이터 누락', 
+                    text: '터널 정보가 존재하지 않습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+                
+            } else if(this.status === 500) {
+                Swal.fire({
+                    title: '응답실패', 
+                    text: '서버응답에 실패하였습니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
             }
         }
     
@@ -479,6 +570,17 @@ const modifyData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
 
+            if(data.hasOwnProperty('err_msg')) {
+                Swal.fire({
+                    title: '데이터입력실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+            }
+
             changeCircleColor(1);
 
             Swal.fire({
@@ -489,10 +591,20 @@ const modifyData = () => {
                 onAfterClose: () => window.scrollTo(0,0)
             });
 
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '터널 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
         } else if(this.status === 500) {
             Swal.fire({
-                title: '입력실패', 
-                text: '데이터 입력에 실패되었습니다.',
+                title: '응답실패', 
+                text: '서버응답에 실패하였습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)

@@ -174,8 +174,8 @@ class Abnormal(MethodView):
 		v = request.get_json()
 
 		for prop_name in ['tunn_code', 'year', 'year_no']:
-				if(v[prop_name] == ''):
-					return '데이터누락', 406
+			if(v[prop_name] == ''):
+				return '데이터누락', 406
 		
 		url = base_url + 'abnormal-report/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
 		r = requests.put(url, data=json.dumps(v['data']))
