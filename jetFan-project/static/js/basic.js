@@ -145,7 +145,7 @@ const createData = () => {
       } else if(this.status === 500) {
         Swal.fire({
           title: '응답실패', 
-          text: '서버응답에 실패하였습니다.',
+          text: '해당 데이터가 없습니다.',
           icon: 'warning',
           confirmButtonText: '확인',
           onAfterClose: () => window.scrollTo(0,0)

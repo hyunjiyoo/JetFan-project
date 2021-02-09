@@ -11,8 +11,6 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-base_url = 'http://api.jetfan.ga:5005/'
-
 
 class Abnormal(MethodView):
 	def get(self):

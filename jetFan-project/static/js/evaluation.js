@@ -103,8 +103,125 @@ window.onload = () => {
     eval_snow.addEventListener('change', getSnow);
 }
 
+// 2. 외관점검 지수
+const selectedOption = (data) => {
+    let index;
+    switch(data) {
+        case '없음':
+        case '양호':
+        case '10일이하':
+            index = 0;
+            break;
+        case '있음':
+        case '불량':
+        case '25%':
+        case '11일이상':
+            index = 1;
+            break;
+        case '50%':
+        case '15일이상':
+            index = 2;
+            break;
+        case '100%':
+        case '19일이상':
+            index = 3;
+            break;
+        case '천공_낙하물':
+        case '22일이상':
+            index = 4;
+            break;
+    }
+    return index;
+}
+
+const initData = () => {
+    document.querySelector('#tunn_name').innerText = '';
+    document.querySelector('#way').innerText = '';
+    document.querySelector('#lane').innerText = '';
+    document.querySelector('#jetfan_name').innerText = '';
+    document.querySelector('#eval_ymd').value = '';
+    document.querySelector('#jetfan_name').dataset.update = '';
+    document.querySelector('#jetfan_name').dataset.emp = '';
+    document.querySelector('#jetfan_name').dataset.company = '';
+
+    document.querySelector('#eval_vibrate_y_1').value = '';
+    document.querySelector('#eval_vibrate_x_1').value = '';
+    document.querySelector('#eval_vibrate_z_1').value = '';
+    document.querySelector('#eval_vibrate_y_2').value = '';
+    document.querySelector('#eval_vibrate_x_2').value = '';
+    document.querySelector('#eval_vibrate_z_2').value = '';
+    document.querySelector('#eval_vibrate').innerText = '';
+    document.querySelector('#eval_vibrate_score').innerText = '';
+    
+    // 1운전전류
+    document.querySelector('#eval_amp_r').value = '';
+    document.querySelector('#eval_amp_s').value = '';
+    document.querySelector('#eval_amp_t').value = '';
+    document.querySelector('#eval_temp').value = '';
+    document.querySelector('#eval_amp').innerText = '';
+    document.querySelector('#eval_amp_score').innerText = '';
+    
+    
+    // 1. 작동기능 지수 - 베어링온도, 모터표면온도, 절연상태, 전압
+    document.querySelector('#eval_beartemp').value = '';
+    document.querySelector('#eval_beartemp_score').innerText = '';
+    document.querySelector('#eval_motortemp').value = '';
+    document.querySelector('#eval_motortemp_score').innerText = '';
+    document.querySelector('#eval_motorinsul').value = '';
+    document.querySelector('#eval_motorinsul_score').innerText = '';
+    document.querySelector('#eval_volt').value = '';
+    
+    // 1. 작동기능 지수 - 소계
+    document.querySelector('#eval_operate_sum').innerText = '';
+
+    document.querySelector(`#eval_braidnoise`).selectedIndex = selectedOption('없음');
+    document.querySelector(`#eval_braidbroken`).selectedIndex = selectedOption('없음');
+    document.querySelector(`#eval_bearnoise`).selectedIndex = selectedOption('없음');
+    document.querySelector(`#eval_casing`).selectedIndex = selectedOption('없음');
+    document.querySelector(`#eval_exterior`).selectedIndex = selectedOption('없음');
+    document.querySelector(`#eval_buckle`).selectedIndex = selectedOption('양호');
+    document.querySelector(`#eval_eyebolt`).selectedIndex = selectedOption('양호');
+    document.querySelector(`#eval_bracket`).selectedIndex = selectedOption('양호');
+    document.querySelector(`#eval_anchor`).selectedIndex = selectedOption('양호');
+    document.querySelector(`#eval_chain`).selectedIndex = selectedOption('양호');
+
+    // 2. 외관점검 지수 - 콤보박스
+    document.querySelector('#eval_braidnoise_score').innerText = '';
+    document.querySelector('#eval_braidbroken_score').innerText = '';
+    document.querySelector('#eval_bearnoise_score').innerText = '';
+    document.querySelector('#eval_casing_score').innerText = '';
+    document.querySelector('#eval_exterior_score').innerText = '';
+    document.querySelector('#eval_buckle_score').innerText = '';
+    document.querySelector('#eval_eyebolt_score').innerText = '';
+    document.querySelector('#eval_bracket_score').innerText = '';
+    document.querySelector('#eval_anchor_score').innerText = '';
+    document.querySelector('#eval_chain_score').innerText = '';
+
+    // 2. 외관점검 지수 - 소계
+    document.querySelector('#eval_exterior_sum').innerText = '';
+
+
+    // 3. 사용연수 지수
+    document.querySelector('#eval_useyear').value = '';
+    document.querySelector('#eval_useyear').dataset.durable = ''; // 제트팬 내구 연수
+    document.querySelector('#eval_useyear_score').innerText = '';
+    document.querySelector('#eval_useyear_sum').innerText = '';
+    
+    // 4. 사용환경 지수
+    document.querySelector(`#eval_snow`).selectedIndex = selectedOption;
+    document.querySelector('#eval_snow_score').innerText = '';
+    document.querySelector('#eval_env_sum').innerText = '';
+    
+    // 점수합계
+    document.querySelector('#eval_score_sum').innerText = '';
+    document.querySelector('#eval_twenty').innerText = '';
+    document.querySelector('#eval_grade').innerText = '';
+}
+
 
 const getData = () => {
+    initData();
+
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
@@ -173,37 +290,6 @@ const getData = () => {
             document.querySelector('#eval_operate_sum').innerText = data.eval_operate_sum ?? '';
             
             
-            // 2. 외관점검 지수
-            const selectedOption = (data) => {
-                let index;
-                switch(data) {
-                    case '없음':
-                    case '양호':
-                    case '10일이하':
-                        index = 0;
-                        break;
-                    case '있음':
-                    case '불량':
-                    case '25%':
-                    case '11일이상':
-                        index = 1;
-                        break;
-                    case '50%':
-                    case '15일이상':
-                        index = 2;
-                        break;
-                    case '100%':
-                    case '19일이상':
-                        index = 3;
-                        break;
-                    case '천공_낙하물':
-                    case '22일이상':
-                        index = 4;
-                        break;
-                }
-                return index;
-            }
-            
             // 2. 외관점검 지수 - 콤보박스
             document.querySelector(`#eval_braidnoise`).selectedIndex = selectedOption(data.eval_braidnoise);
             document.querySelector(`#eval_braidbroken`).selectedIndex = selectedOption(data.eval_braidbroken);
@@ -258,7 +344,7 @@ const getData = () => {
                 });
             }
         
-        } else if(this.status == 406) {
+        } else if(this.status === 406) {
             Swal.fire({
                 title: '데이터 누락', 
                 text: '제트팬 정보가 존재하지 않습니다.',
@@ -266,12 +352,13 @@ const getData = () => {
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
             });
+
             return false;
             
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -711,6 +798,18 @@ const getGrade = () => {
 
 
 const inputData = () => {
+    if(document.querySelector('#tunn_name').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '데이터 조회 후 입력가능합니다.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;   
+    }
+
+
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
@@ -778,6 +877,8 @@ const inputData = () => {
         "eval_grade":document.querySelector('#eval_grade').textContent
     });
 
+    console.log('contents :>> ', contents);
+
     const data = {
         'jetfan_no': jetfan_no, 
         'year': year , 
@@ -792,25 +893,28 @@ const inputData = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data :>> ', data);
-            if(data.status.status_code === 200) {
-                changeCircleColor(1);
 
+            if(data.hasOwnProperty('err_msg')) {
                 Swal.fire({
-                    title: '입력성공', 
-                    text: '데이터가 정상적으로 입력되었습니다.',
-                    icon: 'success',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-            } else {
-                Swal.fire({
-                    title: '입력실패', 
-                    text: '데이터 입력에 실패하였습니다.',
+                    title: '데이터조회실패', 
+                    text: data.err_msg,
                     icon: 'warning',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
                 });
+                return false;
             }
+            
+            changeCircleColor(1);
+
+            Swal.fire({
+                title: '입력성공', 
+                text: '데이터가 정상적으로 입력되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+
         } else if(this.status == 406) {
             Swal.fire({
                 title: '데이터 누락', 
@@ -824,7 +928,7 @@ const inputData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)

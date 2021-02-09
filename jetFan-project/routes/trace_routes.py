@@ -9,8 +9,6 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-base_url = 'http://api.jetfan.ga:5005/'
-
 
 # 추적도면 GET
 # 추적도면 POST : 시설이력, 운전점검

@@ -68,6 +68,7 @@ app.add_url_rule('/create', view_func=CreateData.as_view('data_view'), methods=[
 app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET', 'POST'])
 app.add_url_rule('/test3', view_func=Test3.as_view('test3_view'), methods=['POST'])
 app.add_url_rule('/test4', view_func=Test4.as_view('test4_view'), methods=['POST'])
+# app.add_url_rule('/copy', view_func=Copy.as_view('copy_view'), methods=['POST'])
 
 
 

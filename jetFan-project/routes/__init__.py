@@ -1,9 +1,9 @@
 class Base_url:
-    url_api = 'http://api.jetfan.ga:5007/'
+    url_api = 'http://api.jetfan.ga:5005/'
     url_local = 'http://restx:5000/'
     url_local_old = 'http://restx-old:5000/'
 
-    want_url = 3
+    want_url = 1
     
     if want_url == 1:
         go_url = url_api

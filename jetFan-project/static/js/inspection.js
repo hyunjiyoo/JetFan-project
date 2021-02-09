@@ -102,7 +102,7 @@ const getData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -118,6 +118,17 @@ const getData = () => {
 
 
 const modifyData = (e) => {
+    
+    if(document.querySelector('#tunn_name').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '데이터 조회 후 입력가능합니다.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;   
+    }
 
     const data = {
         'data': [{
@@ -227,7 +238,7 @@ const modifyData = (e) => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)

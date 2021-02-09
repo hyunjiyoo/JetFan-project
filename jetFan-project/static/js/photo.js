@@ -156,7 +156,7 @@ const getData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -223,7 +223,7 @@ const getJetfan = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -303,7 +303,7 @@ const uploadFile = function() {
         } else {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -430,7 +430,7 @@ const addContent = (filename) => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -525,7 +525,7 @@ const deleteContent = (e) => {
             } else if(this.status === 500) {
                 Swal.fire({
                     title: '응답실패', 
-                    text: '서버응답에 실패하였습니다.',
+                    text: '해당 데이터가 없습니다.',
                     icon: 'warning',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
@@ -545,6 +545,18 @@ const deleteContent = (e) => {
 
 // 전체 데이터 반영 (PUT api 요청)
 const modifyData = () => {
+
+    if(document.querySelector('#tunnel_name').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '데이터 조회 후 입력가능합니다.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;   
+    }
+
 
     const tunn_code = document.querySelector('#tunnel').value;
     const year = document.querySelector('#year').value;
@@ -604,7 +616,7 @@ const modifyData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)

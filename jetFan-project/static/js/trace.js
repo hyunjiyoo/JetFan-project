@@ -145,7 +145,7 @@ const getData = () => {
         } else if(this.status == 406) {
             Swal.fire({
                 title: '데이터 누락', 
-                text: '터널 정보가 존재하지 않습니다.',
+                text: '제트팬 정보가 존재하지 않습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -155,7 +155,7 @@ const getData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -172,6 +172,18 @@ const getData = () => {
 
 // 현상태 점검현황 및 비고 데이터 입력/수정
 const inputData = () => {
+
+    if(document.querySelector('#tunn_name').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '데이터 조회 후 입력가능합니다.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;   
+    }
+
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
@@ -234,7 +246,7 @@ const inputData = () => {
         } else if(this.status == 406) {
             Swal.fire({
                 title: '데이터 누락', 
-                text: '터널 정보가 존재하지 않습니다.',
+                text: '제트팬 정보가 존재하지 않습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
@@ -244,7 +256,7 @@ const inputData = () => {
         } else if(this.status === 500) {
             Swal.fire({
                 title: '응답실패', 
-                text: '서버응답에 실패하였습니다.',
+                text: '해당 데이터가 없습니다.',
                 icon: 'warning',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)

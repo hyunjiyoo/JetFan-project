@@ -11,5 +11,6 @@ const nav_menu = function() {
 
 
 const auto_grow = (element) => {
+  element.style.height = '';
   element.style.height = (element.scrollHeight)+"px";
 }

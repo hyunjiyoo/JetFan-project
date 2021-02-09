@@ -4,8 +4,9 @@ from flask import render_template, request
 import requests, datetime
 import json
 
-
-base_url = 'http://api.jetfan.ga:5005/'
+from . import Base_url
+global base_url
+base_url = Base_url.go_url
 
 # 데이터생성 
 class Basic(MethodView):

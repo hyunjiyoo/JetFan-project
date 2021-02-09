@@ -284,7 +284,7 @@ const setTunnel = () => {
 // 터널선택시 제트팬세팅
 const setJetfan = () => {
     document.querySelector('#dept').selectedOptions[0].removeAttribute('selected');
-    signalInit(); searchInit(); init('branch'); init('jetfan_no'); init('jetfan_way');
+    signalInit(); init('branch'); init('jetfan_no'); init('jetfan_way');
 
     const data = { 
         'div': 'jetfan_no', 

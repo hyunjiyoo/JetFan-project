@@ -9,8 +9,6 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-base_url = 'http://api.jetfan.ga:5005/'
-
 
 class Inspection(MethodView):
 	def get(self):
@@ -42,7 +40,7 @@ class Inspection(MethodView):
 		inspect_r = requests.get(base_url + 'inspection/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no'])
 		inspect_result = json.loads(inspect_r.text)
 
-		if(inspect_result['status']['status_code'] == 200):
+		if(inspect_result['status']['status_code'] == 200 and inspect_result['status']['error_code'] == 0):
 			tunn_way1 = inspect_result['data'][0]['tunn_way1']
 			tunn_way2 = inspect_result['data'][0]['tunn_way2']
 			jetfan1_r = requests.get(base_url + 'jetfan-way/' + v['tunn_code'] + '/' + tunn_way1)
