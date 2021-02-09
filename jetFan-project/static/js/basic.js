@@ -113,6 +113,7 @@ const setTunnel = () => {
                 opt.innerText = data['tunn_name'][i];
                 opt.value = data['tunn_code'][i];
             }
+            
         } else if(this.status == 406) {
             Swal.fire({
                 title: '데이터 누락', 
@@ -138,10 +139,59 @@ const setTunnel = () => {
     xhttp.open("POST", "/basic", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(data));
+}
+
+
+// 데이터 생성시 이미지 복사 
+const copyImage = () => {
+    
+    const year = document.querySelectorAll('.year')[0].selectedOptions[0].textContent;
+    const data = {'year': year};
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(this.readyState === 4 && this.status === 200) {
+            const data = JSON.parse(this.responseText);
+            
+            if(data.succ === 200) {
+                Swal.fire({
+                    title: '데이터 생성 성공', 
+                    text: '데이터가 정상적으로 생성되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+            } 
+
+        } else if(this.status == 406) {
+            Swal.fire({
+                title: '데이터 누락', 
+                text: '제트팬 정보가 존재하지 않습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+            
+        } else if(this.status === 500) {
+            Swal.fire({
+                title: '응답실패', 
+                text: '해당 데이터가 없습니다.',
+                icon: 'warning',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+        }
     }
 
+    xhttp.open("POST", "/copyImage", true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(data));
+}
 
-    const createData = () => {
+
+const createData = () => {
     const div = document.querySelector('.active').dataset.div;
     const dept_code = document.querySelector('#div_depts').value;
     const tunn_code = document.querySelector('#tunns').value;
@@ -162,27 +212,21 @@ const setTunnel = () => {
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
+        if(this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
 
-            if(data['status']['status_code'] === 200) {
+            if(data.hasOwnProperty('err_msg')) {
                 Swal.fire({
-                title: '데이터생성 성공', 
-                text: '데이터가 정상적으로 생성되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
+                    title: '데이터생성실패', 
+                    text: data.err_msg,
+                    icon: 'warning',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
                 });
+                return false;
+            };
 
-            } else {
-                Swal.fire({
-                title: '데이터생성 실패', 
-                text: '데이터 생성에 실패하였습니다.',
-                icon: 'warning',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-                });
-            }
+            copyImage();
 
         } else if(this.status == 406) {
             Swal.fire({

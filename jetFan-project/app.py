@@ -7,10 +7,11 @@ from routes.apitest_routes import TestDept
 from routes.apitest_routes import TestJetfan
 from routes.apitest_routes import TestTunnel
 
-from routes.test2_routes import Test2, Test3, Test4
+from routes.test2_routes import Test2, Test3, Test4, Copy
 
 
-## Import routes
+# 로그인
+from routes.login_routes import Login
 # 콤보박스
 from routes.combo_routes import Combo
 # 평가표 Eval
@@ -24,7 +25,7 @@ from routes.abnormal_routes import Abnormal, Abupload
 # 사진첩 Photo
 from routes.photo_routes import Photo, Ptupload
 # 데이터생성 Data
-from routes.basic_routes import Basic, CreateData
+from routes.basic_routes import Basic, CreateData, CopyImage
 
 app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
@@ -39,6 +40,9 @@ app.add_url_rule('/test', view_func=TestTest.as_view('test_view'), methods=['GET
 app.add_url_rule('/dept', view_func=TestDept.as_view('dept_view'), methods=['GET'])
 app.add_url_rule('/jetfan', view_func=TestJetfan.as_view('jetfan_view'), methods=['GET'])
 app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods=['GET'])
+
+# 콤보박스
+app.add_url_rule('/login', view_func=Login.as_view('login'), methods=['GET'])
 
 # 콤보박스
 app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
@@ -63,12 +67,13 @@ app.add_url_rule('/ptupload', view_func=Ptupload.as_view('ptupload_view'), metho
 # 데이터생성
 app.add_url_rule('/basic', view_func=Basic.as_view('basic_view'), methods=['GET', 'POST'])
 app.add_url_rule('/create', view_func=CreateData.as_view('data_view'), methods=['POST'])
+app.add_url_rule('/copyImage', view_func=CopyImage.as_view('copy_view'), methods=['POST'])
 
 
 app.add_url_rule('/test2', view_func=Test2.as_view('test2_view'), methods=['GET', 'POST'])
 app.add_url_rule('/test3', view_func=Test3.as_view('test3_view'), methods=['POST'])
 app.add_url_rule('/test4', view_func=Test4.as_view('test4_view'), methods=['POST'])
-# app.add_url_rule('/copy', view_func=Copy.as_view('copy_view'), methods=['POST'])
+app.add_url_rule('/copy', view_func=Copy.as_view('copy2_view'), methods=['POST'])
 
 
 

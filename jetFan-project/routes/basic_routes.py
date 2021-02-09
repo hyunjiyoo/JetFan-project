@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import render_template, request
 
+import shutil, os
 import requests, datetime
 import json
 
@@ -98,3 +99,24 @@ class CreateData(MethodView):
 		else:
 			data['err_msg'] = result['status']['error_msg']
 			return json.dumps(data)
+
+
+class CopyImage(MethodView):
+	def post(self):
+		v = request.get_json()
+
+		if(v['year'] == ''):
+			return '데이터누락', 406
+
+		prev_year = str(int(v['year']) - 1)
+		curr_year = str(v['year'])
+
+		if(os.path.isdir('./static/data/abnormal/' + curr_year)):
+			pass
+		else:
+			shutil.copytree('./static/data/abnormal/' + prev_year, './static/data/abnormal/' + curr_year) 
+			shutil.copytree('./static/data/jetfan/' + prev_year, './static/data/jetfan/' + curr_year) 
+			shutil.copytree('./static/data/photo/' + prev_year, './static/data/photo/' + curr_year) 
+			shutil.copytree('./static/data/tunnel/' + prev_year, './static/data/tunnel/' + curr_year) 
+		
+		return json.dumps({'succ': 200})
