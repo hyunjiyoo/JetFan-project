@@ -4,11 +4,10 @@
                 <img style='width: 12%;' src="./img/user.png">
                 <span>LOGOUT</span>
             </button>
-            <button type='button' onclick='location.href="./"'>
+            <button id='home' type='button'>
                 <img src="./img/home.png">
                 <span>HOME</span>
             </button>
-            <!-- <button id='exit' type='button' value='종료 하시겠습니까?' onclick='Android.androidAlert(this.value);'> -->
             <button id='exit' type='button'>
                 <img src="./img/exit.png">
                 <span>EXIT</span>
@@ -61,9 +60,27 @@
     });
 
 
+    document.querySelector('#home').addEventListener('click', () => {
+        if(sessionStorage.length) {
+            location.href = './';
+
+        } else {
+            Swal.fire({
+                title: '사전점검', 
+                text: '로그인을 먼저 해주세요.',
+                icon: 'info',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            }).then(() => {
+                window.sessionStorage.clear();
+                location.href = './login';
+            });
+        }
+    });
+
+
     
     document.querySelector('#logout').addEventListener('click', () => {
-        alert(sessionStorage.length);
         if(sessionStorage.length) {
             if(confirm('로그아웃하시겠습니까?')) {
                 const xhttp = new XMLHttpRequest();
@@ -111,10 +128,10 @@
                 icon: 'info',
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
+            }).then(() => {
+                window.sessionStorage.clear();
+                location.href = './login';
             });
-            return false;
         }
     });
-
-    
 </script>

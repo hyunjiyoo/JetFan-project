@@ -47,6 +47,7 @@ def home():
         user['email'] = str(session.get('email')).strip("',")
         return render_template('./index.html', user=user)
     else:
+        session.clear()
         return render_template('./login.html')
 
 

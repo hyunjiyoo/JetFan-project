@@ -102,14 +102,17 @@ const login = () => {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
+            if(data.code === 200) {
+                sessionStorage.setItem('email', data['email']);
+                sessionStorage.setItem('username', data['username']);
+                sessionStorage.setItem('permission', data['permission']);
+                location.href = './';
 
-            console.log('data :>> ', data);
-            sessionStorage.setItem('email', data['email']);
-            sessionStorage.setItem('username', data['username']);
-            sessionStorage.setItem('permission', data['permission']);
-            location.href = './';
+            } else {
+                document.querySelector('#msg').innerText = '비밀번호가 일치하지 않습니다.';
+            }
 
-        } else if(this.status === 401) {
+        } else if(this.status === 500) {
             Swal.fire({
                 title: '로그인실패', 
                 text: '로그인 정보를 다시 확인해주세요.',

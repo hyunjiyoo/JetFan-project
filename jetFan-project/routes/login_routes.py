@@ -1,9 +1,8 @@
 from flask.views import MethodView
 from flask import render_template, request, session
 
-import datetime
 import requests
-import json
+import json, hashlib
 
 # from passlib.hash import sha256_crypt
 # import jwt
@@ -38,25 +37,25 @@ class Login(MethodView):
         r = requests.get(base_url + 'login/' + v['email'])
         result = json.loads(r.text)
 
-        # encrypted_pass = sha256_crypt.encrypt(v['passwd'])
-        # chk_passwd = sha256_crypt.verify(v['passwd'], result['data'][0]['passwd'])
+        hass_pass = hashlib.sha256(v['passwd'].encode()).hexdigest()
 
-        if(v['passwd'] == result['data'][0]['passwd']):
+        if(hass_pass == result['data'][0]['passwd']):
             session.clear()
             session['email'] = v['email']
             session['username'] = result['data'][0]['user_name'],
             session['permission'] = result['data'][0]['permission'],
 
-            session_data =  {
+            data =  {
+                'code': 200,
                 'email': v['email'],
                 'username': result['data'][0]['user_name'],
                 'permission': result['data'][0]['permission']
             }
 
-            return json.dumps(session_data)
+            return json.dumps(data)
         
         else:
-            return json.dumps({'msg': '비밀번호가 일치하지 않습니다.'})
+            return json.dumps({'code': 401})
 
 
 class Logout(MethodView):
