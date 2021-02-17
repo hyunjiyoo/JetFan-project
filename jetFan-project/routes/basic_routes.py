@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request
+from flask import render_template, request, session
 
 import shutil, os
 import requests, datetime
@@ -9,8 +9,12 @@ from . import Base_url
 global base_url
 base_url = Base_url.go_url
 
-# 데이터생성 
+
+# 데이터생성
 class Basic(MethodView):
+
+	# decorators = [login_required]
+
 	def get(self):
 		div_r = requests.get(base_url + 'division')
 		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
@@ -23,11 +27,17 @@ class Basic(MethodView):
 		year = datetime.date.today().year + 2
 		for i in range(year-2020):
 			years.append(year-i-1)
+		
+		if session.get('username') is not None:
+			emp = str(session.get('username')).strip("(',)")
+		else:
+			emp = ''
 
 		return render_template('basic.html', depts=depts,
 											 brans=brans,
 											 tunns=tunns,
-											 years= years)
+											 years= years,
+											 emp=emp)
 
 	def post(self):
 		v = request.get_json()

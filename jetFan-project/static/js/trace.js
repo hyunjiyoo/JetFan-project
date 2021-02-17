@@ -1,6 +1,10 @@
 window.onload = () => {
-    document.querySelector('#inputBtn').addEventListener('click', inputData);
-    document.querySelector('#year').addEventListener('change', changeYear);
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        document.querySelector('#inputBtn').addEventListener('click', inputData);
+        document.querySelector('#year').addEventListener('change', changeYear);
+    } 
 };
 
 // 콤보박스 연도 변경시 이벤트
@@ -69,7 +73,6 @@ const getData = () => {
             document.querySelector('#jetfan_name').innerText = data.eval.jetfan_no ?? '';
             document.querySelector('#jetfan_maker').innerText = data.eval.jetfan_maker ?? '';
             document.querySelector('#eval_emp').innerText = data.eval.eval_emp ?? '';
-            document.querySelector('#user').innerText = data.eval.eval_emp ?? '';
             document.querySelector('#eval_ymd').innerText = data.eval.eval_ymd ? data.eval.eval_ymd.split('T')[0] ?? '' : '';
             document.querySelector('#planImg img').src = './data/jetfan/' + data.eval.eval_year + '/' + data.eval.jetfan_diagram ??
                                                         'http://via.placeholder.com/100x100';

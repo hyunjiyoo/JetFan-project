@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, app
+from datetime import timedelta
+
 
 # Import routes (API test)
 from routes.apitest_routes import TestUser
@@ -11,7 +13,7 @@ from routes.test2_routes import Test2, Test3, Test4, Copy
 
 
 # 로그인
-from routes.login_routes import Login
+from routes.login_routes import Register, Login 
 # 콤보박스
 from routes.combo_routes import Combo
 # 평가표 Eval
@@ -30,9 +32,23 @@ from routes.basic_routes import Basic, CreateData, CopyImage
 app = Flask (__name__, static_url_path="", static_folder="static")
 app.config['JSON_AS_ASCII'] = False
 
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
+
+
 @app.route('/')
 def home():
-    return render_template('./index.html')
+    user = {}
+    if 'username' in session:
+        user['username'] = str(session.get('username')).strip("(',)")
+        user['email'] = str(session.get('email')).strip("',")
+        return render_template('./index.html', user=user)
+    else:
+        return render_template('./login.html')
+
 
 # API Test
 app.add_url_rule('/user', view_func=TestUser.as_view('user_view'), methods=['GET'])
@@ -41,8 +57,9 @@ app.add_url_rule('/dept', view_func=TestDept.as_view('dept_view'), methods=['GET
 app.add_url_rule('/jetfan', view_func=TestJetfan.as_view('jetfan_view'), methods=['GET'])
 app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods=['GET'])
 
-# 콤보박스
-app.add_url_rule('/login', view_func=Login.as_view('login'), methods=['GET'])
+# 로그인
+app.add_url_rule('/register', view_func=Register.as_view('register'), methods=['GET', 'POST'])
+app.add_url_rule('/login', view_func=Login.as_view('login'), methods=['GET', 'POST'])
 
 # 콤보박스
 app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])
@@ -77,7 +94,6 @@ app.add_url_rule('/copy', view_func=Copy.as_view('copy2_view'), methods=['POST']
 
 
 
-
-
 if __name__ == "__main__":
-	app.run(host='0.0.0.0',port=5000,debug=True)
+    app.secret_key = 'secret'
+    app.run(host='0.0.0.0',port=5000,debug=True)

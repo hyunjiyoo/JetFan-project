@@ -1,6 +1,10 @@
 window.onload = () => {
-
-    document.querySelector('#submitBtn').addEventListener('click', modifyData);
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        const submitBtn = document.querySelector('#submitBtn');
+        submitBtn.addEventListener('click', modifyData);
+    } 
 
     const accs = document.querySelectorAll(".accordion");
     accs.forEach( acc => {
@@ -13,7 +17,6 @@ window.onload = () => {
             } 
         });
     });
-
 }
 
 // 데이터 초기화
@@ -87,6 +90,7 @@ const getData = () => {
             }
             for(let i = 1; i < 6; i++) {
                 document.querySelector(`#ins_etc${i}`).value = data['ins'][`ins_etc${i}`] ?? '';
+                document.querySelector(`#ins_etc${i}`).style.height = document.querySelector(`#ins_etc${i}`).scrollHeight;;
             }          
 
         } else if(this.status == 406) {

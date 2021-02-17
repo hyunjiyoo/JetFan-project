@@ -1,106 +1,110 @@
 window.onload = () => {
-
-    const inputBtn = document.querySelector('#inputBtn');
-    inputBtn.addEventListener('click', inputData);
-
-    // 작동기능지수 *****************************************
-    // 진동
-    const eval_vibrates = document.querySelectorAll('.eval_vibrate');
-    eval_vibrates.forEach((vib) => {
-        vib.addEventListener('change', getvibration);
-    });
-
-    // 운전전류, 전압
-    const eval_amps = document.querySelectorAll('.eval_amp');
-    const eval_volt = document.querySelector('#eval_volt');
-    const eval_temp = document.querySelector('#eval_temp');
-    eval_volt.addEventListener('change', getAmp);
-    eval_temp.addEventListener('change', getAmp);
-    eval_amps.forEach((eval_amp) => {
-        eval_amp.addEventListener('change', getAmp);
-    });
-
-    // 베어링 온도
-    const eval_beartemp = document.querySelector('#eval_beartemp');
-    eval_beartemp.addEventListener('change', getBearTmp);
     
-    // 모터표면온도
-    const eval_motortemp = document.querySelector('#eval_motortemp');
-    eval_motortemp.addEventListener('change', getMotorTmp);
-
-    // 모터절연상태
-    const eval_motorinsul = document.querySelector('#eval_motorinsul');
-    eval_motorinsul.addEventListener('change', getMotorStatus);
-
-
-    // 외관점검지수 *****************************************
-    // 브레이드 이상음 발생여부
-    const eval_braidnoise = document.querySelector('#eval_braidnoise');
-    eval_braidnoise.addEventListener('change', () => {
-        yesOrNo('eval_braidnoise', 'eval_braidnoise_score');
-    });
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        const inputBtn = document.querySelector('#inputBtn');
+        inputBtn.addEventListener('click', inputData);
     
-    // 브레이드 파손여부
-    const eval_braidbroken = document.querySelector('#eval_braidbroken');
-    eval_braidbroken.addEventListener('change', () => {
-        yesOrNo('eval_braidbroken', 'eval_braidbroken_score');
-    });
-    
-    // 베어링 이상음 발생여부
-    const eval_bearnoise = document.querySelector('#eval_bearnoise');
-    eval_bearnoise.addEventListener('change', () => {
-        yesOrNo('eval_bearnoise', 'eval_bearnoise_score');
-    });
+        // 작동기능지수 *****************************************
+        // 진동
+        const eval_vibrates = document.querySelectorAll('.eval_vibrate');
+        eval_vibrates.forEach((vib) => {
+            vib.addEventListener('change', getvibration);
+        });
 
-    // 케이싱 카바 부식정도
-    const eval_casing = document.querySelector('#eval_casing');
-    eval_casing.addEventListener('change', getCasing);
+        // 운전전류, 전압
+        const eval_amps = document.querySelectorAll('.eval_amp');
+        const eval_volt = document.querySelector('#eval_volt');
+        const eval_temp = document.querySelector('#eval_temp');
+        eval_volt.addEventListener('change', getAmp);
+        eval_temp.addEventListener('change', getAmp);
+        eval_amps.forEach((eval_amp) => {
+            eval_amp.addEventListener('change', getAmp);
+        });
 
-    // 외관 충격 여부
-    const eval_exterior = document.querySelector('#eval_exterior');
-    eval_exterior.addEventListener('change', () => {
-        yesOrNo('eval_exterior', 'eval_exterior_score');
-    });
+        // 베어링 온도
+        const eval_beartemp = document.querySelector('#eval_beartemp');
+        eval_beartemp.addEventListener('change', getBearTmp);
+        
+        // 모터표면온도
+        const eval_motortemp = document.querySelector('#eval_motortemp');
+        eval_motortemp.addEventListener('change', getMotorTmp);
 
-    // 턴버클 부식
-    const eval_buckle = document.querySelector('#eval_buckle');
-    eval_buckle.addEventListener('change', () => {
-        goodOrBad('eval_buckle', 'eval_buckle_score');
-    });
-
-    // 아이볼트부식
-    const eval_eyebolt = document.querySelector('#eval_eyebolt');
-    eval_eyebolt.addEventListener('change', () => {
-        goodOrBad('eval_eyebolt', 'eval_eyebolt_score');
-    });
-
-    // 브라켓 체결상태
-    const eval_bracket = document.querySelector('#eval_bracket');
-    eval_bracket.addEventListener('change', () => {
-        goodOrBad('eval_bracket', 'eval_bracket_score');
-    });
-
-    // 앙카볼트 체결상태
-    const eval_anchor = document.querySelector('#eval_anchor');
-    eval_anchor.addEventListener('change', () => {
-        goodOrBad('eval_anchor', 'eval_anchor_score');
-    });
-
-    // 안전체인 체결상태
-    const eval_chain = document.querySelector('#eval_chain');
-    eval_chain.addEventListener('change', () => {
-        goodOrBad('eval_chain', 'eval_chain_score');
-    });
+        // 모터절연상태
+        const eval_motorinsul = document.querySelector('#eval_motorinsul');
+        eval_motorinsul.addEventListener('change', getMotorStatus);
 
 
-    // 사용연수지수 *****************************************
-    const eval_useyear = document.querySelector('#eval_useyear');
-    eval_useyear.addEventListener('change', getUseYear);
+        // 외관점검지수 *****************************************
+        // 브레이드 이상음 발생여부
+        const eval_braidnoise = document.querySelector('#eval_braidnoise');
+        eval_braidnoise.addEventListener('change', () => {
+            yesOrNo('eval_braidnoise', 'eval_braidnoise_score');
+        });
+        
+        // 브레이드 파손여부
+        const eval_braidbroken = document.querySelector('#eval_braidbroken');
+        eval_braidbroken.addEventListener('change', () => {
+            yesOrNo('eval_braidbroken', 'eval_braidbroken_score');
+        });
+        
+        // 베어링 이상음 발생여부
+        const eval_bearnoise = document.querySelector('#eval_bearnoise');
+        eval_bearnoise.addEventListener('change', () => {
+            yesOrNo('eval_bearnoise', 'eval_bearnoise_score');
+        });
+
+        // 케이싱 카바 부식정도
+        const eval_casing = document.querySelector('#eval_casing');
+        eval_casing.addEventListener('change', getCasing);
+
+        // 외관 충격 여부
+        const eval_exterior = document.querySelector('#eval_exterior');
+        eval_exterior.addEventListener('change', () => {
+            yesOrNo('eval_exterior', 'eval_exterior_score');
+        });
+
+        // 턴버클 부식
+        const eval_buckle = document.querySelector('#eval_buckle');
+        eval_buckle.addEventListener('change', () => {
+            goodOrBad('eval_buckle', 'eval_buckle_score');
+        });
+
+        // 아이볼트부식
+        const eval_eyebolt = document.querySelector('#eval_eyebolt');
+        eval_eyebolt.addEventListener('change', () => {
+            goodOrBad('eval_eyebolt', 'eval_eyebolt_score');
+        });
+
+        // 브라켓 체결상태
+        const eval_bracket = document.querySelector('#eval_bracket');
+        eval_bracket.addEventListener('change', () => {
+            goodOrBad('eval_bracket', 'eval_bracket_score');
+        });
+
+        // 앙카볼트 체결상태
+        const eval_anchor = document.querySelector('#eval_anchor');
+        eval_anchor.addEventListener('change', () => {
+            goodOrBad('eval_anchor', 'eval_anchor_score');
+        });
+
+        // 안전체인 체결상태
+        const eval_chain = document.querySelector('#eval_chain');
+        eval_chain.addEventListener('change', () => {
+            goodOrBad('eval_chain', 'eval_chain_score');
+        });
 
 
-    // 사용환경지수 *****************************************
-    const eval_snow = document.querySelector('#eval_snow');
-    eval_snow.addEventListener('change', getSnow);
+        // 사용연수지수 *****************************************
+        const eval_useyear = document.querySelector('#eval_useyear');
+        eval_useyear.addEventListener('change', getUseYear);
+
+
+        // 사용환경지수 *****************************************
+        const eval_snow = document.querySelector('#eval_snow');
+        eval_snow.addEventListener('change', getSnow);
+    }
 }
 
 // 2. 외관점검 지수

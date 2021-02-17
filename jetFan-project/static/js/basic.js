@@ -1,5 +1,9 @@
 window.onload = () => {
-    document.querySelector('#submitBtn').addEventListener('click', createData);
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        document.querySelector('#submitBtn').addEventListener('click', createData);
+    }
 }
 
 
@@ -77,6 +81,7 @@ const setBranch = () => {
 
     xhttp.open("POST", "/basic", true);
     xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.setRequestHeader('Authorization', localStorage.getItem('token'));
     xhttp.send(JSON.stringify(data));
 }
 

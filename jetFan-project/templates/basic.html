@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/basic.css') }}">
-<script src="{{ url_for('static', filename='js/basic.js') }}"></script>
+<script type='text/javascript' src="{{ url_for('static', filename='js/basic.js') }}"></script>
 
 {% include 'header.html' %}
 
@@ -37,7 +37,7 @@
 
                 <div class='item'>
                     <div>점검자</div>
-                    <div class='emp'>손정화</div>
+                    <div class='emp'>{{ emp }}</div>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
 
                 <div class='item'>
                     <div>점검자</div>
-                    <div class='emp'>손정화</div>
+                    <div class='emp'>{{ emp }}</div>
                 </div>
 
             </div>

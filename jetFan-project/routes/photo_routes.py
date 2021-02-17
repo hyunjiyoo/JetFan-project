@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request
+from flask import render_template, request, session
 from werkzeug.utils import secure_filename
 
 import datetime
@@ -26,10 +26,16 @@ class Photo(MethodView):
 		for i in range(year-2020):
 			years.append(year-i-1)
 
+		if session.get('username') is not None:
+			emp = str(session.get('username')).strip("(',)")
+		else:
+			emp = ''
+
 		return render_template('photo.html', depts=depts,
 											 brans=brans,
 											 tunns=tunns,
-											 years= years)
+											 years= years,
+											 emp=emp)
 
 	def post(self):
 		v = request.get_json()

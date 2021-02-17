@@ -1,9 +1,13 @@
 window.onload = () => {
-    document.querySelector('#addBtn').addEventListener('click', uploadFile);
-    document.querySelector('#submitBtn').addEventListener('click', modifyData);
-    document.querySelector('#myFile').addEventListener('change', showImg);
-    document.querySelector('#errPlusBtn').addEventListener('click', errAddContent);
-    document.querySelector('#chkPlusBtn').addEventListener('click', chkAddContent);
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        document.querySelector('#addBtn').addEventListener('click', uploadFile);
+        document.querySelector('#submitBtn').addEventListener('click', modifyData);
+        document.querySelector('#myFile').addEventListener('change', showImg);
+        document.querySelector('#errPlusBtn').addEventListener('click', errAddContent);
+        document.querySelector('#chkPlusBtn').addEventListener('click', chkAddContent);
+    } 
 }
 
 

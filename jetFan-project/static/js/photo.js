@@ -1,8 +1,13 @@
 window.onload = () => {
-    document.querySelector('#addBtn').addEventListener('click', uploadFile);
-    document.querySelector('#submitBtn').addEventListener('click', modifyData);
-    document.querySelector('#myFile').addEventListener('change', showImg);
-}
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        document.querySelector('#addBtn').addEventListener('click', uploadFile);
+        document.querySelector('#submitBtn').addEventListener('click', modifyData);
+        document.querySelector('#myFile').addEventListener('change', showImg);
+    }
+    
+} 
 
 const initData = () => {
     document.querySelector('#tunnel_name').innerText = '';

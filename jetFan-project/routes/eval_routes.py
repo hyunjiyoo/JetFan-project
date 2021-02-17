@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request
+from flask import render_template, request, session
 
 import datetime
 import requests
@@ -26,11 +26,17 @@ class Eval(MethodView):
 		for i in range(year-2020):
 			years.append(year-i-1)
 
+		if session.get('username') is not None:
+			emp = str(session.get('username')).strip("(',)")
+		else:
+			emp = ''
+
 		return render_template('evaluation.html', depts=depts,
 												  brans=brans,
 												  tunns=tunns,
 												  jetfans=jetfans, 
-												  years= years)
+												  years= years,
+												  emp=emp)
 	
 	def post(self):
 		value = request.get_json()
