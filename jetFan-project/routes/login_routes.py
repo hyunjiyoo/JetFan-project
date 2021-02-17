@@ -57,3 +57,9 @@ class Login(MethodView):
         
         else:
             return json.dumps({'msg': '비밀번호가 일치하지 않습니다.'})
+
+
+class Logout(MethodView):
+    def post(self):
+        session.clear()
+        return json.dumps({'code': 200})

@@ -13,7 +13,7 @@ from routes.test2_routes import Test2, Test3, Test4, Copy
 
 
 # 로그인
-from routes.login_routes import Register, Login 
+from routes.login_routes import Register, Login, Logout 
 # 콤보박스
 from routes.combo_routes import Combo
 # 평가표 Eval
@@ -60,6 +60,7 @@ app.add_url_rule('/tunnel', view_func=TestTunnel.as_view('tunnel_view'), methods
 # 로그인
 app.add_url_rule('/register', view_func=Register.as_view('register'), methods=['GET', 'POST'])
 app.add_url_rule('/login', view_func=Login.as_view('login'), methods=['GET', 'POST'])
+app.add_url_rule('/logout', view_func=Logout.as_view('logout'), methods=['POST'])
 
 # 콤보박스
 app.add_url_rule('/combo', view_func=Combo.as_view('combo'), methods=['POST'])

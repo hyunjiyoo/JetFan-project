@@ -1,14 +1,15 @@
     <footer>
         <div>
-            <button type='button'>
+            <button id='logout' type='button'>
                 <img style='width: 12%;' src="./img/user.png">
-                <span>USER</span>
+                <span>LOGOUT</span>
             </button>
             <button type='button' onclick='location.href="./"'>
                 <img src="./img/home.png">
                 <span>HOME</span>
             </button>
-            <button id='exit' type='button' value='종료 하시겠습니까?' onclick='Android.androidAlert(this.value);'>
+            <!-- <button id='exit' type='button' value='종료 하시겠습니까?' onclick='Android.androidAlert(this.value);'> -->
+            <button id='exit' type='button'>
                 <img src="./img/exit.png">
                 <span>EXIT</span>
             </button>
@@ -16,3 +17,104 @@
     </footer>
 </body>
 </html>
+
+<script>
+    document.querySelector('#exit').addEventListener('click', () => {
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let data = JSON.parse(this.responseText);
+
+                if(data.code === 200) {
+                    sessionStorage.clear();
+                    Android.androidAlert('종료 하시겠습니까?');
+
+                } else {
+                    Swal.fire({
+                        title: '로그아웃 실패', 
+                        text: '로그아웃을 다시 시도해주세요.',
+                        icon: 'info',
+                        confirmButtonText: '확인',
+                        onAfterClose: () => window.scrollTo(0,0)
+                    });
+                    return false;
+                }
+
+            } else if(this.status === 500) {
+                Swal.fire({
+                    title: '로그아웃 실패', 
+                    text: '로그아웃을 다시 시도해주세요.',
+                    icon: 'info',
+                    confirmButtonText: '확인',
+                    onAfterClose: () => window.scrollTo(0,0)
+                });
+                return false;
+                
+            } 
+        }
+
+        xhttp.open("POST", "/logout", true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify({}));
+
+    });
+
+
+    
+    document.querySelector('#logout').addEventListener('click', () => {
+        alert(sessionStorage.length);
+        if(sessionStorage.length) {
+            if(confirm('로그아웃하시겠습니까?')) {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        let data = JSON.parse(this.responseText);
+        
+                        if(data.code === 200) {
+                            window.sessionStorage.clear();
+                            location.href = './login';
+        
+                        } else {
+                            Swal.fire({
+                                title: '로그아웃 실패', 
+                                text: '로그아웃을 다시 시도해주세요.',
+                                icon: 'info',
+                                confirmButtonText: '확인',
+                                onAfterClose: () => window.scrollTo(0,0)
+                            });
+                            return false;
+                        }
+        
+                    } else if(this.status === 500) {
+                        Swal.fire({
+                            title: '로그아웃 실패', 
+                            text: '로그아웃을 다시 시도해주세요.',
+                            icon: 'info',
+                            confirmButtonText: '확인',
+                            onAfterClose: () => window.scrollTo(0,0)
+                        });
+                        return false;
+                        
+                    } 
+                }
+        
+                xhttp.open("POST", "/logout", true);
+                xhttp.setRequestHeader('Content-Type', 'application/json');
+                xhttp.send('');
+            }
+
+        } else {
+            Swal.fire({
+                title: '사전점검', 
+                text: '로그인을 먼저 해주세요.',
+                icon: 'info',
+                confirmButtonText: '확인',
+                onAfterClose: () => window.scrollTo(0,0)
+            });
+            return false;
+        }
+    });
+
+    
+</script>
