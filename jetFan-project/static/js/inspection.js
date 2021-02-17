@@ -134,6 +134,17 @@ const modifyData = (e) => {
         return false;   
     }
 
+    if(document.querySelector('#ins_ymd').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '평가표관리에서 점검일자를 입력해주세요.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false; 
+    }
+
     const data = {
         'data': [{
             "ins_tunn_code": document.querySelector('#tunnel').value,

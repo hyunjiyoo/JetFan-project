@@ -108,9 +108,9 @@ class Abnormal(MethodView):
 							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
 						except:
 							jetfanYmd.append('')
-					else:
-						data['err_msg'] = ymd_items['status']['error_msg']
-						return json.dumps(data)
+					# else:
+					# 	data['err_msg'] = ymd_items['status']['error_msg']
+					# 	return json.dumps(data)
 			else:
 				data['err_msg'] = jetfan1_result['status']['error_msg']
 				return json.dumps(data)
@@ -127,9 +127,9 @@ class Abnormal(MethodView):
 							jetfanYmd.append(ymd_items['data'][0]['eval_ymd'].split('T')[0])
 						except:
 							jetfanYmd.append('')
-					else:
-						data['err_msg'] = ymd_items['status']['error_msg']
-						return json.dumps(data)
+					# else:
+					# 	data['err_msg'] = ymd_items['status']['error_msg']
+					# 	return json.dumps(data)
 			
 				data['jetfan'] = jetfanArr
 				data['ymd'] = list(filter(None,set(jetfanYmd)))

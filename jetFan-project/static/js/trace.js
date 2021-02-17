@@ -17,6 +17,28 @@ const changeYear = () => {
 
 // 현상태점검현황, 비고데이터 초기화
 const initData = () => {
+    // 시설 이력
+    document.querySelector('#tunn_name').innerText = '';
+    document.querySelector('#way').innerText = '';
+    document.querySelector('#lane').innerText = '';
+    document.querySelector('#jetfan_name').innerText = '';
+    document.querySelector('#jetfan_maker').innerText = '';
+    document.querySelector('#eval_emp').innerText = '';
+    document.querySelector('#eval_ymd').innerText = '';
+    document.querySelector('#planImg img').src = 'http://via.placeholder.com/100x100';
+
+    // 운전 점검
+    document.querySelector('#eval_vibrate_y_1').innerText = '';
+    document.querySelector('#eval_vibrate_x_1').innerText = '';
+    document.querySelector('#eval_vibrate_z_1').innerText = '';
+    document.querySelector('#eval_vibrate_y_2').innerText = '';
+    document.querySelector('#eval_vibrate_x_2').innerText = '';
+    document.querySelector('#eval_vibrate_z_2').innerText = '';
+    document.querySelector('#eval_amp_r').innerText = '';
+    document.querySelector('#eval_amp_s').innerText = '';
+    document.querySelector('#eval_amp_t').innerText = '';
+    document.querySelector('#eval_volt').innerText = '';
+
     const tc_contents = document.querySelectorAll('#curStatusChk textarea');
     for(content of tc_contents) {
         content.value = '';
@@ -41,17 +63,20 @@ const initData = () => {
 
 // 콤보박스 아래 데이터 조회 버튼클릭 함수
 const getData = () => {
+
+    initData();
+
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
     const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
-
+    
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             console.log('data22222 :>> ', data);
-
+            
             if(data.hasOwnProperty('err_msg')) {
                 Swal.fire({
                     title: '데이터조회실패', 
@@ -64,7 +89,7 @@ const getData = () => {
             }
 
             changeCircleColor(data.update);
-            initData();
+            
 
             // 시설 이력
             document.querySelector('#tunn_name').innerText = data.eval.tunn_name ?? '';
@@ -186,6 +211,18 @@ const inputData = () => {
         });
         return false;   
     }
+
+    if(document.querySelector('#eval_ymd').textContent === '') {
+        Swal.fire({
+            title: '사전점검', 
+            text: '평가표관리에서 점검일자를 입력해주세요.',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        });
+        return false;   
+    }
+
 
     const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;

@@ -66,9 +66,9 @@ class Inspection(MethodView):
 							jetfan_ymd.append(ymd1_items['data'][0]['eval_ymd'].split('T')[0])
 						except:	
 							jetfan_ymd.append('')
-					else:
-						data['err_msg'] = ymd1_items['status']['error_msg']
-						return json.dumps(data)
+					# else:
+					# 	data['err_msg'] = ymd1_items['status']['error_msg']
+					# 	return json.dumps(data)
 			else:
 				data['err_msg'] = jetfan1_result['status']['error_msg']
 				return json.dumps(data)
@@ -83,9 +83,9 @@ class Inspection(MethodView):
 							jetfan_ymd.append(ymd2_items['data'][0]['eval_ymd'].split('T')[0])
 						except:	
 							jetfan_ymd.append('')
-					else:
-						data['err_msg'] = ymd2_items['status']['error_msg']
-						return json.dumps(data)
+					# else:
+					# 	data['err_msg'] = ymd2_items['status']['error_msg']
+					# 	return json.dumps(data)
 			else:
 				data['err_msg'] = jetfan2_result['status']['error_msg']
 				return json.dumps(data)

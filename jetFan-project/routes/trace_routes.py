@@ -66,9 +66,9 @@ class Trace(MethodView):
 					checkArr.append(item['tc_content'])
 				data['tc_content'] = checkArr
 				data['update'] = chk_result['data'][0]['tc_update']
-			else:
-				data['err_msg'] = chk_result['status']['error_msg']
-				return json.dumps(data)
+			# else:
+			# 	data['err_msg'] = chk_result['status']['error_msg']
+			# 	return json.dumps(data)
 
 
 			# 비고 (기능상태 등)
@@ -90,9 +90,9 @@ class Trace(MethodView):
 				data['noteCurYear'] = noteCurYear
 				data['noteOneYearAgo'] = noteOneYearAgo
 				data['noteTowYearAgo'] = noteTowYearAgo
-			else:
-				data['err_msg'] = note_result['status']['error_msg']
-				return json.dumps(data)
+			# else:
+			# 	data['err_msg'] = note_result['status']['error_msg']
+			# 	return json.dumps(data)
 		
 		else:
 			data['err_msg'] = eval_result['status']['error_msg']
