@@ -5,9 +5,21 @@ window.onload = () => {
         document.querySelector('#addBtn').addEventListener('click', uploadFile);
         document.querySelector('#submitBtn').addEventListener('click', modifyData);
         document.querySelector('#myFile').addEventListener('change', showImg);
+        
+    } else {
+        document.querySelector('#addBtn').addEventListener('click', disabledInputBtn);
     }
-    
 } 
+
+const resolveDelete = (button) => {
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        button.onclick = deleteContent;
+    } else {
+        button.onclick = disabledInputBtn;
+    }
+}
 
 const initData = () => {
     document.querySelector('#tunnel_name').innerText = '';
@@ -91,7 +103,8 @@ const getData = () => {
                     button.classList.add('delBtn');
                     button.setAttribute('id', 'btn'+data['ph_seq'][i]);
                     button.dataset.seq = data['ph_seq'][i];
-                    button.onclick = deleteContent;
+                    resolveDelete(button);
+
                     button.src = './img/minus.png';
                     img.classList.add('refImg');
                     img.setAttribute('id', 'img'+data['ph_seq'][i]);
@@ -121,7 +134,8 @@ const getData = () => {
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
                 button.src = './img/minus.png';
-                button.onclick = deleteContent;
+                resolveDelete(button);
+
                 img.classList.add('refImg');
                 img.src = 'http://via.placeholder.com/300x100';
                 input.setAttribute('id', 'input0');
@@ -404,7 +418,8 @@ const addContent = (filename) => {
             input.classList.add('refInput');
             button.classList.add('delBtn');
             button.dataset.seq = seq;
-            button.onclick = deleteContent;
+            resolveDelete(button);
+            // button.onclick = deleteContent;
             button.src = './img/minus.png';
             img.classList.add('refImg');
             img.setAttribute('src', img_path + file_name);
@@ -506,7 +521,8 @@ const deleteContent = (e) => {
                     input.classList.add('refInput');
                     button.classList.add('delBtn');
                     button.dataset.seq = 0;
-                    button.onclick = deleteContent;
+                    // button.onclick = deleteContent;
+                    resolveDelete(button);
                     button.src = './img/minus.png';
                     img.classList.add('refImg');
                     img.src = 'http://via.placeholder.com/300x100';
@@ -545,103 +561,4 @@ const deleteContent = (e) => {
     } else {
         console.log('삭제취소');
     }
-}
-
-
-// 전체 데이터 반영 (PUT api 요청)
-const modifyData = () => {
-
-    if(document.querySelector('#tunnel_name').textContent === '') {
-        Swal.fire({
-            title: '사전점검', 
-            text: '데이터 조회 후 입력가능합니다.',
-            icon: 'info',
-            confirmButtonText: '확인',
-            onAfterClose: () => window.scrollTo(0,0)
-        });
-        return false;   
-    }
-
-    
-    if(document.querySelector('#tunn_ymd').textContent === '') {
-        Swal.fire({
-            title: '사전점검', 
-            text: '평가표관리에서 점검일자를 입력해주세요.',
-            icon: 'info',
-            confirmButtonText: '확인',
-            onAfterClose: () => window.scrollTo(0,0)
-        });
-        return false;   
-    }
-
-
-    const tunn_code = document.querySelector('#tunnel').value;
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
-
-    const contents = [];
-    const comment = document.querySelectorAll('#photo .refInput');
-
-    comment.forEach((elem, i) => {
-        contents.push({'photo_seq': i+1,
-                       'photo_comment': elem.value });
-    });
-
-    console.log('contents :>> ', contents);
-
-    const data = {'tunn_code': tunn_code,
-                  'year': year,
-                  'year_no': year_no,
-                  'data': contents};
-
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            let data = JSON.parse(this.responseText);
-
-            if(data.hasOwnProperty('err_msg')) {
-                Swal.fire({
-                    title: '데이터입력실패', 
-                    text: data.err_msg,
-                    icon: 'warning',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-                return false;
-            }
-
-            changeCircleColor(1);
-
-            Swal.fire({
-                title: '입력성공', 
-                text: '데이터가 정상적으로 입력되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-            });
-
-        } else if(this.status == 406) {
-            Swal.fire({
-                title: '데이터 누락', 
-                text: '터널 정보가 존재하지 않습니다.',
-                icon: 'warning',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-            });
-            return false;
-            
-        } else if(this.status === 500) {
-            Swal.fire({
-                title: '응답실패', 
-                text: '해당 데이터가 없습니다.',
-                icon: 'warning',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-            });
-        }
-    }
-
-    xhttp.open("PUT", "/photo", true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(data));
 }

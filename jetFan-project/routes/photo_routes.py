@@ -160,24 +160,6 @@ class Photo(MethodView):
 				data['err_msg'] = result['status']['error_msg']
 			return json.dumps(data)
 
-	def put(self):
-		data = {}
-		v = request.get_json()
-
-		for prop_name in ['tunn_code', 'year', 'year_no']:
-			if(v[prop_name] == ''):
-				return '데이터누락', 406
-
-		url = base_url + 'photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']
-		r = requests.put(url, data=json.dumps(v['data']))
-		result = json.loads(r.text)
-
-		if(result['status']['status_code'] == 200 and result['status']['error_code'] == 0):
-			data['succ'] = 200
-		else:
-			data['err_msg'] = result['status']['error_msg']
-
-		return json.dumps(result)
 	
 	def delete(self):
 		data = {}

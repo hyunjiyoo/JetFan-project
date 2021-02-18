@@ -61,7 +61,7 @@
 
 
     document.querySelector('#home').addEventListener('click', () => {
-        if(sessionStorage.length) {
+        if(sessionStorage.length & location.pathname != '/login') {
             location.href = './';
 
         } else {

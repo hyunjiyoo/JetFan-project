@@ -35,7 +35,16 @@ const tunnelEnterKeyEvent = (() => {
 const searchTunnel = () => {
     // 아무것도 입력안하고 검색만 클릭했을때
     if(document.querySelector(`#tunn_search`).value === '') {
-        location.reload();
+        Swal.fire({
+            title: '검색실패', 
+            text: '검색어를 입력해주세요',
+            icon: 'info',
+            confirmButtonText: '확인',
+            onAfterClose: () => window.scrollTo(0,0)
+        }).then(() => {
+            location.reload();
+        });
+        return false;
     }
 
     signalInit(); init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');

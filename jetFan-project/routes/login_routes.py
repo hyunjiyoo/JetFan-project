@@ -29,6 +29,7 @@ class Register(MethodView):
 
 class Login(MethodView):
     def get(self):
+        session.clear()
         return render_template('login.html')
 
     def post(self):

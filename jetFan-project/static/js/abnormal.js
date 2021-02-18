@@ -7,7 +7,21 @@ window.onload = () => {
         document.querySelector('#myFile').addEventListener('change', showImg);
         document.querySelector('#errPlusBtn').addEventListener('click', errAddContent);
         document.querySelector('#chkPlusBtn').addEventListener('click', chkAddContent);
-    } 
+    } else {
+        document.querySelector('#addBtn').addEventListener('click', disabledInputBtn);
+        document.querySelector('#errPlusBtn').addEventListener('click', disabledInputBtn);
+        document.querySelector('#chkPlusBtn').addEventListener('click', disabledInputBtn);
+    }
+}
+
+const resolveDelete = (button) => {
+    const permission = parseInt(sessionStorage.permission);
+    const supervisor = displaySupervisor(permission);
+    if(!supervisor) {
+        button.onclick = deleteContent;
+    } else {
+        button.onclick = disabledInputBtn;
+    }
 }
 
 
@@ -130,7 +144,7 @@ const getData = () => {
                     button.classList.add('delBtn');
                     button.setAttribute('id', 'btn'+data['photo']['ap_seq'][i]);
                     button.dataset.seq = data['photo']['ap_seq'][i];
-                    button.onclick = deleteContent;
+                    resolveDelete(button);
                     img.classList.add('refImg');
                     img.setAttribute('id', 'img'+data['photo']['ap_seq'][i]);
                     input.value = data['photo']['ap_comment'][i];
@@ -172,7 +186,8 @@ const getData = () => {
                 button.src = './img/minus.png';
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
-                button.onclick = deleteContent;
+                // button.onclick = deleteContent;
+                resolveDelete(button);
                 img.classList.add('refImg');
                 img.src = 'http://via.placeholder.com/300x100';
                 input.setAttribute('id', 'input0');
@@ -467,7 +482,8 @@ const addContent = (filename) => {
                 input.classList.add('refInput');
                 button.classList.add('delBtn');
                 button.dataset.seq = seq;
-                button.onclick = deleteContent;
+                // button.onclick = deleteContent;
+                resolveDelete(button);
                 button.src = './img/minus.png';
                 img.classList.add('refImg');
                 img.setAttribute('src', img_path + file_name);

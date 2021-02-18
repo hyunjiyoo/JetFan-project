@@ -1,3 +1,8 @@
+window.onload = () => {
+    sessionStorage.clear();
+}
+
+
 const verify = (email, passwd, confirmPass = passwd) => {
     document.querySelector('#msg').innerText = '';
 
