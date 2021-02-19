@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/login.css') }}">
 <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/email.png') }}">
 <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/lock.png') }}">
+<link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/permission.png') }}">
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 
 {% include 'header.html' %}
@@ -8,9 +9,13 @@
 <div id='bg-box'></div>
 
 <div class='content-body'>
-    <div id='title-text'>REGISTER FOR JETFAN</div>
+    <div class='title-text' id='register-text'>REGISTER FOR JETFAN</div>
 
     <div id='login-box'>
+        <div>
+            <img src="./img/user.png">
+            <input type="text" id='name' placeholder='이름 입력' />
+        </div>
         <div>
             <img src="./img/email.png">
             <input type="email" id='email' placeholder='이메일 입력' />
@@ -22,6 +27,16 @@
         <div>
             <img src="./img/lock.png">
             <input type="password" id='confirmPasswd' maxlength="20" placeholder='비밀번호를 한번더 입력해주세요' />
+        </div>
+        <div>
+            <img src="./img/permission.png">
+            <div id='permission'>
+                <input type="radio" name="permitItem" id="inspector" value="0" checked>
+                <label for="inspector">점검자</label>
+                &nbsp;&nbsp;&nbsp;
+                <input type="radio" name="permitItem" id="supervisor" value="1">
+                <label for="supervisor">감독자</label>
+            </div>
         </div>
         <button id='registerBtn' onclick='register()'>등록</button>
         <div id='msg'></div>

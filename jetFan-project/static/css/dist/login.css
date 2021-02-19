@@ -8,13 +8,18 @@
   height: 100%;
   position: absolute;
 }
-.content-body #title-text {
+.content-body .title-text {
   font-size: 18pt;
   color: #2d669d;
   font-weight: bold;
   text-align: center;
-  margin-top: 45% !important;
   margin-bottom: 10px;
+}
+.content-body #login-text {
+  margin-top: 45% !important;
+}
+.content-body #register-text {
+  margin-top: 27% !important;
 }
 .content-body #login-box {
   display: flex;
@@ -26,13 +31,16 @@
   align-items: center;
   margin-top: 15px;
 }
-.content-body #login-box div input[type='email'] {
-  width: 230px;
-  height: 30px;
-}
+.content-body #login-box div input[type='text'],
+.content-body #login-box div input[type='email'],
 .content-body #login-box div input[type='password'] {
   width: 230px;
   height: 30px;
+}
+.content-body #login-box div #permission {
+  width: 230px;
+  height: 30px;
+  margin-top: 0;
 }
 .content-body #login-box div img {
   width: 18px;

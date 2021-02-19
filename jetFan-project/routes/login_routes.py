@@ -18,12 +18,19 @@ class Register(MethodView):
 
     def post(self):
         v = request.get_json()
-        # 이메일과 패스워드 받아서 DB에 INSERT하는 API 콜 
-        # v['email'], v['passwd']
 
-        # 콜 응답이 정상적으로 되면 return
-        return json.dumps({'code': 200})
-        # 정상이 아니면, 중복되면 중복코드 리턴
+        hass_pass = hashlib.sha256(v['passwd'].encode()).hexdigest()
+        login_info = [{
+                'passwd': hass_pass,
+                'permission': v['permission'],
+                'user_name': v['username']
+            }]
+
+        url = base_url + 'user/' + v['email']
+        r = requests.post(url, data=json.dumps(login_info))
+        result = json.loads(r.text)
+
+        return json.dumps(result)
 
 
 
@@ -35,7 +42,7 @@ class Login(MethodView):
     def post(self):
         v = request.get_json()
 
-        r = requests.get(base_url + 'login/' + v['email'])
+        r = requests.get(base_url + 'user/' + v['email'])
         result = json.loads(r.text)
 
         hass_pass = hashlib.sha256(v['passwd'].encode()).hexdigest()

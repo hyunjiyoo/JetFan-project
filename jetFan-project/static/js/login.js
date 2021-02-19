@@ -31,64 +31,77 @@ const verify = (email, passwd, confirmPass = passwd) => {
         document.querySelector('#msg').innerText = '비밀번호가 서로 다릅니다.';
         return false;
     }
+
+    return true;
 }
 
 
 const register = () => {
+    const username = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
     const passwd = document.querySelector('#passwd').value;
     const confirmPasswd = document.querySelector('#confirmPasswd').value;
+    const permissionItems = document.querySelectorAll('#permission input');
 
-    verify(email, passwd, confirmPasswd);
+    if(verify(email, passwd, confirmPasswd)) {
+        let permissionValue = 0;
+        permissionItems.forEach((items) => {
+            permissionValue = items.checked ? items.value : 0;
+        });
+        
+        const data = {
+            'username': username,
+            'email': email,
+            'passwd': passwd,
+            'permission':  permissionValue
+        };
 
-    const data = {
-        'email': email,
-        'passwd': passwd
-    };
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                const data = JSON.parse(this.responseText);
+                console.log('data :>> ', data);
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            const data = JSON.parse(this.responseText);
-            console.log('this.responseText :>> ', this.responseText);
+                if(data.data && data.status.status_code === 200) {
+                    Swal.fire({
+                        title: '등록성공', 
+                        text: data.status.msg,
+                        icon: 'success',
+                        confirmButtonText: '확인',
+                        onAfterClose: () => window.scrollTo(0,0)
+                    }).then(() => {
+                        location.href = './login';
+                    });
 
-            if(data.code === 200) {
-                Swal.fire({
-                    title: '등록성공', 
-                    text: '제트팬회원이 되신 것을 축하드립니다.',
-                    icon: 'success',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                }).then(() => {
-                    location.href = './login';
-                });
+                } else {
+                    console.log(data.status.error_msg);
+                    Swal.fire({
+                        title: '등록실패', 
+                        text: data.status.msg + ' 이미 존재하는 아이디입니다.',
+                        icon: 'info',
+                        confirmButtonText: '확인',
+                        onAfterClose: () => window.scrollTo(0,0)
+                    });
+                    return false;
+                }
 
-            } else {
+            } else if(this.status === 500) {
                 Swal.fire({
                     title: '등록실패', 
-                    text: '이미 존재하는 아이디 입니다.',
+                    text: '등록 정보를 다시 확인해주세요.',
                     icon: 'info',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
-                })
-            }
+                });
+                return false;
+                
+            } 
+        }
 
-        } else if(this.status === 500) {
-            Swal.fire({
-                title: '등록실패', 
-                text: '등록 정보를 다시 확인해주세요.',
-                icon: 'info',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-            });
-            return false;
-            
-        } 
+        xhttp.open("POST", "/register", true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(JSON.stringify(data));
     }
-
-    xhttp.open("POST", "/register", true);
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(data));
 }
 
 

@@ -12,13 +12,20 @@
 
 .content-body {
     
-    #title-text {
+    .title-text {
         font-size: 18pt;
         color: #2d669d;
         font-weight: bold;
         text-align: center;
-        margin-top: 45% !important;
         margin-bottom: 10px;
+    }
+    
+    #login-text {
+        margin-top: 45% !important;
+    }
+
+    #register-text {
+        margin-top: 27% !important;
     }
 
     #login-box {
@@ -31,20 +38,24 @@
             align-items: center;
             margin-top: 15px;
 
-            input[type='email'] {
-                width: 230px;
-                height: 30px;
-            }
-        
+            input[type='text'], 
+            input[type='email'],
             input[type='password'] {
                 width: 230px;
                 height: 30px;
             }
-        
+            
+            #permission {
+                width: 230px;
+                height: 30px;
+                margin-top: 0;
+            }
+
             img {
                 width: 18px;
                 margin-right: 13px;
             }
+            
         }
 
         #loginBtn, #registerBtn {
