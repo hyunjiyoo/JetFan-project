@@ -23,7 +23,6 @@
   width: 100%;
   font-size: 13pt;
 }
-#body-header table button#search,
 #body-header table button#select {
   background-color: #458eb0;
   color: #fff;
@@ -32,10 +31,76 @@
   height: 26px;
   cursor: pointer;
 }
-#body-header table button#search:hover,
 #body-header table button#select:hover {
   background-color: #3c72a6;
 }
 #body-header select {
   font-size: 13pt;
+}
+#body-header .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  margin-top: 13px;
+}
+#body-header .tab #signal {
+  float: right;
+  margin-top: 8px;
+  margin-right: 16px;
+}
+#body-header .tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  border-right: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 7px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  color: #2d669d;
+  font-weight: bold;
+}
+#body-header .tab button:hover {
+  background-color: #ddd;
+}
+#body-header .tab button.active {
+  background-color: #ccc;
+}
+#body-header .tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+#body-header .container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 10px 5px;
+  width: 100%;
+}
+#body-header .container form {
+  display: flex;
+}
+#body-header .container #comboItems {
+  margin-left: 10px;
+  width: 26%;
+}
+#body-header .container #comboItems select {
+  width: 100%;
+  margin-top: 10px;
+}
+#body-header .container button#searchSelect {
+  background-color: #458eb0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 26px;
+  width: 100%;
+  font-size: 13pt;
+  cursor: pointer;
+}
+#body-header .container button#searchSelect:hover {
+  background-color: #3c72a6;
 }

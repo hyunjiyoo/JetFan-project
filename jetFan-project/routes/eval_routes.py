@@ -12,10 +12,12 @@ base_url = Base_url.go_url
 # 평가표 
 class Eval(MethodView):
 	def get(self):
+		all_tunn_r = requests.get(base_url + 'tunnel/')
 		div_r = requests.get(base_url + 'division')
 		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
 		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
 		jetfan_r = requests.get(base_url + 'jetfan-way/101/일산')
+		all_tunns = json.loads(all_tunn_r.text)
 		depts = json.loads(div_r.text)
 		brans = json.loads(bran_r.text)
 		tunns = json.loads(tunn_r.text)
@@ -31,12 +33,14 @@ class Eval(MethodView):
 		else:
 			emp = ''
 
-		return render_template('evaluation.html', depts=depts,
-												  brans=brans,
-												  tunns=tunns,
-												  jetfans=jetfans, 
-												  years= years,
-												  emp=emp)
+		return render_template('evaluation.html', 
+												all_tunns=all_tunns,
+												depts=depts,
+												brans=brans,
+												tunns=tunns,
+												jetfans=jetfans, 
+												years= years,
+												emp=emp)
 	
 	def post(self):
 		value = request.get_json()

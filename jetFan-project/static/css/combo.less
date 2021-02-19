@@ -28,7 +28,7 @@
             font-size: @basic-font;
         }
 
-        button#search, button#select {
+        button#select {
             background-color: #458eb0;
             color: #fff;
             border: none;
@@ -43,5 +43,84 @@
 
     select {
         font-size: @basic-font;
+    }
+
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        margin-top: 13px;
+
+        #signal {
+            float: right;
+            margin-top: 8px;
+            margin-right: 16px;
+        }
+    }
+    
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        border-right: 1px solid #ccc;
+        outline: none;
+        cursor: pointer;
+        padding: 7px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+        color: #2d669d;
+        font-weight: bold;
+    }
+    
+    .tab button:hover {
+        background-color: #ddd;
+    }
+    
+    .tab button.active {
+        background-color: #ccc;
+    }
+    
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    .container {
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 500px;
+        padding: 10px 5px;
+        width: 100%;
+
+        form {
+            display: flex;
+        }
+
+        #comboItems {
+            margin-left: 10px;
+            width: 26%;
+
+            select {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        button#searchSelect {
+            background-color: #458eb0;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            height: 26px;
+            width: 100%;
+            font-size: @basic-font;
+            cursor: pointer;
+            &:hover {
+                background-color: #3c72a6;
+            }
+        }
     }
 }

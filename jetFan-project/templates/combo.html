@@ -1,99 +1,190 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/combo.css') }}">
-<script async src="{{ url_for('static', filename='js/combo.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dist/multi.css') }}">
+<script src="{{ url_for('static', filename='js/combo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/multi.js') }}"></script>
 
 <div id='body-header'>
-    <table>
-        <tr>
-            <td colspan=2>
-                <input id='tunn_search' type="text" placeholder="터널명 입력">
-            </td>
-            <td>
-                <button type='button' id='search' onclick='searchTunnel()'>검색</button>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <select name="year" id="year" data-div='eval_year'>
-                    {% for year in years %}
-                    <option>{{ year }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select id="update">
-                    <option value="0">차수</option>
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-            </td>
-            <td >
-                <span id='greenCircle' style='color: green;'><b>○</b></span>
-                <span id='redCircle' style='color: red;'><b>○</b></span>
-                <span id='user'>{{ emp }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <select name="dept" id="dept" onchange='setBranch()'>
-                    {% for dept in depts['data'] %}
-                    <option value="{{ dept['div_code'] }}">
-                        {{ dept['div_name'] }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select name="branch" id="branch" onchange='setTunnel()'>
-                    {% for bran in brans['data'] %}
-                    <option value="{{ bran['bran_code'] }}">
-                        {{ bran['bran_name'] }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select name="tunnel" id="tunnel" onchange='setJetfan()'>
-                    {% for tunn in tunns['data'] %}
-                        {% if(tunn['tunn_name'] == '수리') %}
-                        <option value="{{ tunn['tunn_code'] }}" selected>{{ tunn['tunn_name'] }}</option>
-                        {% else %}
-                        <option value="{{ tunn['tunn_code'] }}">{{ tunn['tunn_name'] }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-                <span hidden id='tunnClick'></span>
-            </td>
+    
+    <div class="tab">
+        <button class="tablinks active" onclick="tabCombo(event, 'Combo')">선택</button>
+        <button class="tablinks" onclick="tabCombo(event, 'Search')">검색</button>
+        <div id='signal'>
+            <span id='user' style='font-size: 11pt;'>{{ emp }}</span>
+            <span id='greenCircle' style='color: green;'><b>○</b></span>
+            <span id='redCircle' style='color: red;'><b>○</b></span>
+        </div>
+    </div>
+    
+    <div id="Combo" class="tabcontent" style='display: block;'>
+        <table>
+            <tr>
+                <td>
+                    <select name="year" id="year" data-div='eval_year'>
+                        {% for year in years %}
+                        <option>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select id="update">
+                        <option value="0">차수</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select name="dept" id="dept" onchange='setBranch()'>
+                        {% for dept in depts['data'] %}
+                        <option value="{{ dept['div_code'] }}">
+                            {{ dept['div_name'] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select name="branch" id="branch" onchange='setTunnel()'>
+                        {% for bran in brans['data'] %}
+                        <option value="{{ bran['bran_code'] }}">
+                            {{ bran['bran_name'] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select name="tunnel" id="tunnel" onchange='setJetfan()'>
+                        {% for tunn in tunns['data'] %}
+                            {% if(tunn['tunn_name'] == '수리') %}
+                            <option value="{{ tunn['tunn_code'] }}" selected>{{ tunn['tunn_name'] }}</option>
+                            {% else %}
+                            <option value="{{ tunn['tunn_code'] }}">{{ tunn['tunn_name'] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <span hidden id='tunnClick'></span>
+                </td>
+                
+            </tr>
+            <tr>
+                {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
+                <td>
+                    <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
+                        <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
+                        <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
+                    </select>
+                </td>
+    
+                <td>
+                    <select name="jetfan_no" id="jetfan_no">
+                        {% for jetfan in jetfans['data'] %}
+                        <option value="{{ jetfan['jetfan_code'] }}">
+                            {{ jetfan['jetfan_no'] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+    
+                <td>
+                    <button type='button' id='select' onclick='getData()'>데이터 조회</button>
+                </td>
+                {% else %}
+                <td colspan=3>
+                    <button type='button' id='select' onclick='getData()'>데이터 조회</button>
+                </td>
+                {% endif %}
+            </tr>
             
-        </tr>
-        <tr>
-            {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
-            <td>
-                <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
-                    <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
-                    <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
-                </select>
-            </td>
+        </table>
+    </div>
+    
+    <div id="Search" class="tabcontent">
+        <!-- <table>
+            <tr>
+                <td colspan=2>
+                    <input id='tunn_search' type="text" placeholder="터널명 입력">
+                </td>
+                <td>
+                    <button type='button' id='search' onclick='searchTunnel()'>검색</button>
+                </td>
+            </tr>
+        </table> -->
 
-            <td>
-                <select name="jetfan_no" id="jetfan_no">
-                    {% for jetfan in jetfans['data'] %}
-                    <option value="{{ jetfan['jetfan_code'] }}">
-                        {{ jetfan['jetfan_no'] }}
-                    </option>
+        <div class='container'>
+            <form>
+                <select
+                    required
+                    multiple="multiple"
+                    name="favorite_fruits"
+                    id="tunnel_select"
+                >
+                    {% for tunn in all_tunns['data'] %}
+                    <option value="{{ tunn['tunn_code'] }}">{{ tunn['div_name'] }} {{ tunn['bran_name'] }} {{ tunn['tunn_name'] }}</option>
                     {% endfor %}
                 </select>
-            </td>
+                
+                <div id='comboItems'>
+                    <select name="year" id="year" data-div='eval_year'>
+                        {% for year in years %}
+                        <option>{{ year }}</option>
+                        {% endfor %}
+                    </select>
 
-            <td>
-                <button type='button' id='select' onclick='getData()'>데이터 조회</button>
-            </td>
-            {% else %}
-            <td colspan=3>
-                <button type='button' id='select' onclick='getData()'>데이터 조회</button>
-            </td>
-            {% endif %}
-        </tr>
+                    <select id="update">
+                        <option value="0">차수</option>
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+
+
+                    {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
+                        <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
+                            <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
+                            <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
+                        </select>
         
-    </table>
+                        <select name="jetfan_no" id="jetfan_no">
+                            {% for jetfan in jetfans['data'] %}
+                            <option value="{{ jetfan['jetfan_code'] }}">
+                                {{ jetfan['jetfan_no'] }}
+                            </option>
+                            {% endfor %}
+                        </select>
+       
+                    {% else %}
+                        <select style='background: #ccc;' disabled>
+                            <option>해당없음</option>
+                        </select>
+                        <select style='background: #ccc;' disabled>
+                            <option>해당없음</option>
+                        </select>
+                    {% endif %}
+
+                </div>
+            
+            </form>
+
+
+            <button type="button" id='searchSelect' onclick='getData()'>데이터조회</button>
+        </div>
+    </div>
+
+
+    <script>
+        const select = document.getElementById("tunnel_select");
+            multi(select, {
+                'limit': 1,
+                "search_placeholder": "키워드를 입력해주세요",
+                enable_search: true,
+                "non_selected_header": null,
+                "selected_header": null,
+                "hide_empty_groups": true
+
+            });
+    </script>
+
+
+
 </div>

@@ -1,3 +1,20 @@
+
+const tabCombo = (evt, comboOpt) => {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(comboOpt).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+
+
 // 초기화
 const init = (target) => {
     const opt = document.querySelectorAll(`#${target} option`);
@@ -13,41 +30,41 @@ const signalInit = () => {
     document.querySelector('#redCircle').innerText = '○';
 }
 
-// 터널검색 초기화
-const searchInit = () => {
-    document.querySelector('#tunn_search').value = '';
-}
+// // 터널검색 초기화
+// const searchInit = () => {
+//     document.querySelector('#tunn_search').value = '';
+// }
 
 
-// 터널명 입력했을 때 엔터키로 검색 클릭
-const tunnelEnterKeyEvent = (() => {
-    document.querySelector('#tunn_search').addEventListener('keypress', (e) => {
-        if(e.keyCode === 13) {
-            e.preventDefault();
-            searchTunnel();
-        }
-    });
-})();
+// // 터널명 입력했을 때 엔터키로 검색 클릭
+// const tunnelEnterKeyEvent = (() => {
+//     document.querySelector('#tunn_search').addEventListener('keypress', (e) => {
+//         if(e.keyCode === 13) {
+//             e.preventDefault();
+//             searchTunnel();
+//         }
+//     });
+// })();
 
 
 
 // 터널명 검색했을때 터널 가져오기
 const searchTunnel = () => {
-    // 아무것도 입력안하고 검색만 클릭했을때
-    if(document.querySelector(`#tunn_search`).value === '') {
-        Swal.fire({
-            title: '검색실패', 
-            text: '검색어를 입력해주세요',
-            icon: 'info',
-            confirmButtonText: '확인',
-            onAfterClose: () => window.scrollTo(0,0)
-        }).then(() => {
-            location.reload();
-        });
-        return false;
-    }
+//     // 아무것도 입력안하고 검색만 클릭했을때
+//     if(document.querySelector(`#tunn_search`).value === '') {
+//         Swal.fire({
+//             title: '검색실패', 
+//             text: '검색어를 입력해주세요',
+//             icon: 'info',
+//             confirmButtonText: '확인',
+//             onAfterClose: () => window.scrollTo(0,0)
+//         }).then(() => {
+//             location.reload();
+//         });
+//         return false;
+//     }
 
-    signalInit(); init('dept'); init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');
+    signalInit();
 
     const tunn_search = document.querySelector('#tunn_search').value;
     const data = { 'div_code': tunn_search, 'div': 'tunn_search'};
@@ -56,90 +73,80 @@ const searchTunnel = () => {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.responseText);
             
-            if(data.hasOwnProperty('err_msg')) {
-                Swal.fire({
-                    title: '데이터조회실패', 
-                    text: data.err_msg,
-                    icon: 'warning',
-                    confirmButtonText: '확인',
-                    onAfterClose: () => window.scrollTo(0,0)
-                });
-                return false;
+//             if(data.hasOwnProperty('err_msg')) {
+//                 Swal.fire({
+//                     title: '데이터조회실패', 
+//                     text: data.err_msg,
+//                     icon: 'warning',
+//                     confirmButtonText: '확인',
+//                     onAfterClose: () => window.scrollTo(0,0)
+//                 });
+//                 return false;
 
-            } else {
-                // 본부
-                const dept = document.querySelector('#dept');
-                for(let i = 0; i < data['div_code'].length; i++) {
-                    let opt = document.createElement('option');
-                    dept.appendChild(opt);
-                    opt.innerText = data['div_name'][i];
-                    opt.value = data['div_code'][i];
-                    if(data['div_code'][i] === data['tunn_div_code']) {
-                        opt.selected = true;
-                    }
-                }
+//             } else {
+//                 // 본부
+//                 const dept = document.querySelector('#dept');
+//                 for(let i = 0; i < data['div_code'].length; i++) {
+//                     let opt = document.createElement('option');
+//                     dept.appendChild(opt);
+//                     opt.innerText = data['div_name'][i];
+//                     opt.value = data['div_code'][i];
+//                     if(data['div_code'][i] === data['tunn_div_code']) {
+//                         opt.selected = true;
+//                     }
+//                 }
 
                 
-                // 지사
-                const bran = document.querySelector('#branch');
-                for(let i = 0; i < data['bran_code'].length; i++) {
-                    let opt = document.createElement('option');
-                    bran.appendChild(opt);
-                    opt.innerText = data['bran_name'][i];
-                    opt.value = data['bran_code'][i];
-                    if(data['bran_code'][i] === data['tunn_bran_code']) {
-                        opt.selected = true;
-                    }
-                }
+//                 // 지사
+//                 const bran = document.querySelector('#branch');
+//                 for(let i = 0; i < data['bran_code'].length; i++) {
+//                     let opt = document.createElement('option');
+//                     bran.appendChild(opt);
+//                     opt.innerText = data['bran_name'][i];
+//                     opt.value = data['bran_code'][i];
+//                     if(data['bran_code'][i] === data['tunn_bran_code']) {
+//                         opt.selected = true;
+//                     }
+//                 }
 
 
-                // 터널
-                for(let i = 0; i < data['tunn_code'].length; i++) {
-                    let opt = document.createElement('option');
-                    document.querySelector('#tunnel').appendChild(opt);
-                    opt.innerText = data['tunn_name'][i];
-                    opt.value = data['tunn_code'][i];
-                }
+//                 // 터널
+//                 for(let i = 0; i < data['tunn_code'].length; i++) {
+//                     let opt = document.createElement('option');
+//                     document.querySelector('#tunnel').appendChild(opt);
+//                     opt.innerText = data['tunn_name'][i];
+//                     opt.value = data['tunn_code'][i];
+//                 }
 
-                const path = window.location.pathname;
-                if(path === '/evaluation' || path === '/trace') {
-                    // 방향
-                    let opt1 = document.createElement('option');
-                    let opt2 = document.createElement('option');
-                    document.querySelector(`#jetfan_way`).appendChild(opt1);
-                    document.querySelector(`#jetfan_way`).appendChild(opt2);
-                    opt1.innerText = data['tunn_way1'];
-                    opt2.innerText = data['tunn_way2'];
+//                 const path = window.location.pathname;
+//                 if(path === '/evaluation' || path === '/trace') {
+//                     // 방향
+//                     let opt1 = document.createElement('option');
+//                     let opt2 = document.createElement('option');
+//                     document.querySelector(`#jetfan_way`).appendChild(opt1);
+//                     document.querySelector(`#jetfan_way`).appendChild(opt2);
+//                     opt1.innerText = data['tunn_way1'];
+//                     opt2.innerText = data['tunn_way2'];
         
-                    // 제트팬
-                    for(let i = 0; i < data['jetfan_code'].length; i++) {
-                        let opt = document.createElement('option');
-                        document.querySelector(`#jetfan_no`).appendChild(opt);
-                        opt.innerText = data['jetfan_no'][i];
-                        opt.value = data['jetfan_code'][i];
-                    }
-                }
-
-                // 터널 콤보박스 클릭이벤트 넣어줘야함.
-                // 모달창 띄워서 비슷한 효과
-                // document.querySelector('#tunnClick').addEventListener('mousedown', function(event) {
-                //     var evt = event;
-                //     setTimeout(() => {
-                //         document.querySelector('#tunnel').dispatchEvent(evt);
-                //     });
-                // });
-                // document.querySelector('#tunnClick').click();
-            }
+//                     // 제트팬
+//                     for(let i = 0; i < data['jetfan_code'].length; i++) {
+//                         let opt = document.createElement('option');
+//                         document.querySelector(`#jetfan_no`).appendChild(opt);
+//                         opt.innerText = data['jetfan_no'][i];
+//                         opt.value = data['jetfan_code'][i];
+//                     }
+//                 }
+//             }
             
 
-        } else if(this.status === 500) {
-            Swal.fire({
-                title: '검색실패', 
-                text: '해당 데이터가 존재하지 않습니다.',
-                icon: 'warning',
-                confirmButtonText: '확인',
-                onAfterClose: () => window.scrollTo(0,0)
-            });
+//         } else if(this.status === 500) {
+//             Swal.fire({
+//                 title: '검색실패', 
+//                 text: '해당 데이터가 존재하지 않습니다.',
+//                 icon: 'warning',
+//                 confirmButtonText: '확인',
+//                 onAfterClose: () => window.scrollTo(0,0)
+//             });
         }
     }
 
@@ -151,7 +158,7 @@ const searchTunnel = () => {
 
 // 본부선택시 지사세팅
 const setBranch = () => {
-    signalInit(); searchInit(); 
+    signalInit();
     init('branch'); init('tunnel'); init('jetfan_no'); init('jetfan_way');
 
     const data = { 'div_code': document.querySelector(`#dept`).value, 'div': 'branch'};
@@ -227,7 +234,7 @@ const setBranch = () => {
 
 // 지사선택시 터널세팅
 const setTunnel = () => {
-    signalInit(); searchInit(); init('tunnel'); init('jetfan_way'); init('jetfan_no');
+    signalInit(); init('tunnel'); init('jetfan_way'); init('jetfan_no');
 
     const data = { 'div_code': document.querySelector(`#branch`).value, 'div': 'tunnel'};
     
@@ -369,7 +376,7 @@ const setJetfan = () => {
 
 // 방향 클릭했을때 제트팬 가져오기
 const clickWay = () => {
-    signalInit(); searchInit(); init('jetfan_no');
+    signalInit(); init('jetfan_no');
     
     const data = { 
         'tunn_code': document.querySelector(`#tunnel`).value, 
