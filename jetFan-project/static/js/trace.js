@@ -66,15 +66,20 @@ const getData = () => {
 
     initData();
 
-    let jetfan_no = 0;
+    let data = {};
     if(document.querySelector('.tab button.active').textContent === '검색') {
-        jetfan_no = document.querySelector('#search_jetfan_no').value;
+        data = { 
+            'jetfan_no': document.querySelector('#search_jetfan_no').value, 
+            'year': document.querySelector('#search_year').value, 
+            'year_no': document.querySelector('#search_update').value 
+        };
     } else {
-        jetfan_no = document.querySelector('#jetfan_no').value;
+        data = { 
+            'jetfan_no': document.querySelector('#jetfan_no').value, 
+            'year': document.querySelector('#year').value, 
+            'year_no': document.querySelector('#update').value 
+        };
     }
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
-    const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };
     
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

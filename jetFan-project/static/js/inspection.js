@@ -45,19 +45,20 @@ const initData = () => {
 const getData = () => {
     initData();
 
-    let tunn_code = 0;
+    let data = {};
     if(document.querySelector('.tab button.active').textContent === '검색') {
-        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+        data = {
+            'tunn_code': document.querySelector('.non-selected-wrapper a.selected').dataset.value,
+            'year': document.querySelector('#search_year').value, 
+            'year_no': document.querySelector('#search_update').value
+        };
     } else {
-        tunn_code = document.querySelector('#tunnel').value;
+        data = {
+            'tunn_code': document.querySelector('#tunnel').value,
+            'year': document.querySelector('#year').value, 
+            'year_no': document.querySelector('#update').value
+        };
     }
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
-    const data = {
-        'tunn_code': tunn_code,
-        'year': year,
-        'year_no': year_no
-    };
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
