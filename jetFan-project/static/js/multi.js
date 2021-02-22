@@ -249,6 +249,62 @@ var multi = (function() {
       wrapper.addEventListener("click", function(event) {
         if (event.target.getAttribute("multi-index")) {
           toggle_option(select, event, settings);
+
+          // 초기화
+          const init = (target) => {
+            const opt = document.querySelectorAll(`#${target} option`);
+            if(opt.length) {
+              for(let i = opt.length-1; i >= 0; i--) {
+                  opt[i].remove();
+              }
+            }
+          }
+
+          signalInit();
+          init('search_jetfan_no'); init('search_jetfan_way');
+          if(document.querySelector('.non-selected-wrapper a.selected') !== null) {
+
+            const tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+            console.log('tunn_code :>> ', tunn_code);
+            const data = { 'tunn_code': tunn_code, 'div': 'tunn_search'};
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState === 4 && this.status === 200) {
+                let data = JSON.parse(this.responseText);
+                console.log('data :>> ', data);
+  
+                const path = window.location.pathname;
+                if(path === '/evaluation' || path === '/trace') {
+                  // 방향
+                  let opt1 = document.createElement('option');
+                  let opt2 = document.createElement('option');
+                  document.querySelector(`#search_jetfan_way`).appendChild(opt1);
+                  document.querySelector(`#search_jetfan_way`).appendChild(opt2);
+                  opt1.innerText = data['tunn_way1'];
+                  opt2.innerText = data['tunn_way2'];
+      
+                  // 제트팬
+                  for(let i = 0; i < data['jetfan_code'].length; i++) {
+                      let opt = document.createElement('option');
+                      document.querySelector(`#search_jetfan_no`).appendChild(opt);
+                      opt.innerText = data['jetfan_no'][i];
+                      opt.value = data['jetfan_code'][i];
+                  }
+                }
+              }
+            }
+  
+            xhttp.open("POST", "/combo", true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify(data));
+          } else {
+            // alert('이미 체크되어있는 터널이 존재합니다.');
+            // let opts = Object.values(document.querySelectorAll('#tunnel_select option'));
+            // const selectedOpt = opts.filter((opt) => { if(opt.disabled === false) return opt;});
+            // console.log('selectedOpt :>> ', selectedOpt[0]);
+            // selectedOpt[0].disabled = true;
+            
+          }
         }
       });
   
@@ -256,7 +312,6 @@ var multi = (function() {
       wrapper.addEventListener("keypress", function(event) {
         var is_action_key = event.keyCode === 32 || event.keyCode === 13;
         var is_option = event.target.getAttribute("multi-index");
-  
         if (is_option && is_action_key) {
           // Prevent the default action to stop scrolling when space is pressed
           event.preventDefault();

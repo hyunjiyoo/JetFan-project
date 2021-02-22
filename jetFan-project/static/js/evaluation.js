@@ -225,8 +225,14 @@ const initData = () => {
 
 const getData = () => {
     initData();
+    
+    let jetfan_no = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        jetfan_no = document.querySelector('#search_jetfan_no').value;
+    } else {
+        jetfan_no = document.querySelector('#jetfan_no').value;
+    }
 
-    const jetfan_no = document.querySelector('#jetfan_no').value;
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
     const data = { 'jetfan_no': jetfan_no, 'year': year , 'year_no': year_no };

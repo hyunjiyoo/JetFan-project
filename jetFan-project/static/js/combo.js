@@ -375,13 +375,18 @@ const setJetfan = () => {
 
 
 // 방향 클릭했을때 제트팬 가져오기
-const clickWay = () => {
-    signalInit(); init('jetfan_no');
+const clickWay = (wayId, jetfanId) => {
+    signalInit(); init(`${jetfanId}`);
     
     const data = { 
-        'tunn_code': document.querySelector(`#tunnel`).value, 
-        'jetfan_way': document.querySelector(`#jetfan_way`).selectedOptions[0].textContent,
+        'jetfan_way': document.querySelector(`#${wayId}`).selectedOptions[0].textContent,
         'div': 'jetfan_way'};
+        
+        if(wayId === 'jetfan_way') {
+            data['tunn_code'] = document.querySelector(`#tunnel`).value;
+        } else {
+            data['tunn_code'] = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+        }
 
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -400,10 +405,10 @@ const clickWay = () => {
 
             } else {
 
-                if(document.querySelector(`#jetfan_no option`) === null) {
+                if(document.querySelector(`#${jetfanId} option`) === null) {
                     for(let i = 0; i < data['jetfan_code'].length; i++) {
                         let opt = document.createElement('option');
-                        document.querySelector(`#jetfan_no`).appendChild(opt);
+                        document.querySelector(`#${jetfanId}`).appendChild(opt);
                         opt.innerText = data['jetfan_no'][i];
                         opt.value = data['jetfan_code'][i];
                     }

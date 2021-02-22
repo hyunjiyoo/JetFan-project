@@ -200,18 +200,18 @@ const createData = () => {
     const div = document.querySelector('.active').dataset.div;
     const dept_code = document.querySelector('#div_depts').value;
     const tunn_code = document.querySelector('#tunns').value;
-    const year = document.querySelectorAll('.year')[0].selectedOptions[0].textContent;
     const emp = document.querySelector('.emp').textContent;
 
     let data = {
         'div': div,
-        'year': year,
         'emp': emp
     };
 
     if(div === 'division') {
+        data.year = document.querySelectorAll('.year')[0].selectedOptions[0].textContent;
         data.code = dept_code;
     } else {
+        data.year = document.querySelectorAll('.year')[1].selectedOptions[0].textContent;
         data.code = tunn_code;
     }
 

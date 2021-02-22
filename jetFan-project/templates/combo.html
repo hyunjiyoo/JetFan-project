@@ -70,7 +70,7 @@
             <tr>
                 {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
                 <td>
-                    <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
+                    <select name="jetfan_way" id="jetfan_way" onchange='clickWay("jetfan_way", "jetfan_no")'>
                         <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
                         <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
                     </select>
@@ -100,16 +100,6 @@
     </div>
     
     <div id="Search" class="tabcontent">
-        <!-- <table>
-            <tr>
-                <td colspan=2>
-                    <input id='tunn_search' type="text" placeholder="터널명 입력">
-                </td>
-                <td>
-                    <button type='button' id='search' onclick='searchTunnel()'>검색</button>
-                </td>
-            </tr>
-        </table> -->
 
         <div class='container'>
             <form>
@@ -138,34 +128,21 @@
                         <option value="3">3</option>
                     </select>
 
-
                     {% if(request.path.split('/')[1] == 'trace' or request.path.split('/')[1] == 'evaluation' ) %}
-                        <select name="jetfan_way" id="jetfan_way" onchange='clickWay()'>
-                            <option selected>{{ tunns['data'][0]['tunn_way1'] }}</option>
-                            <option>{{ tunns['data'][0]['tunn_way2'] }}</option>
-                        </select>
-        
-                        <select name="jetfan_no" id="jetfan_no">
-                            {% for jetfan in jetfans['data'] %}
-                            <option value="{{ jetfan['jetfan_code'] }}">
-                                {{ jetfan['jetfan_no'] }}
-                            </option>
-                            {% endfor %}
-                        </select>
+                        <select name="jetfan_way" id="search_jetfan_way" onchange='clickWay("search_jetfan_way", "search_jetfan_no")'></select>
+                        <select name="jetfan_no" id="search_jetfan_no"></select>
        
                     {% else %}
-                        <select style='background: #ccc;' disabled>
+                        <select style='background: #ccc; z-index: -1; position: relative;' disabled>
                             <option>해당없음</option>
-                        </select>
-                        <select style='background: #ccc;' disabled>
+                        </select> 
+                        <select style='background: #ccc; z-index: -1; position: relative;' disabled>
                             <option>해당없음</option>
                         </select>
                     {% endif %}
-
                 </div>
             
             </form>
-
 
             <button type="button" id='searchSelect' onclick='getData()'>데이터조회</button>
         </div>
@@ -184,7 +161,5 @@
 
             });
     </script>
-
-
 
 </div>

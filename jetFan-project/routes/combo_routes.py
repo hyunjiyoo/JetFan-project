@@ -17,59 +17,15 @@ class Combo(MethodView):
 
 		# 터널명 검색
 		if(value['div'] == 'tunn_search'):
-			div_r = requests.get(base_url + 'division')
-			div_result = json.loads(div_r.text)
-
-			tunn_r = requests.get(base_url + 'tunnel-search/' + value['div_code'])
+			tunn_r = requests.get(base_url + 'tunnel/tunn_code/' + value['tunn_code'])
 			tunn_result = json.loads(tunn_r.text)
 
-			tunn_div_code = str(tunn_result['data'][0]['tunn_div_code'])
-			bran_r = requests.get(base_url + 'branch/bran_div_code/' + tunn_div_code)
-			bran_result = json.loads(bran_r.text)
-
-			tunn_code = str(tunn_result['data'][0]['tunn_code'])
 			tunn_way1 = tunn_result['data'][0]['tunn_way1']
-			jetfan_r = requests.get(base_url + 'jetfan-way/' + tunn_code + '/' + tunn_way1) 
+			jetfan_r = requests.get(base_url + 'jetfan-way/' + value['tunn_code'] + '/' + tunn_way1) 
 			jetfan_result = json.loads(jetfan_r.text)
 
-			# 본부 데이터
-			if(div_result['status']['status_code'] == 200 and div_result['status']['error_code'] == 0):
-				divName = []; divCode = []
-				for item in div_result['data']:
-					divName.append(item['div_name'])
-					divCode.append(item['div_code'])
-				data['div_name'] = divName
-				data['div_code'] = divCode
-			else:
-				data['err_msg'] = div_result['status']['error_msg']
-				return json.dumps(data)
-
-
-			# 지사 데이터
-			if(bran_result['status']['status_code'] == 200 and bran_result['status']['error_code'] == 0):
-				branName = []; branCode = []
-				for item in bran_result['data']:
-					branName.append(item['bran_name'])
-					branCode.append(item['bran_code'])
-				data['bran_name'] = branName
-				data['bran_code'] = branCode
-			else:
-				data['err_msg'] = bran_result['status']['error_msg']
-				return json.dumps(data)
-				
-
-			# 터널, 방향, 제트팬 데이터
+			# 방향, 제트팬 데이터
 			if(tunn_result['status']['status_code'] == 200 and tunn_result['status']['error_code'] == 0):
-				data['tunn_div_code'] = tunn_result['data'][0]['tunn_div_code']
-				data['tunn_bran_code'] = tunn_result['data'][0]['tunn_bran_code']
-				
-				tunnName = []; tunnCode = []; ways = []
-				for item in tunn_result['data']:
-					tunnName.append(item['tunn_name'])
-					tunnCode.append(item['tunn_code'])
-				data['tunn_name'] = tunnName
-				data['tunn_code'] = tunnCode
-				
 				data['tunn_way1'] = tunn_result['data'][0]['tunn_way1']
 				data['tunn_way2'] = tunn_result['data'][0]['tunn_way2']
 
@@ -88,7 +44,7 @@ class Combo(MethodView):
 			else:
 				data['err_msg'] = tunn_result['status']['error_msg']
 				return json.dumps(data)
-			
+
 
 		# 본부 클릭
 		elif(value['div'] == 'branch'):

@@ -45,7 +45,12 @@ const initData = () => {
 const getData = () => {
     initData();
 
-    const tunn_code = document.querySelector('#tunnel').value;
+    let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+    } else {
+        tunn_code = document.querySelector('#tunnel').value;
+    }
     const year = document.querySelector('#year').value;
     const year_no = document.querySelector('#update').value;
     const data = {
