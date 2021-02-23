@@ -154,6 +154,7 @@ const getData = () => {
                     div.setAttribute('id', 'div'+data['photo']['ap_seq'][i]);
                     input.classList.add('refInput');
                     input.setAttribute('id', 'input'+data['photo']['ap_seq'][i]);
+                    input.disabled = true;
                     button.classList.add('delBtn');
                     button.setAttribute('id', 'btn'+data['photo']['ap_seq'][i]);
                     button.dataset.seq = data['photo']['ap_seq'][i];
@@ -196,6 +197,7 @@ const getData = () => {
                 photo.appendChild(img);
                 photo.appendChild(hr);
                 input.classList.add('refInput');
+                input.disabled = true;
                 button.src = './img/minus.png';
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
@@ -529,6 +531,7 @@ const addContent = (filename) => {
 
                 div.setAttribute('id', 'div'+seq);
                 input.setAttribute('id', 'input'+seq);
+                input.disabled = true;
                 button.setAttribute('id', 'btn'+seq);
                 img.setAttribute('id', 'img'+seq);
                 hr.setAttribute('id', 'hr'+seq);
@@ -631,6 +634,7 @@ const deleteContent = (e) => {
                     photo.appendChild(img);
                     photo.appendChild(hr);
                     input.classList.add('refInput');
+                    input.disabled = true;
                     button.classList.add('delBtn');
                     button.dataset.seq = 0;
                     button.onclick = deleteContent;

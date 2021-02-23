@@ -119,6 +119,7 @@ const getData = () => {
                     div.setAttribute('id', 'div'+data['ph_seq'][i]);
                     input.classList.add('refInput');
                     input.setAttribute('id', 'input'+data['ph_seq'][i]);
+                    input.disabled = true;
                     button.classList.add('delBtn');
                     button.setAttribute('id', 'btn'+data['ph_seq'][i]);
                     button.dataset.seq = data['ph_seq'][i];
@@ -150,6 +151,7 @@ const getData = () => {
                 photoElem.appendChild(img);
                 photoElem.appendChild(hr);
                 input.classList.add('refInput');
+                input.disabled = true;
                 button.classList.add('delBtn');
                 button.dataset.seq = 0;
                 button.src = './img/minus.png';
@@ -456,6 +458,7 @@ const addContent = (filename) => {
             div.innerText = `⊙ ${photo_way} - ${photo_jetfan_no}` ?? '';
             input.value = photo_comment;
             input.classList.add('refInput');
+            input.disabled = true;
             button.classList.add('delBtn');
             button.dataset.seq = seq;
             resolveDelete(button);
@@ -567,6 +570,7 @@ const deleteContent = (e) => {
                     photo.appendChild(img);
                     photo.appendChild(hr);
                     input.classList.add('refInput');
+                    input.disabled = true;
                     button.classList.add('delBtn');
                     button.dataset.seq = 0;
                     // button.onclick = deleteContent;
@@ -639,9 +643,17 @@ const modifyData = () => {
     }	
 
 
-    const tunn_code = document.querySelector('#tunnel').value;	
-    const year = document.querySelector('#year').value;	
-    const year_no = document.querySelector('#update').value;	
+    let year = 0; let year_no = 0; let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+    } else {
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+        tunn_code = document.querySelector('#tunnel').value;
+    }
 
     const contents = [];	
     const comment = document.querySelectorAll('#photo .refInput');	

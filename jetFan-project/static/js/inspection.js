@@ -77,7 +77,7 @@ const getData = () => {
                 return false;
             }
 
-            changeCircleColor(data['ins_update']);
+            changeCircleColor(data['ins']['ins_update']);
 
             document.querySelector('#tunn_name').innerText = data['tunn_name'] ?? '';
             document.querySelector('#way1').innerText = data['tunn_way1'] ?? '';
@@ -235,8 +235,8 @@ const modifyData = (e) => {
                 return false;
             }
 
-            const eval_update = document.querySelector('#greenCircle').dataset.update;
-            changeCircleColor(eval_update);
+            const update = document.querySelector('#greenCircle').dataset.update;
+            changeCircleColor(update);
             
             if(data.status.status_code === 200) {
 
