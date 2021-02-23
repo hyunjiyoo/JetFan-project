@@ -172,7 +172,6 @@ class Combo(MethodView):
 				return json.dumps(data)
 
 			# 제트팬
-
 			jetfan_r = requests.get(base_url + 'jetfan-way/' + value['tunn_code'] + '/' + data['tunn_way1'])
 			jetfan_result = json.loads(jetfan_r.text)
 

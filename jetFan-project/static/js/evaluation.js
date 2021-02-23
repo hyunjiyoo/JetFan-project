@@ -834,16 +834,23 @@ const inputData = () => {
         return false;
     }
 
-
-    const jetfan_no = document.querySelector('#jetfan_no').value;
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
-
+    let jetfan_no = 0; let year = 0; let year_no = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        jetfan_no = document.querySelector('#search_jetfan_no').value; 
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        
+    } else {
+        jetfan_no = document.querySelector('#jetfan_no').value; 
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+    }
+    
     let contents = Array();
     contents.push({
-        "eval_jetfan_code": document.querySelector('#jetfan_no').value,
-        "eval_year": document.querySelector('#year').value,
-        "eval_year_no": document.querySelector('#update').value,
+        "eval_jetfan_code": jetfan_no,
+        "eval_year": year,
+        "eval_year_no": year_no,
         "eval_update":document.querySelector('#jetfan_name').dataset.update,
         "eval_ymd": document.querySelector('#eval_ymd').value,
         "eval_emp": document.querySelector('#jetfan_name').dataset.emp,

@@ -69,18 +69,23 @@ const getData = () => {
     initData();
 
     let data = {};
+    let year = 0; let year_no = 0;
     if(document.querySelector('.tab button.active').textContent === '검색') {
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
         data = {
             'tunn_code': document.querySelector('.non-selected-wrapper a.selected').dataset.value,
-            'year': document.querySelector('#search_year').value, 
-            'year_no': document.querySelector('#search_update').value,
+            'year': year, 
+            'year_no': year_no,
             'option': 'getContent'
         };
     } else {
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
         data = {
             'tunn_code': document.querySelector('#tunnel').value,
-            'year': document.querySelector('#year').value, 
-            'year_no': document.querySelector('#update').value,
+            'year': year, 
+            'year_no': year_no,
             'option': 'getContent'
         };
     }
@@ -260,7 +265,13 @@ const getJetfan = () => {
         }
     }
 
-    const tunn_code = document.querySelector('#tunnel').value;
+    let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+    } else {
+        tunn_code = document.querySelector('#tunnel').value;
+    }
+
     const way = document.querySelector('#way').selectedOptions[0].textContent;
     const data = {'tunn_code': tunn_code,
                   'way': way,
@@ -337,9 +348,19 @@ const showImg = () => {
 
 // 사진파일 업로드
 const uploadFile = function() {
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
-    const tunn_code = document.querySelector('#tunnel').value;
+    
+    let year = 0; let year_no = 0; let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+    } else {
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+        tunn_code = document.querySelector('#tunnel').value;
+    }
+
     const delBtn = document.querySelectorAll('.delBtn');
     const seq = Number(delBtn[delBtn.length-1].dataset.seq)+1 ?? 1;
     const fileElem = document.querySelector('#myFile');
@@ -408,9 +429,18 @@ const addContent = (filename) => {
         });
         
     } else {
-        const tunn_code = document.querySelector('#tunnel').value;
-        const year = document.querySelector('#year').value;
-        const year_no = document.querySelector('#update').value;
+        let year = 0; let year_no = 0; let tunn_code = 0;
+        if(document.querySelector('.tab button.active').textContent === '검색') {
+            year = document.querySelector('#search_year').value;
+            year_no = document.querySelector('#search_update').value;
+            tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+        } else {
+            year = document.querySelector('#year').value;
+            year_no = document.querySelector('#update').value;
+            tunn_code = document.querySelector('#tunnel').value;
+        }
+
         const ap_way = document.querySelector('#way').selectedOptions[0].textContent;
         const ap_jetfan_no = document.querySelector('#jetfan').selectedOptions[0].textContent;
         const ap_comment = document.querySelector('#commentText').value ?? '';
@@ -541,10 +571,18 @@ const addContent = (filename) => {
 const deleteContent = (e) => {
     if (confirm('정말로 삭제하시겠습니까?')) {
 
-        const tunn_code = document.querySelector('#tunnel').value;
-        const year = document.querySelector('#year').value;
-        const year_no = document.querySelector('#update').value;
         const seq = e.target.dataset.seq;
+        let year = 0; let year_no = 0; let tunn_code = 0;
+        if(document.querySelector('.tab button.active').textContent === '검색') {
+            year = document.querySelector('#search_year').value;
+            year_no = document.querySelector('#search_update').value;
+            tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+        } else {
+            year = document.querySelector('#year').value;
+            year_no = document.querySelector('#update').value;
+            tunn_code = document.querySelector('#tunnel').value;
+        }
     
         const data = {
             'tunn_code': tunn_code,
@@ -663,9 +701,17 @@ const modifyData = () => {
         return false;   
     }
 
-    const tunn_code = document.querySelector('#tunnel').value;
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
+    let year = 0; let year_no = 0; let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+    } else {
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+        tunn_code = document.querySelector('#tunnel').value;
+    }
 
     const contents = [];
     const errorContents = document.querySelectorAll('#error textarea');

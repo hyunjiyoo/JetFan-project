@@ -151,11 +151,23 @@ const modifyData = (e) => {
         return false; 
     }
 
+    let year = 0; let year_no = 0; let tunn_code = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        tunn_code = document.querySelector('.non-selected-wrapper a.selected').dataset.value;
+
+    } else {
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+        tunn_code = document.querySelector('#tunnel').value;
+    }
+
     const data = {
         'data': [{
-            "ins_tunn_code": document.querySelector('#tunnel').value,
-            "ins_year": document.querySelector('#year').value,
-            "ins_year_no": document.querySelector('#update').value,
+            "ins_tunn_code": tunn_code,
+            "ins_year": year,
+            "ins_year_no": year_no,
             "ins_update": document.querySelector('#greenCircle').dataset.update,
             "ins_emp": document.querySelector('#ins_emp').textContent,
             "ins_company": document.querySelector('#ins_company').textContent,

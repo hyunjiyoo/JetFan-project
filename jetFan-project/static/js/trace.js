@@ -3,13 +3,20 @@ window.onload = () => {
     const supervisor = displaySupervisor(permission);
     if(!supervisor) {
         document.querySelector('#inputBtn').addEventListener('click', inputData);
+        document.querySelector('#search_year').addEventListener('change', changeYear);
         document.querySelector('#year').addEventListener('change', changeYear);
     } 
 };
 
 // 콤보박스 연도 변경시 이벤트
 const changeYear = () => {
-    let curYear = document.querySelector('#year').value;
+    let curYear = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        console.log('d');
+        curYear = document.querySelector('#search_year').value;
+    } else {
+        curYear = document.querySelector('#year').value;
+    }
     document.querySelector('#curYear').innerText = curYear + '년도';
     document.querySelector('#oneYearAgo').innerText = curYear-1 + '년도';
     document.querySelector('#towYearAgo').innerText = curYear-2 + '년도';
@@ -234,9 +241,17 @@ const inputData = () => {
     }
 
 
-    const jetfan_no = document.querySelector('#jetfan_no').value;
-    const year = document.querySelector('#year').value;
-    const year_no = document.querySelector('#update').value;
+    let jetfan_no = 0; let year = 0; let year_no = 0;
+    if(document.querySelector('.tab button.active').textContent === '검색') {
+        jetfan_no = document.querySelector('#search_jetfan_no').value; 
+        year = document.querySelector('#search_year').value;
+        year_no = document.querySelector('#search_update').value;
+        
+    } else {
+        jetfan_no = document.querySelector('#jetfan_no').value; 
+        year = document.querySelector('#year').value;
+        year_no = document.querySelector('#update').value;
+    }
     const checkReports = document.querySelectorAll('.checkReport');
     const noteCurYears = document.querySelectorAll('.noteCurYear');
     

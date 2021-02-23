@@ -224,7 +224,7 @@ const createData = () => {
                 Swal.fire({
                     title: '데이터생성실패', 
                     text: data.err_msg,
-                    icon: 'warning',
+                    icon: 'info',
                     confirmButtonText: '확인',
                     onAfterClose: () => window.scrollTo(0,0)
                 });
