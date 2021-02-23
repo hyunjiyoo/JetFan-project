@@ -13,31 +13,34 @@ base_url = Base_url.go_url
 # 데이터생성
 class Basic(MethodView):
 
-	# decorators = [login_required]
-
 	def get(self):
-		div_r = requests.get(base_url + 'division')
-		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
-		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
-		depts = json.loads(div_r.text)
-		brans = json.loads(bran_r.text)
-		tunns = json.loads(tunn_r.text)
+		if 'username' in session:
+			div_r = requests.get(base_url + 'division')
+			bran_r = requests.get(base_url + 'branch/bran_div_code/11')
+			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
+			depts = json.loads(div_r.text)
+			brans = json.loads(bran_r.text)
+			tunns = json.loads(tunn_r.text)
 
-		years = []
-		year = datetime.date.today().year + 2
-		for i in range(year-2020):
-			years.append(year-i-1)
-		
-		if session.get('username') is not None:
-			emp = str(session.get('username')).strip("(',)")
+			years = []
+			year = datetime.date.today().year + 2
+			for i in range(year-2020):
+				years.append(year-i-1)
+			
+			if session.get('username') is not None:
+				emp = str(session.get('username')).strip("(',)")
+			else:
+				emp = ''
+
+			return render_template('basic.html', 
+									depts=depts,
+									brans=brans,
+									tunns=tunns,
+									years= years,
+									emp=emp)
 		else:
-			emp = ''
-
-		return render_template('basic.html', depts=depts,
-											 brans=brans,
-											 tunns=tunns,
-											 years= years,
-											 emp=emp)
+			session.clear()
+			return render_template('./login.html')
 
 	def post(self):
 		v = request.get_json()
@@ -104,8 +107,12 @@ class CreateData(MethodView):
 		r = requests.post(base_url + 'basic/' + v['div'] + '/' + v['code'] + '/' + v['year'] + '/' + v['emp'])
 		result = json.loads(r.text)
 
-		if(result['status']['status_code'] == 200 and result['status']['status_code'] == 200):		
-			return json.dumps('ok')
+		if(result['status']['status_code'] == 200 and result['status']['status_code'] == 200):
+			if(result['status']['cnt'] != 0):
+				return json.dumps('ok')
+			else:
+				data['err_msg'] = result['status']['error_msg']
+				return json.dumps(data)
 		else:
 			data['err_msg'] = result['status']['error_msg']
 			return json.dumps(data)

@@ -3,10 +3,12 @@ window.onload = () => {
     const supervisor = displaySupervisor(permission);
     if(!supervisor) {
         document.querySelector('#addBtn').addEventListener('click', uploadFile);
+        document.querySelector('#submitBtn').addEventListener('click', modifyData);
         document.querySelector('#myFile').addEventListener('change', showImg);
         
     } else {
         document.querySelector('#addBtn').addEventListener('click', disabledInputBtn);
+        document.querySelector('#submitBtn').addEventListener('click', disabledInputBtn);
     }
 } 
 
@@ -92,7 +94,12 @@ const getData = () => {
 
             if(data.ph_seq.length > 0) {
 
-                const tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
+                let tunn_name = '';
+                if(document.querySelector('.tab button.active').textContent === '검색') {
+                    tunn_name = document.querySelector('.non-selected-wrapper a.selected').text.split(' ')[2];
+                } else {
+                    tunn_name = document.querySelector('#tunnel').selectedOptions[0].textContent;
+                }
                 document.querySelector('#tunnel_name').innerText = tunn_name + '터널' ?? '';
                 document.querySelector('#tunn_ymd').innerText = data['ymd'] ?? '';
 
@@ -603,3 +610,102 @@ const deleteContent = (e) => {
         console.log('삭제취소');
     }
 }
+
+
+// 전체 데이터 반영 (PUT api 요청)	
+const modifyData = () => {	
+
+    if(document.querySelector('#tunnel_name').textContent === '') {	
+        Swal.fire({	
+            title: '사전점검', 	
+            text: '데이터 조회 후 입력가능합니다.',	
+            icon: 'info',	
+            confirmButtonText: '확인',	
+            onAfterClose: () => window.scrollTo(0,0)	
+        });	
+        return false;   	
+    }	
+
+
+    if(document.querySelector('#tunn_ymd').textContent === '') {	
+        Swal.fire({	
+            title: '사전점검', 	
+            text: '평가표관리에서 점검일자를 입력해주세요.',	
+            icon: 'info',	
+            confirmButtonText: '확인',	
+            onAfterClose: () => window.scrollTo(0,0)	
+        });	
+        return false;   	
+    }	
+
+
+    const tunn_code = document.querySelector('#tunnel').value;	
+    const year = document.querySelector('#year').value;	
+    const year_no = document.querySelector('#update').value;	
+
+    const contents = [];	
+    const comment = document.querySelectorAll('#photo .refInput');	
+
+    comment.forEach((elem, i) => {	
+        contents.push({'photo_seq': i+1,	
+                       'photo_comment': elem.value });	
+    });	
+
+    console.log('contents :>> ', contents);	
+
+    const data = {'tunn_code': tunn_code,	
+                  'year': year,	
+                  'year_no': year_no,	
+                  'data': contents};	
+
+    const xhttp = new XMLHttpRequest();	
+    xhttp.onreadystatechange = function() {	
+        if (this.readyState === 4 && this.status === 200) {	
+            let data = JSON.parse(this.responseText);	
+
+            if(data.hasOwnProperty('err_msg')) {	
+                Swal.fire({	
+                    title: '데이터입력실패', 	
+                    text: data.err_msg,	
+                    icon: 'warning',	
+                    confirmButtonText: '확인',	
+                    onAfterClose: () => window.scrollTo(0,0)	
+                });	
+                return false;	
+            }	
+
+            changeCircleColor(1);	
+
+            Swal.fire({	
+                title: '입력성공', 	
+                text: '데이터가 정상적으로 입력되었습니다.',	
+                icon: 'success',	
+                confirmButtonText: '확인',	
+                onAfterClose: () => window.scrollTo(0,0)	
+            });	
+
+        } else if(this.status == 406) {	
+            Swal.fire({	
+                title: '데이터 누락', 	
+                text: '터널 정보가 존재하지 않습니다.',	
+                icon: 'warning',	
+                confirmButtonText: '확인',	
+                onAfterClose: () => window.scrollTo(0,0)	
+            });	
+            return false;	
+
+        } else if(this.status === 500) {	
+            Swal.fire({	
+                title: '응답실패', 	
+                text: '해당 데이터가 없습니다.',	
+                icon: 'warning',	
+                confirmButtonText: '확인',	
+                onAfterClose: () => window.scrollTo(0,0)	
+            });	
+        }	
+    }	
+
+    xhttp.open("PUT", "/photo", true);	
+    xhttp.setRequestHeader('Content-Type', 'application/json');	
+    xhttp.send(JSON.stringify(data));	
+} 

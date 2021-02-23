@@ -14,35 +14,36 @@ base_url = Base_url.go_url
 # 사진첩 
 class Photo(MethodView):
 	def get(self):
-		all_tunn_r = requests.get(base_url + 'tunnel/')
-		div_r = requests.get(base_url + 'division')
-		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
-		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
-		# jetfan_r = requests.get(base_url + 'jetfan-way/101/일산')
-		all_tunns = json.loads(all_tunn_r.text)
-		depts = json.loads(div_r.text)
-		brans = json.loads(bran_r.text)
-		tunns = json.loads(tunn_r.text)
-		# jetfans = json.loads(jetfan_r.text)
+		if 'username' in session:
+			all_tunn_r = requests.get(base_url + 'tunnel/')
+			div_r = requests.get(base_url + 'division')
+			bran_r = requests.get(base_url + 'branch/bran_div_code/11')
+			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
+			all_tunns = json.loads(all_tunn_r.text)
+			depts = json.loads(div_r.text)
+			brans = json.loads(bran_r.text)
+			tunns = json.loads(tunn_r.text)
 
-		years = []
-		year = datetime.date.today().year + 2
-		for i in range(year-2020):
-			years.append(year-i-1)
+			years = []
+			year = datetime.date.today().year + 2
+			for i in range(year-2020):
+				years.append(year-i-1)
 
-		if session.get('username') is not None:
-			emp = str(session.get('username')).strip("(',)")
+			if session.get('username') is not None:
+				emp = str(session.get('username')).strip("(',)")
+			else:
+				emp = ''
+
+			return render_template('photo.html', 
+									all_tunns=all_tunns,
+									depts=depts,
+									brans=brans,
+									tunns=tunns,
+									years= years,
+									emp=emp)
 		else:
-			emp = ''
-
-		return render_template('photo.html', 
-												all_tunns=all_tunns,
-												depts=depts,
-												brans=brans,
-												tunns=tunns,
-												# jetfans=jetfans, 
-												years= years,
-												emp=emp)
+			session.clear()
+			return render_template('./login.html')
 
 	def post(self):
 		v = request.get_json()
@@ -167,6 +168,26 @@ class Photo(MethodView):
 				data['err_msg'] = result['status']['error_msg']
 			return json.dumps(data)
 
+
+	def put(self):	
+		data = {}	
+		v = request.get_json()	
+
+		for prop_name in ['tunn_code', 'year', 'year_no']:	
+			if(v[prop_name] == ''):	
+				return '데이터누락', 406	
+
+		url = base_url + 'photo/' + v['tunn_code'] + '/' + v['year'] + '/' + v['year_no']	
+		r = requests.put(url, data=json.dumps(v['data']))	
+		result = json.loads(r.text)	
+
+		if(result['status']['status_code'] == 200 and result['status']['error_code'] == 0):	
+			data['succ'] = 200	
+		else:	
+			data['err_msg'] = result['status']['error_msg']	
+
+		return json.dumps(result)
+		
 	
 	def delete(self):
 		data = {}

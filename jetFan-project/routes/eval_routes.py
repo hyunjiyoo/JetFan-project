@@ -12,35 +12,39 @@ base_url = Base_url.go_url
 # 평가표 
 class Eval(MethodView):
 	def get(self):
-		all_tunn_r = requests.get(base_url + 'tunnel/')
-		div_r = requests.get(base_url + 'division')
-		bran_r = requests.get(base_url + 'branch/bran_div_code/11')
-		tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
-		jetfan_r = requests.get(base_url + 'jetfan-way/101/일산')
-		all_tunns = json.loads(all_tunn_r.text)
-		depts = json.loads(div_r.text)
-		brans = json.loads(bran_r.text)
-		tunns = json.loads(tunn_r.text)
-		jetfans = json.loads(jetfan_r.text)
+		if 'username' in session:
+			all_tunn_r = requests.get(base_url + 'tunnel/')
+			div_r = requests.get(base_url + 'division')
+			bran_r = requests.get(base_url + 'branch/bran_div_code/11')
+			tunn_r = requests.get(base_url + 'tunnel/tunn_bran_code/11')
+			jetfan_r = requests.get(base_url + 'jetfan-way/101/일산')
+			all_tunns = json.loads(all_tunn_r.text)
+			depts = json.loads(div_r.text)
+			brans = json.loads(bran_r.text)
+			tunns = json.loads(tunn_r.text)
+			jetfans = json.loads(jetfan_r.text)
 
-		years = []
-		year = datetime.date.today().year + 2
-		for i in range(year-2020):
-			years.append(year-i-1)
+			years = []
+			year = datetime.date.today().year + 2
+			for i in range(year-2020):
+				years.append(year-i-1)
 
-		if session.get('username') is not None:
-			emp = str(session.get('username')).strip("(',)")
+			if session.get('username') is not None:
+				emp = str(session.get('username')).strip("(',)")
+			else:
+				emp = ''
+
+			return render_template('evaluation.html', 
+									all_tunns=all_tunns,
+									depts=depts,
+									brans=brans,
+									tunns=tunns,
+									jetfans=jetfans, 
+									years= years,
+									emp=emp)
 		else:
-			emp = ''
-
-		return render_template('evaluation.html', 
-												all_tunns=all_tunns,
-												depts=depts,
-												brans=brans,
-												tunns=tunns,
-												jetfans=jetfans, 
-												years= years,
-												emp=emp)
+			session.clear()
+			return render_template('./login.html')
 	
 	def post(self):
 		value = request.get_json()
