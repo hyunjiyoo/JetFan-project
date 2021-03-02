@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/abnormal.css') }}">
 <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/plus.png') }}">
 <link rel="stylesheet" type="image/png" href="{{ url_for('static', filename='img/minus.png') }}">
+<link rel="stylesheet" type="image/gif" href="{{ url_for('static', filename='img/loading.gif') }}">
 <script src="{{ url_for('static', filename='js/photo.js') }}"></script>
 
 {% include 'header.html' %}
@@ -51,7 +52,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <button id='submitBtn' type='button'>입력</button>
     </div>
 </div>

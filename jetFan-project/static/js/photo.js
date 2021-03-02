@@ -304,6 +304,7 @@ const showImg = () => {
 
 // 사진파일 업로드
 const uploadFile = function() {
+    document.querySelector('#addBtn').removeEventListener('click', uploadFile);
     let year = 0; let year_no = 0; let tunn_code = 0;
     if(document.querySelector('.tab button.active').textContent === '검색') {
         year = document.querySelector('#search_year').value;
@@ -424,7 +425,10 @@ const addContent = (filename) => {
                 text: '사진이 정상적으로 추가되었습니다.',
                 icon: 'success',
                 confirmButtonText: '확인'
+            }).then(() => {
+                document.querySelector('#addBtn').addEventListener('click', uploadFile);
             });
+
 
             // 비어있는 참고사진 객체 삭제
             if(document.querySelector('#input0')) {

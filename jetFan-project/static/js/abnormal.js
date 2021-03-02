@@ -350,7 +350,7 @@ const showImg = () => {
 
 // 사진파일 업로드
 const uploadFile = function() {
-    
+    document.querySelector('#addBtn').removeEventListener('click', uploadFile);
     let year = 0; let year_no = 0; let tunn_code = 0;
     if(document.querySelector('.tab button.active').textContent === '검색') {
         year = document.querySelector('#search_year').value;
@@ -487,6 +487,8 @@ const addContent = (filename) => {
                     icon: 'success',
                     confirmButtonText: '확인'
                 });
+
+                document.querySelector('#addBtn').addEventListener('click', uploadFile);
 
                 // 비어있는 참고사진 객체 삭제
                 if(document.querySelector('#input0')) {
@@ -775,6 +777,8 @@ const modifyData = () => {
                 confirmButtonText: '확인',
                 onAfterClose: () => window.scrollTo(0,0)
             });
+
+            getData();
 
         } else if(this.status == 406) {
             Swal.fire({
