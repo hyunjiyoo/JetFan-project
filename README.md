@@ -1,8 +1,9 @@
 
-![jetfan_logo](https://user-images.githubusercontent.com/23496927/117934451-a9ea1780-b33d-11eb-9b88-8bec670d48cf.png)
 
 ## 제트팬 관리 시스템
 제트팬 관리 시스템은 터널을 환기시켜주기 위해 설치된 제트팬의 상태를 관리해주는 안드로이드용 웹앱입니다.
+
+![jetfan_logo](https://user-images.githubusercontent.com/23496927/117935241-79ef4400-b33e-11eb-966b-ad8a06adbb8f.png)
 
 ### 프로젝트 기간
 - 2020.11.25 ~ 2021.02.23
